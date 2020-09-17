@@ -94,7 +94,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\ReviewStatus.cs" />
     <Compile Include="Models\ProductReview.cs" />
+    <Compile Include="Services\Implement\ProductReviewService.cs" />
     <Compile Include="Services\IProductReviewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

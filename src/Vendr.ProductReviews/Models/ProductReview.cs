@@ -1,8 +1,15 @@
-﻿namespace Vendr.ProductReviews.Models
+﻿using System;
+using Vendr.ProductReviews.Enums;
+
+namespace Vendr.ProductReviews.Models
 {
     public class ProductReview
     {
         public int Id { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public ReviewStatus Status { get; set; }
 
         public decimal Rating { get; set; }
 
