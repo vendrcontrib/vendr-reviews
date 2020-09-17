@@ -1,21 +1,24 @@
-﻿namespace Vendr.ProductReviews.Services
+﻿using System.Collections.Generic;
+using Vendr.ProductReviews.Models;
+
+namespace Vendr.ProductReviews.Services
 {
     interface IProductReviewService
     {
         /// <summary>
         /// Gets a product review.
         /// </summary>
-        void GetProductReview(int id);
+        ProductReview GetProductReview(int id);
 
         /// <summary>
         /// Gets product reviews.
         /// </summary>
-        void GetProductReviews(string productReference);
+        IEnumerable<ProductReview> GetProductReviews(string productReference);
 
         /// <summary>
         /// Gets product reviews for customer.
         /// </summary>
-        void GetProductReviewsForCustomer(string customerReference);
+        IEnumerable<ProductReview> GetProductReviewsForCustomer(string customerReference);
 
         /// <summary>
         /// Add product review.
