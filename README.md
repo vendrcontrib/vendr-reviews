@@ -1,1 +1,1 @@
-# vendr-product-reviews
+# Vendr Product Reviews
