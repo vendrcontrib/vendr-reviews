@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Vendr.Core.Persistence;
 using Vendr.ProductReviews.Models;
 
 namespace Vendr.ProductReviews.Services.Implement
 {
     public sealed class ProductReviewService : IProductReviewService
     {
+        private IUowProvider _uowProvider;
+        private IRepositoryFactory _repositoryFactory;
+
+        public ProductReviewService(IUowProvider uowProvider, IRepositoryFactory repositoryFactory)
+        {
+            _uowProvider = uowProvider;
+            _repositoryFactory = repositoryFactory;
+        }
+
         public ProductReview GetProductReview(Guid ids)
         {
-            throw new NotImplementedException();
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateOrderRepository(uow))
+            {
+                // Do your thing
+                uow.Complete();
+            }
         }
 
         public IEnumerable<ProductReview> GetProductReviews(Guid[] ids)
