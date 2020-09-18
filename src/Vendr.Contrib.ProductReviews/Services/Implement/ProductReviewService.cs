@@ -27,7 +27,7 @@ namespace Vendr.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                productReview = repo.GetProductReview(id);
+                productReview = repo.Get(id);
                 uow.Complete();
             }
 

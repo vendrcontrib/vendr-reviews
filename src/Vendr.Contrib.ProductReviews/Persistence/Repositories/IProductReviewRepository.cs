@@ -4,7 +4,7 @@ using Vendr.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 {
-    public interface IProductReviewRepository
+    public interface IProductReviewRepository : IDisposable
     {
         ProductReview Get(Guid id);
 
