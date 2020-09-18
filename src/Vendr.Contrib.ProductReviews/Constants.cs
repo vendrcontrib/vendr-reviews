@@ -9,9 +9,11 @@
 
         public static class DatabaseSchema
         {
+            public const string TableNamePrefix = "vendr";
+
             public static class Tables
             {
-                public const string ProductReviews = "ProductReviews";
+                public const string ProductReviews = TableNamePrefix + "ProductReviews";
             }
         }
     }
