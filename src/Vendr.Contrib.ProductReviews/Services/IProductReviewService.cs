@@ -3,7 +3,7 @@ using Vendr.ProductReviews.Models;
 
 namespace Vendr.ProductReviews.Services
 {
-    interface IProductReviewService
+    public interface IProductReviewService
     {
         /// <summary>
         /// Gets a product review.
