@@ -287,9 +287,9 @@
     <Compile Include="Factories\IProductReviewFactory.cs" />
     <Compile Include="Factories\ProductReviewFactory.cs" />
     <Compile Include="Models\ProductReview.cs" />
-    <Compile Include="Repositories\IProductReviewRepository.cs" />
-    <Compile Include="Repositories\ProductReviewRepository.cs" />
-    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Persistence\Repositories\IProductReviewRepository.cs" />
+    <Compile Include="Persistence\Repositories\Implement\ProductReviewRepository.cs" />
+    <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
     <Compile Include="Services\Implement\ProductReviewService.cs" />
     <Compile Include="Services\IProductReviewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

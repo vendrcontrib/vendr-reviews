@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Vendr.Contrib.ProductReviews.Factories;
-using Vendr.Contrib.ProductReviews.Repositories;
+using Vendr.Contrib.ProductReviews.Persistence.Repositories;
 using Vendr.Core;
 using Vendr.Core.Persistence;
 using Vendr.ProductReviews.Models;
@@ -25,6 +25,8 @@ namespace Vendr.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
+                
+
                 // Do your thing
                 uow.Complete();
             }

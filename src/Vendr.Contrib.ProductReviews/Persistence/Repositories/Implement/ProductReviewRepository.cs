@@ -7,7 +7,7 @@ using Vendr.Core;
 using Vendr.ProductReviews.Models;
 using Constants = Vendr.Contrib.ProductReviews.Constants;
 
-namespace Vendr.Contrib.ProductReviews.Repositories
+namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 {
     internal class ProductReviewRepository : RepositoryBase, IProductReviewRepository
     {
