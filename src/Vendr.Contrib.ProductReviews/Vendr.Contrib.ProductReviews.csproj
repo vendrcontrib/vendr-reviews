@@ -284,8 +284,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Dto\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
-    <Compile Include="Factories\IProductReviewFactory.cs" />
-    <Compile Include="Factories\ProductReviewFactory.cs" />
+    <Compile Include="Factories\IProductReviewRepositoryFactory.cs" />
+    <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />
     <Compile Include="Models\ProductReview.cs" />
     <Compile Include="Persistence\Repositories\IProductReviewRepository.cs" />
     <Compile Include="Persistence\Repositories\Implement\ProductReviewRepository.cs" />

@@ -11,10 +11,10 @@ namespace Vendr.ProductReviews.Services.Implement
     public sealed class ProductReviewService : IProductReviewService
     {
         private IUnitOfWorkProvider _uowProvider;
-        private IProductReviewFactory _repositoryFactory;
+        private IProductReviewRepositoryFactory _repositoryFactory;
         //private IRepositoryFactory _repositoryFactory;
 
-        public ProductReviewService(IUnitOfWorkProvider uowProvider, IProductReviewFactory repositoryFactory) //IRepositoryFactory repositoryFactory)
+        public ProductReviewService(IUnitOfWorkProvider uowProvider, IProductReviewRepositoryFactory repositoryFactory) //IRepositoryFactory repositoryFactory)
         {
             _uowProvider = uowProvider;
             _repositoryFactory = repositoryFactory;
@@ -22,14 +22,16 @@ namespace Vendr.ProductReviews.Services.Implement
 
         public ProductReview GetProductReview(Guid id)
         {
+            ProductReview productReview;
+
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                
-
-                // Do your thing
+                productReview = repo.GetProductReview(id);
                 uow.Complete();
             }
+
+            return productReview;
         }
 
         public IEnumerable<ProductReview> GetProductReviews(Guid[] ids)

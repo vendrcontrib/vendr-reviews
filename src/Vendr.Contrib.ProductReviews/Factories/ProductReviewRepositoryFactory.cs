@@ -4,7 +4,7 @@ using Vendr.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Factories
 {
-    public class ProductReviewFactory
+    public class ProductReviewRepositoryFactory
     {
         public static ProductReview BuildProductReview(ProductReviewDto dto)
         {

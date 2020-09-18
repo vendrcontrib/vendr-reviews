@@ -32,7 +32,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
         {
-            return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();
+            return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewRepositoryFactory.BuildProductReview).ToList();
         }
     }
 }
