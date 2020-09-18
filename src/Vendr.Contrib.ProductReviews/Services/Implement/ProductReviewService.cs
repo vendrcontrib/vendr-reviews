@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vendr.Core;
 using Vendr.Core.Persistence;
 using Vendr.ProductReviews.Models;
 
@@ -7,10 +8,10 @@ namespace Vendr.ProductReviews.Services.Implement
 {
     public sealed class ProductReviewService : IProductReviewService
     {
-        private IUowProvider _uowProvider;
+        private IUnitOfWorkProvider _uowProvider;
         private IRepositoryFactory _repositoryFactory;
 
-        public ProductReviewService(IUowProvider uowProvider, IRepositoryFactory repositoryFactory)
+        public ProductReviewService(IUnitOfWorkProvider uowProvider, IRepositoryFactory repositoryFactory)
         {
             _uowProvider = uowProvider;
             _repositoryFactory = repositoryFactory;

@@ -283,6 +283,7 @@
   <ItemGroup>
     <Compile Include="Dto\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
+    <Compile Include="Factories\ProductReviewFactory.cs" />
     <Compile Include="Models\ProductReview.cs" />
     <Compile Include="Repositories\IProductReviewRepository.cs" />
     <Compile Include="Repositories\ProductReviewRepository.cs" />
