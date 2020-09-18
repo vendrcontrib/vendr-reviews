@@ -8,12 +8,17 @@ namespace Vendr.ProductReviews.Services.Implement
 {
     public sealed class ProductReviewService : IProductReviewService
     {
-        public void AddProductReview(string productReference, string customerReference, decimal rating, string name, string description)
+        public ProductReview GetProductReview(Guid ids)
         {
             throw new NotImplementedException();
         }
 
-        public ProductReview GetProductReview(int id)
+        public IEnumerable<ProductReview> GetProductReviews(Guid[] ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddProductReview(string productReference, string customerReference, decimal rating, string name, string description)
         {
             throw new NotImplementedException();
         }

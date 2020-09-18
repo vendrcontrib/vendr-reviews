@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Vendr.ProductReviews.Models;
 
 namespace Vendr.ProductReviews.Services
@@ -8,7 +9,12 @@ namespace Vendr.ProductReviews.Services
         /// <summary>
         /// Gets a product review.
         /// </summary>
-        ProductReview GetProductReview(int id);
+        ProductReview GetProductReview(Guid ids);
+
+        /// <summary>
+        /// Gets product reviews.
+        /// </summary>
+        IEnumerable<ProductReview> GetProductReviews(Guid[] ids);
 
         /// <summary>
         /// Gets product reviews.
