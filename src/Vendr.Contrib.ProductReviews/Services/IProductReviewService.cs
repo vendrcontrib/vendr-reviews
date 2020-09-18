@@ -9,7 +9,7 @@ namespace Vendr.ProductReviews.Services
         /// <summary>
         /// Gets a product review.
         /// </summary>
-        ProductReview GetProductReview(Guid ids);
+        ProductReview GetProductReview(Guid id);
 
         /// <summary>
         /// Gets product reviews.
