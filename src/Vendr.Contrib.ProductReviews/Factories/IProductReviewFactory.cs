@@ -3,7 +3,7 @@ using Vendr.Core;
 
 namespace Vendr.Contrib.ProductReviews.Factories
 {
-    internal interface IProductReviewFactory
+    public interface IProductReviewFactory
     {
         IDisposable CreateProductReviewRepository(IUnitOfWork uow);
     }

@@ -6,6 +6,8 @@ namespace Vendr.Contrib.ProductReviews.Repositories
 {
     public interface IProductReviewRepository
     {
-        IEnumerable<ProductReview> Get(Guid id);
+        ProductReview Get(Guid id);
+
+        IEnumerable<ProductReview> Get(Guid[] ids);
     }
 }

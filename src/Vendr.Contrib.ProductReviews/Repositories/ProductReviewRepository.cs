@@ -4,7 +4,6 @@ using System.Linq;
 using Vendr.Contrib.ProductReviews.Dto;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Core;
-using Vendr.Core.Persistence.Repositories;
 using Vendr.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Repositories
@@ -21,6 +20,11 @@ namespace Vendr.Contrib.ProductReviews.Repositories
         public ProductReview Get(Guid id)
         {
             return DoFetchInternal(_uow, "WHERE id = @0", id).SingleOrDefault();
+        }
+
+        public IEnumerable<ProductReview> Get(Guid[] ids)
+        {
+            return DoFetchInternal(_uow, "WHERE id = IN(@0)", ids);
         }
 
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
