@@ -20,7 +20,7 @@ namespace Vendr.ProductReviews.Services.Implement
             _repositoryFactory = repositoryFactory;
         }
 
-        public ProductReview GetProductReview(Guid ids)
+        public ProductReview GetProductReview(Guid id)
         {
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
