@@ -10,7 +10,7 @@ namespace Vendr.Contrib.ProductReviews.Repositories
 {
     public class ProductReviewRepository : RepositoryBase, IProductReviewRepository
     {
-        private IDatabaseUnitOfWork _uow;
+        private readonly IDatabaseUnitOfWork _uow;
 
         public ProductReviewRepository(IDatabaseUnitOfWork uow)
         {
@@ -24,7 +24,7 @@ namespace Vendr.Contrib.ProductReviews.Repositories
 
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
         {
-            return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildState).ToList();
+            return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();
         }
     }
 }

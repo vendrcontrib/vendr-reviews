@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Vendr.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Factories
 {
     public static class ProductReviewFactory
     {
-        public static void BuildDto()
+        public static ProductReview BuildDto()
         {
 
         }
 
-        public static void BuildState()
+        public static ProductReview BuildProductReview()
         {
 
         }
