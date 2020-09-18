@@ -4,11 +4,12 @@ using System.Linq;
 using Vendr.Contrib.ProductReviews.Dto;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Core;
+using Vendr.Core.Persistence.Repositories;
 using Vendr.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Repositories
 {
-    public class ProductReviewRepository : RepositoryBase, IProductReviewRepository
+    internal class ProductReviewRepository : RepositoryBase, IProductReviewRepository
     {
         private readonly IDatabaseUnitOfWork _uow;
 

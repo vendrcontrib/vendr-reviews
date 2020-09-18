@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vendr.Contrib.ProductReviews.Factories;
+using Vendr.Contrib.ProductReviews.Repositories;
 using Vendr.Core;
 using Vendr.Core.Persistence;
 using Vendr.ProductReviews.Models;
@@ -9,9 +11,10 @@ namespace Vendr.ProductReviews.Services.Implement
     public sealed class ProductReviewService : IProductReviewService
     {
         private IUnitOfWorkProvider _uowProvider;
-        private IRepositoryFactory _repositoryFactory;
+        private IProductReviewFactory _repositoryFactory;
+        //private IRepositoryFactory _repositoryFactory;
 
-        public ProductReviewService(IUnitOfWorkProvider uowProvider, IRepositoryFactory repositoryFactory)
+        public ProductReviewService(IUnitOfWorkProvider uowProvider, IProductReviewFactory repositoryFactory) //IRepositoryFactory repositoryFactory)
         {
             _uowProvider = uowProvider;
             _repositoryFactory = repositoryFactory;
@@ -20,7 +23,7 @@ namespace Vendr.ProductReviews.Services.Implement
         public ProductReview GetProductReview(Guid ids)
         {
             using (var uow = _uowProvider.Create())
-            using (var repo = _repositoryFactory.CreateOrderRepository(uow))
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
                 // Do your thing
                 uow.Complete();

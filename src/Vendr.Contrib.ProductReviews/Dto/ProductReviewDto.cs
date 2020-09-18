@@ -4,6 +4,8 @@ namespace Vendr.Contrib.ProductReviews.Dto
 {
     public class ProductReviewDto
     {
+        public Guid Id { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public decimal Rating { get; set; }

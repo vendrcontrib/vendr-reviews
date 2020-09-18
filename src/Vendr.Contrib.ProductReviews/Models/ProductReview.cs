@@ -5,7 +5,12 @@ namespace Vendr.ProductReviews.Models
 {
     public class ProductReview
     {
-        public int Id { get; set; }
+        public ProductReview(Guid id)
+        {
+            Id = id;
+        }
+
+        public Guid Id { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
