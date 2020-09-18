@@ -5,6 +5,7 @@ using Vendr.Contrib.ProductReviews.Dto;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Core;
 using Vendr.ProductReviews.Models;
+using Constants = Vendr.Contrib.ProductReviews.Constants;
 
 namespace Vendr.Contrib.ProductReviews.Repositories
 {
@@ -19,6 +20,8 @@ namespace Vendr.Contrib.ProductReviews.Repositories
 
         public ProductReview Get(Guid id)
         {
+            //Constants.DatabaseSchema.Tables.ProductReviews
+
             return DoFetchInternal(_uow, "WHERE id = @0", id).SingleOrDefault();
         }
 

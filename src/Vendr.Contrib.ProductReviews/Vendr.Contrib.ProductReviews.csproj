@@ -281,6 +281,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Dto\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
     <Compile Include="Factories\IProductReviewFactory.cs" />
