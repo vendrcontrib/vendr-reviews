@@ -6,7 +6,7 @@ namespace Vendr.Contrib.ProductReviews.Dto
     {
         public Guid Id { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreateDate { get; set; }
 
         public decimal Rating { get; set; }
 
