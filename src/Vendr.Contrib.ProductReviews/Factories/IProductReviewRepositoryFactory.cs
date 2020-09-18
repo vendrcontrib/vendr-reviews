@@ -5,6 +5,6 @@ namespace Vendr.Contrib.ProductReviews.Factories
 {
     public interface IProductReviewRepositoryFactory
     {
-        IDisposable CreateProductReviewRepository(IUnitOfWork uow);
+        IProductReviewRepository CreateProductReviewRepository(IUnitOfWork uow);
     }
 }
