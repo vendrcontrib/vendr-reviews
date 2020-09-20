@@ -4,7 +4,7 @@
     {
       "alias": "vendrProductReviews",
       "view": "~/App_Plugins/VendrProductReviews/backoffice/views/dashboards/productreviews.html",
-      "sections": [ "content" ]
+      "sections": [ "commerce" ]
     }
   ],
   "javascript": [
