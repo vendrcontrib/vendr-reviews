@@ -284,6 +284,7 @@
     <Compile Include="Composing\VendrProductReviewsComponent.cs" />
     <Compile Include="Composing\VendrProductReviewsComposer.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Factories\TestRepositoryFactory.cs" />
     <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
     <Compile Include="Factories\IProductReviewRepositoryFactory.cs" />

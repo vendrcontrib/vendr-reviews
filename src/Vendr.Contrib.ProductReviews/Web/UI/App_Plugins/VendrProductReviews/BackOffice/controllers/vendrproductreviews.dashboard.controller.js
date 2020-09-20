@@ -10,6 +10,9 @@
 
         function init() {
 
+            // http://angular-tips.com/blog/2015/10/creating-a-rating-directive-in-angular-2/
+            // https://jsfiddle.net/n2h05z7e/3/
+
             vendrProductReviewsResource.getPagedProductReviews().then(function (data) {
                 console.log("data", data);
                 vm.reviews = data;
