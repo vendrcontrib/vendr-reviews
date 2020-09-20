@@ -53,5 +53,10 @@ namespace Vendr.ProductReviews.Services.Implement
         {
             throw new NotImplementedException();
         }
+
+        public void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

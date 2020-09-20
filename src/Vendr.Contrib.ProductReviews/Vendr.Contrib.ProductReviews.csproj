@@ -293,6 +293,8 @@
     <Compile Include="Services\Implement\ProductReviewService.cs" />
     <Compile Include="Services\IProductReviewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\Controllers\ProductReviewController.cs" />
+    <Compile Include="Web\Dtos\ProductReviewDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

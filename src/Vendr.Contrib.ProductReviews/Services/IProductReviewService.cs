@@ -29,6 +29,6 @@ namespace Vendr.ProductReviews.Services
         /// <summary>
         /// Add product review.
         /// </summary>
-        void AddProductReview(string productReference, string customerReference, decimal rating, string name, string description);
+        void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description);
     }
 }
