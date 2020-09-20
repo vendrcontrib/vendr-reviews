@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Umbraco.Core.Models;
 using Vendr.Contrib.ProductReviews.Factories;
-using Vendr.Contrib.ProductReviews.Persistence.Repositories;
 using Vendr.Core;
 using Vendr.Core.Models;
 using Vendr.Core.Persistence;
@@ -10,7 +9,7 @@ using Vendr.ProductReviews.Models;
 
 namespace Vendr.ProductReviews.Services.Implement
 {
-    public sealed class ProductReviewService : IProductReviewService
+    public class ProductReviewService : IProductReviewService
     {
         private IUnitOfWorkProvider _uowProvider;
         private IProductReviewRepositoryFactory _repositoryFactory;
