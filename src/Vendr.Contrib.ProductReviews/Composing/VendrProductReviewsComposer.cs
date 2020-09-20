@@ -1,5 +1,4 @@
-﻿using LightInject;
-using Umbraco.Core;
+﻿using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Persistence.Repositories;
@@ -10,17 +9,17 @@ using Vendr.Web.Composing;
 
 namespace Vendr.Contrib.ProductReviews.Composing
 {
-    //[RuntimeLevel(MinLevel = RuntimeLevel.Run)]
+    [RuntimeLevel(MinLevel = RuntimeLevel.Run)]
     [ComposeAfter(typeof(VendrWebComposer))]
     public class VendrProductReviewsComposer : IUserComposer
     {
         public void Compose(Composition composition)
         {
-            composition.RegisterUnique<IProductReviewRepositoryFactory>();
             composition.RegisterUnique<IProductReviewRepository, ProductReviewRepository>();
+            composition.RegisterUnique<IProductReviewRepositoryFactory>();
 
             // Register services
-            composition.Register<IProductReviewService, ProductReviewService>(Lifetime.Singleton);
+            composition.Register<IProductReviewService, ProductReviewService>();
 
             // Register component
             composition.Components()
