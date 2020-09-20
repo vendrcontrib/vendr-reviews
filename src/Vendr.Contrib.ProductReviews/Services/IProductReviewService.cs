@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vendr.Core.Models;
 using Vendr.ProductReviews.Models;
 
 namespace Vendr.ProductReviews.Services

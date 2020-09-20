@@ -1,5 +1,14 @@
 ﻿{
-    "javascript": [
-        
-    ]
+
+  "dashboards": [
+    {
+      "alias": "vendrProductReviews",
+      "view": "~/App_Plugins/VendrProductReviews/backoffice/views/dashboards/productreviews.html",
+      "sections": [ "content" ]
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/VendrProductReviews/backoffice/resources/vendrproductreviews.resource.js",
+    "~/App_Plugins/VendrProductReviews/backoffice/controllers/vendrproductreviews.dashboard.controller.js"
+  ]
 }

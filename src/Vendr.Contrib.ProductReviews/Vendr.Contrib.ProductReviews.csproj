@@ -281,6 +281,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composing\VendrProductReviewsComponent.cs" />
+    <Compile Include="Composing\VendrProductReviewsComposer.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
@@ -305,12 +307,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\resources\vendr-product-reviews.resource.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\vendrproductreviews.dashboard.controller.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\resources\vendrproductreviews.resource.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\dashboards\productreviews.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\package.manifest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
