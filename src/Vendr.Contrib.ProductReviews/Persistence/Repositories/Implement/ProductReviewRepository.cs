@@ -1,6 +1,9 @@
-﻿using System;
+﻿using NPoco;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Umbraco.Core.Persistence;
+using Umbraco.Core.Persistence.Querying;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
@@ -33,6 +36,29 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
         {
             return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewRepositoryFactory.BuildProductReview).ToList();
+        }
+
+        public IEnumerable<ProductReview> GetPagedReviewsByQuery(IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords) //, Ordering ordering)
+        {
+            string sql = $"SELECT * From {Constants.DatabaseSchema.Tables.ProductReviews}";
+
+            //if (ordering == null || ordering.IsEmpty)
+            //    ordering = Ordering.By(SqlSyntax.GetQuotedColumn(Constants.DatabaseSchema.Tables.ProductReviews, "id"));
+
+            //var translator = new SqlTranslator<IRelation>(sql, query);
+            //sql = translator.Translate();
+
+            // apply ordering
+            //ApplyOrdering(ref sql, ordering);
+
+            var pageIndexToFetch = pageIndex + 1;
+            var page = _uow.Database.Page<ProductReviewDto>(pageIndexToFetch, pageSize, sql);
+            var dtos = page.Items;
+            totalRecords = page.TotalItems;
+
+            var result = dtos.Select(ProductReviewRepositoryFactory.BuildProductReview).ToList();
+
+            return result;
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Umbraco.Core.Models;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Persistence.Repositories;
 using Vendr.Core;
+using Vendr.Core.Models;
 using Vendr.Core.Persistence;
 using Vendr.ProductReviews.Models;
 
@@ -57,6 +59,26 @@ namespace Vendr.ProductReviews.Services.Implement
         public void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords)
+        {
+            long total;
+            var results = new List<ProductReview>();
+
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                //var query = Query<ProductReview>().Where(x => x.Id == id);
+
+                var items = repo.GetPagedReviewsByQuery(null, currentPage - 1, itemsPerPage, out total);
+                results.AddRange(items);
+                totalRecords = total;
+
+                uow.Complete();
+            }
+
+            return results;
         }
     }
 }

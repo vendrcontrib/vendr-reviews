@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vendr.Core.Models;
 using Vendr.ProductReviews.Models;
 
 namespace Vendr.ProductReviews.Services
@@ -20,6 +21,11 @@ namespace Vendr.ProductReviews.Services
         /// Gets product reviews.
         /// </summary>
         IEnumerable<ProductReview> GetProductReviews(string productReference);
+
+        /// <summary>
+        /// Gets paged result of product reviews.
+        /// </summary>
+        IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords);
 
         /// <summary>
         /// Gets product reviews for customer.
