@@ -35,7 +35,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
         {
-            return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewRepositoryFactory.BuildProductReview).ToList();
+            return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();
         }
 
         public IEnumerable<ProductReview> GetPagedReviewsByQuery(IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords) //, Ordering ordering)
@@ -56,7 +56,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             var dtos = page.Items;
             totalRecords = page.TotalItems;
 
-            var result = dtos.Select(ProductReviewRepositoryFactory.BuildProductReview).ToList();
+            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
 
             return result;
         }

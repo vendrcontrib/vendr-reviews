@@ -284,11 +284,11 @@
     <Compile Include="Composing\VendrProductReviewsComponent.cs" />
     <Compile Include="Composing\VendrProductReviewsComposer.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Factories\TestRepositoryFactory.cs" />
+    <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />
     <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
     <Compile Include="Factories\IProductReviewRepositoryFactory.cs" />
-    <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />
+    <Compile Include="Factories\ProductReviewFactory.cs" />
     <Compile Include="Models\ProductReview.cs" />
     <Compile Include="Persistence\Repositories\IProductReviewRepository.cs" />
     <Compile Include="Persistence\Repositories\Implement\ProductReviewRepository.cs" />

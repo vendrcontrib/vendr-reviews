@@ -16,7 +16,7 @@ namespace Vendr.Contrib.ProductReviews.Composing
         public void Compose(Composition composition)
         {
             //composition.RegisterUnique<IProductReviewRepository, ProductReviewRepository>();
-            composition.RegisterUnique<IProductReviewRepositoryFactory, TestRepositoryFactory>();
+            composition.RegisterUnique<IProductReviewRepositoryFactory, ProductReviewRepositoryFactory>();
 
             // Register services
             composition.Register<IProductReviewService, ProductReviewService>();
