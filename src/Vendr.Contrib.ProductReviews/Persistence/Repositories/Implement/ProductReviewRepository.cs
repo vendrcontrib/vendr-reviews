@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Vendr.Contrib.ProductReviews.Dto;
 using Vendr.Contrib.ProductReviews.Factories;
+using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
 using Vendr.ProductReviews.Models;
 using Constants = Vendr.Contrib.ProductReviews.Constants;

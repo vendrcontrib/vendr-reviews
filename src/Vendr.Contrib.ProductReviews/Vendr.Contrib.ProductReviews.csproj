@@ -282,7 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Dto\ProductReviewDto.cs" />
+    <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
     <Compile Include="Factories\IProductReviewRepositoryFactory.cs" />
     <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />

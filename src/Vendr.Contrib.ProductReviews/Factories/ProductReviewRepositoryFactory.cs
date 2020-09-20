@@ -1,4 +1,4 @@
-﻿using Vendr.Contrib.ProductReviews.Dto;
+﻿using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
 using Vendr.ProductReviews.Models;
 
@@ -14,6 +14,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
             {
                 CreatedAt = dto.CreateDate,
                 Rating = dto.Rating,
+                Title = dto.Title,
                 Name = dto.Name,
                 Description = dto.Description,
                 CustomerReference = dto.CustomerReference,
@@ -31,6 +32,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
             {
                 Id = review.Id,
                 Rating = review.Rating,
+                Title = review.Title,
                 Name = review.Name,
                 Description = review.Description,
                 CustomerReference = review.CustomerReference,
