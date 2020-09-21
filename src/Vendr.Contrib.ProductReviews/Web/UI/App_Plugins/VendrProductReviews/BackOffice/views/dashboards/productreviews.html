@@ -4,18 +4,6 @@
 
     <umb-load-indicator ng-if="vm.page.loading"></umb-load-indicator>
 
-    <!--<div ng-repeat="review in vm.reviews" class="flex">
-        <span class="rating">
-            <i class="icon-trophy" ng-repeat="n in [].constructor(5) track by $index" ng-class="{ 'color-yellow': n <= review.rating }" aria-hidden="true"></i>
-        </span>
-        <span>
-            <strong>{{review.title}}</strong><br>
-            <p>{{review.description}}</p>
-        </span>
-    </div>-->
-
-    Items: {{vm.options.items | json}}
-
     <vendr-table-view create-actions="vm.options.createActions"
                       bulk-actions="vm.options.bulkActions"
                       filters="vm.options.filters"

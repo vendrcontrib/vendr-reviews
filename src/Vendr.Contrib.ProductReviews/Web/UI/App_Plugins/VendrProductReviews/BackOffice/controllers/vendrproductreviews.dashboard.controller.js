@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function vendrProductReviewsDashboardController($scope, $routeParams, $location, appState, vendrProductReviewsResource, navigationService, vendrUtils) {
+    function vendrProductReviewsDashboardController($scope, $routeParams, $location, $q, appState, vendrProductReviewsResource, navigationService, vendrUtils, vendrLocalStorage) {
 
         //var compositeId = vendrUtils.parseCompositeId($routeParams.id);
         var storeId = "b1e61994-b83b-420a-903e-63a7a15942dc"; //compositeId[0];
@@ -24,8 +24,7 @@
 
         vm.options = {
             createActions: [],
-            filters: [],
-            //filters: [
+            filters: [
             //    {
             //        name: 'Order Status',
             //        alias: 'orderStatusIds',
@@ -45,37 +44,42 @@
             //                });
             //        }
             //    },
-            //    {
-            //        name: 'Payment Status',
-            //        alias: 'paymentStatuses',
-            //        localStorageKey: 'store_' + storeId + '_paymentStatusFilter',
-            //        getFilterOptions: function () {
-            //            return $q.resolve([
-            //                { id: 1, name: 'Authorized', color: 'light-blue' },
-            //                { id: 2, name: 'Captured', color: 'green' },
-            //                { id: 3, name: 'Cancelled', color: 'grey' },
-            //                { id: 4, name: 'Refunded', color: 'orange' },
-            //                { id: 5, name: 'Pending', color: 'deep-purple' },
-            //                { id: 200, name: 'Error', color: 'red' }
-            //            ]);
-            //        }
-            //    }
-            //],
-            //bulkActions: [
-            //    {
-            //        name: 'Delete',
-            //        icon: 'icon-trash',
-            //        doAction: function (bulkItem) {
-            //            return vendrOrderResource.deleteOrder(bulkItem.id);
-            //        },
-            //        getConfirmMessage: function (total) {
-            //            return $q.resolve("Are you sure you want to delete " + total + " " + (total > 1 ? "items" : "item") + "?");
-            //        }
-            //    }
-            //],
+                {
+                    name: 'Status',
+                    alias: 'reviewStatuses',
+                    localStorageKey: 'store_' + storeId + '_reviewStatusFilter',
+                    getFilterOptions: function () {
+                        return $q.resolve([
+                            { id: 1, name: 'Approved', color: 'green' },
+                            { id: 2, name: 'Declined', color: 'grey' },
+                            { id: 3, name: 'Pending', color: 'light-blue' }
+                        ]);
+                    }
+                }
+            ],
+            bulkActions: [
+                {
+                    name: 'Delete',
+                    icon: 'icon-trash',
+                    doAction: function (bulkItem) {
+                        //return vendrProductReviewsResource.deleteReview(bulkItem.id);
+                    },
+                    getConfirmMessage: function (total) {
+                        return $q.resolve("Are you sure you want to delete " + total + " " + (total > 1 ? "items" : "item") + "?");
+                    }
+                }
+            ],
             items: [],
             itemProperties: [
-                { alias: 'rating', header: 'Rating', template: '<span class="vendr-table-cell-value--multiline" title="Rating: {{rating}}"><span class="rating"><i class="icon-rate" ng-repeat="n in [].constructor(5) track by $index" aria-hidden="true"></i></span><span>{{rating}}</span></span>' },
+                {
+                    alias: 'rating', header: 'Rating', template: `<span class="vendr-table-cell-value--multiline" title="Rating: {{rating}}">
+                        <span class="rating" aria-hidden="true">
+                            <i class="icon-rate {{rating < 1 ? 'dn' : ''}}"></i>
+                            <i class="icon-rate {{rating < 2 ? 'dn' : ''}}"></i>
+                            <i class="icon-rate {{rating < 3 ? 'dn' : ''}}"></i>
+                            <i class="icon-rate {{rating < 4 ? 'dn' : ''}}"></i>
+                            <i class="icon-rate {{rating < 5 ? 'dn' : ''}}"></i>
+                        </span><span>{{rating}}</span></span>` },
                 { alias: 'review', header: 'Review', template: '<span class="db bold">{{title}}</span><span class="vendr-table-cell-label">{{description}}</span>' },
                 { alias: 'createDate', header: 'Date', template: "{{ createDate | date : 'MMMM d, yyyy h:mm a' }}" },
                 { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-bg--blue" title="Status: {{ status }}">{{ status }}</span>' }
@@ -84,6 +88,40 @@
                 $location.path(itm.routePath);
             }
         };
+
+        var hasFilterRouteParams = false;
+
+        vm.options.filters.forEach(fltr => {
+            Object.defineProperty(fltr, "value", {
+                get: function () {
+                    return vendrLocalStorage.get(fltr.localStorageKey) || [];
+                },
+                set: function (value) {
+                    vendrLocalStorage.set(fltr.localStorageKey, value);
+                }
+            });
+
+            // Initially just check to see if any of the filter are in the route params
+            // as if they are, we will reset filters accordingly in a moment, but we
+            // need to know if any params exist as we'll wipe out anything that isn't
+            // in the querystring
+            if ($routeParams[fltr.alias])
+                hasFilterRouteParams = true;
+        });
+
+        // If we have some filters in the querystring then
+        // set the filter values by default, wiping out any
+        // cached value they previously had
+        if (hasFilterRouteParams) {
+            vm.options.filters.forEach(fltr => {
+                if ($routeParams[fltr.alias]) {
+                    fltr.value = $routeParams[fltr.alias].split(",");
+                    $location.search(fltr.alias, null);
+                } else {
+                    fltr.value = [];
+                }
+            });
+        }
 
         vm.loadItems = function (opts, callback) {
 
