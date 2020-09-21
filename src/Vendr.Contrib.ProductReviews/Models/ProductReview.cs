@@ -10,10 +10,14 @@ namespace Vendr.ProductReviews.Models
         public ProductReview(Guid id)
         {
             Id = id;
+            Icon = "icon-rate";
         }
 
         [DataMember(Name = "id")]
         public Guid Id { get; set; }
+
+        [DataMember(Name = "icon")]
+        public string Icon { get; set; }
 
         [DataMember(Name = "createDate")]
         public DateTime CreateDate { get; set; }
