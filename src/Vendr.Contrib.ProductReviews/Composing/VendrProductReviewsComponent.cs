@@ -46,7 +46,7 @@ namespace Vendr.Contrib.ProductReviews.Composing
                     if (parentId == "b1e61994-b83b-420a-903e-63a7a15942dc")
                     {
                         var id = Guid.NewGuid().ToString();
-                        var childNode = sender.CreateTreeNode(id, parentId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/reviews/{id}");
+                        var childNode = sender.CreateTreeNode(id, parentId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
                         childNode.Path = $"-1,{parentId},{id}";
                         e.Nodes.Insert(e.Nodes.Count - 1, childNode);
                     }
