@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function vendrProductReviewsDashboardController($scope, $location, vendrProductReviewsResource) {
+    function vendrProductReviewsDashboardController($scope, $location, appState, vendrProductReviewsResource) {
 
         var vm = this;
 
@@ -21,54 +21,54 @@
 
         vm.options = {
             createActions: [],
-            filters: [
-                {
-                    name: 'Order Status',
-                    alias: 'orderStatusIds',
-                    localStorageKey: 'store_' + storeId + '_orderStatusFilter',
-                    getFilterOptions: function () {
-                        return vendrRouteCache.getOrFetch("store_" + storeId + "_orderStatuses", function () {
-                            return vendrOrderStatusResource.getOrderStatuses(storeId);
-                        })
-                            .then(function (items) {
-                                return items.map(function (itm) {
-                                    return {
-                                        id: itm.id,
-                                        name: itm.name,
-                                        color: itm.color
-                                    };
-                                });
-                            });
-                    }
-                },
-                {
-                    name: 'Payment Status',
-                    alias: 'paymentStatuses',
-                    localStorageKey: 'store_' + storeId + '_paymentStatusFilter',
-                    getFilterOptions: function () {
-                        return $q.resolve([
-                            { id: 1, name: 'Authorized', color: 'light-blue' },
-                            { id: 2, name: 'Captured', color: 'green' },
-                            { id: 3, name: 'Cancelled', color: 'grey' },
-                            { id: 4, name: 'Refunded', color: 'orange' },
-                            { id: 5, name: 'Pending', color: 'deep-purple' },
-                            { id: 200, name: 'Error', color: 'red' }
-                        ]);
-                    }
-                }
-            ],
-            bulkActions: [
-                {
-                    name: 'Delete',
-                    icon: 'icon-trash',
-                    doAction: function (bulkItem) {
-                        return vendrOrderResource.deleteOrder(bulkItem.id);
-                    },
-                    getConfirmMessage: function (total) {
-                        return $q.resolve("Are you sure you want to delete " + total + " " + (total > 1 ? "items" : "item") + "?");
-                    }
-                }
-            ],
+            //filters: [
+            //    {
+            //        name: 'Order Status',
+            //        alias: 'orderStatusIds',
+            //        localStorageKey: 'store_' + storeId + '_orderStatusFilter',
+            //        getFilterOptions: function () {
+            //            return vendrRouteCache.getOrFetch("store_" + storeId + "_orderStatuses", function () {
+            //                return vendrOrderStatusResource.getOrderStatuses(storeId);
+            //            })
+            //                .then(function (items) {
+            //                    return items.map(function (itm) {
+            //                        return {
+            //                            id: itm.id,
+            //                            name: itm.name,
+            //                            color: itm.color
+            //                        };
+            //                    });
+            //                });
+            //        }
+            //    },
+            //    {
+            //        name: 'Payment Status',
+            //        alias: 'paymentStatuses',
+            //        localStorageKey: 'store_' + storeId + '_paymentStatusFilter',
+            //        getFilterOptions: function () {
+            //            return $q.resolve([
+            //                { id: 1, name: 'Authorized', color: 'light-blue' },
+            //                { id: 2, name: 'Captured', color: 'green' },
+            //                { id: 3, name: 'Cancelled', color: 'grey' },
+            //                { id: 4, name: 'Refunded', color: 'orange' },
+            //                { id: 5, name: 'Pending', color: 'deep-purple' },
+            //                { id: 200, name: 'Error', color: 'red' }
+            //            ]);
+            //        }
+            //    }
+            //],
+            //bulkActions: [
+            //    {
+            //        name: 'Delete',
+            //        icon: 'icon-trash',
+            //        doAction: function (bulkItem) {
+            //            return vendrOrderResource.deleteOrder(bulkItem.id);
+            //        },
+            //        getConfirmMessage: function (total) {
+            //            return $q.resolve("Are you sure you want to delete " + total + " " + (total > 1 ? "items" : "item") + "?");
+            //        }
+            //    }
+            //],
             items: [],
             itemProperties: [
                 { alias: 'name', template: '<span class="vendr-table-cell-value--multiline"><span>{{customerFullName}}</span><span class="vendr-table-cell-label">#{{orderNumber}}</span></span>' },
