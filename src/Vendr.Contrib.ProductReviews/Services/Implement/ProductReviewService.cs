@@ -60,7 +60,7 @@ namespace Vendr.ProductReviews.Services.Implement
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProductReview> GetPagedResults(long currentPage = 1, long itemsPerPage = 50) //, out long totalRecords)
+        public IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords)
         {
             long total;
             var results = new List<ProductReview>();
@@ -72,7 +72,7 @@ namespace Vendr.ProductReviews.Services.Implement
 
                 var items = repo.GetPagedReviewsByQuery(null, currentPage - 1, itemsPerPage, out total);
                 results.AddRange(items);
-                //totalRecords = total;
+                totalRecords = total;
 
                 uow.Complete();
             }

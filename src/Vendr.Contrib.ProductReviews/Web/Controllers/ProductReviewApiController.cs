@@ -40,8 +40,8 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         [HttpGet]
         public PagedResult<ProductReview> GetPagedProductReviews(long pageNumber = 1, int pageSize = 50)
         {
-            long total = 0;
-            var items = _productReviewService.GetPagedResults(pageNumber, pageSize); //, out total);
+            long total;
+            var items = _productReviewService.GetPagedResults(pageNumber, pageSize, out total);
 
             return new PagedResult<ProductReview>(total, pageNumber, pageSize)
             {
