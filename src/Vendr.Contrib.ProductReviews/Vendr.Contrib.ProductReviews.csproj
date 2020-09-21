@@ -298,6 +298,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Controllers\ProductReviewApiController.cs" />
     <Compile Include="Web\Controllers\ProductReviewController.cs" />
+    <Compile Include="Web\Controllers\ReviewTreeController.cs" />
     <Compile Include="Web\Dtos\ProductReviewDto.cs" />
   </ItemGroup>
   <ItemGroup>

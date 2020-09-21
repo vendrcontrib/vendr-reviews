@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.Querying;
+using Umbraco.Core.Persistence.SqlSyntax;
+using Umbraco.Core.Services;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
@@ -15,10 +17,12 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
     internal class ProductReviewRepository : RepositoryBase, IProductReviewRepository
     {
         private readonly IDatabaseUnitOfWork _uow;
+        //private readonly ISqlSyntaxProvider _sqlSyntax;
 
-        public ProductReviewRepository(IDatabaseUnitOfWork uow)
+        public ProductReviewRepository(IDatabaseUnitOfWork uow) //, ISqlSyntaxProvider sqlSyntax)
         {
             _uow = uow;
+            //_sqlSyntax = sqlSyntax;
         }
 
         public ProductReview Get(Guid id)
@@ -40,10 +44,10 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public IEnumerable<ProductReview> GetPagedReviewsByQuery(IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords) //, Ordering ordering)
         {
-            string sql = $"SELECT * From {Constants.DatabaseSchema.Tables.ProductReviews}";
+            string sql = $"SELECT * FROM {Constants.DatabaseSchema.Tables.ProductReviews} ORDER BY id";
 
             //if (ordering == null || ordering.IsEmpty)
-            //    ordering = Ordering.By(SqlSyntax.GetQuotedColumn(Constants.DatabaseSchema.Tables.ProductReviews, "id"));
+            //    ordering = Ordering.By(_sqlSyntax.GetQuotedColumnName(Constants.DatabaseSchema.Tables.ProductReviews, "id"));
 
             //var translator = new SqlTranslator<IRelation>(sql, query);
             //sql = translator.Translate();
