@@ -4,12 +4,14 @@
 
     <umb-load-indicator ng-if="vm.page.loading"></umb-load-indicator>
 
-    <div ng-repeat="review in vm.reviews">
+    <div ng-repeat="review in vm.reviews" class="flex">
         <span class="rating">
             <i class="icon-trophy" ng-repeat="n in [].constructor(5) track by $index" ng-class="{ 'color-yellow': n <= review.rating }" aria-hidden="true"></i>
         </span>
-        <strong>{{review.title}}</strong><br>
-        <strong>{{review.description}}</strong><br>
+        <span>
+            <strong>{{review.title}}</strong><br>
+            <p>{{review.description}}</p>
+        </span>
     </div>
 
 

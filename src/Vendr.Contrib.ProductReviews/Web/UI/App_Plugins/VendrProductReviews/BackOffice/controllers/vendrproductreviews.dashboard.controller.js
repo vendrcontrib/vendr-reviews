@@ -91,7 +91,7 @@
 
             vendrProductReviewsResource.getPagedProductReviews().then(function (data) {
                 console.log("data", data);
-                vm.reviews = data;
+                vm.reviews = data.items;
             });
         }
 
