@@ -1,23 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http.ModelBinding;
 using Umbraco.Core;
 using Umbraco.Web.Actions;
 using Umbraco.Web.Models.Trees;
+using Umbraco.Web.Mvc;
 using Umbraco.Web.Trees;
+using Vendr.Core.Services;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
     using Constants = Umbraco.Core.Constants;
 
     [Tree("commerce", "review", TreeTitle = "Reviews", SortOrder = 10)]
+    [PluginController("VendrProductReviews")]
     public class ReviewTreeController : TreeController
     {
+        private readonly IStoreService _storeService;
+
+        public ReviewTreeController(IStoreService storeService)
+        {
+            _storeService = storeService;
+        }
+
         protected override TreeNodeCollection GetTreeNodes(string id, FormDataCollection queryStrings)
         {
-            // this tree doesn't support rendering more than 1 level
-            throw new NotSupportedException();
+            var nodes = new TreeNodeCollection();
+
+            if (id == Constants.System.Root.ToInvariantString())
+            {
+            }
+            else
+            {
+                var stores = _storeService.GetStores();
+
+                if (stores != null && stores.Any())
+                {
+                    foreach (var store in stores)
+                    {
+                        var childNode = CreateTreeNode(Guid.NewGuid().ToString(), store.Id.ToString(), queryStrings, "Reviews", "icon-rate", false);
+                        nodes.Add(childNode);
+                    }
+                }
+            }
+
+            return nodes;
         }
 
         protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
@@ -41,15 +70,16 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             return menu;
         }
 
-        protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
-        {
-            var root = base.CreateRootNode(queryStrings);
+        //protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
+        //{
+        //    var root = base.CreateRootNode(queryStrings);
+        //    root.
 
-            root.Icon = "icon-rate";
-            root.HasChildren = false;
-            root.MenuUrl = null;
+        //    root.Icon = "icon-rate";
+        //    root.HasChildren = false;
+        //    root.MenuUrl = null;
 
-            return root;
-        }
+        //    return null;
+        //}
     }
 }
