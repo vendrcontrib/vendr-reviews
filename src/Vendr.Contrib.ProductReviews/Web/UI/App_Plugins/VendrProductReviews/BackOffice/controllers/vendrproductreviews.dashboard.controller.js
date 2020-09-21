@@ -2,7 +2,10 @@
 
     'use strict';
 
-    function vendrProductReviewsDashboardController($scope, $location, appState, vendrProductReviewsResource) {
+    function vendrProductReviewsDashboardController($scope, $routeParams, $location, appState, vendrProductReviewsResource, navigationService, vendrUtils) {
+
+        //var compositeId = vendrUtils.parseCompositeId($routeParams.id);
+        var storeId = "b1e61994-b83b-420a-903e-63a7a15942dc"; //compositeId[0];
 
         var vm = this;
 
@@ -21,6 +24,7 @@
 
         vm.options = {
             createActions: [],
+            filters: [],
             //filters: [
             //    {
             //        name: 'Order Status',
@@ -71,32 +75,106 @@
             //],
             items: [],
             itemProperties: [
-                { alias: 'name', template: '<span class="vendr-table-cell-value--multiline"><span>{{customerFullName}}</span><span class="vendr-table-cell-label">#{{orderNumber}}</span></span>' },
-                { alias: 'finalizedDate', header: 'Date', template: "{{ finalizedDate  | date : 'MMMM d, yyyy h:mm a' }}" },
-                { alias: 'orderStatusId', header: 'Order Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-bg--{{ orderStatus.color }}" title="Order Status: {{ orderStatus.name }}">{{ orderStatus.name }}</span>' },
-                { alias: 'paymentStatus', header: 'Payment Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-badge--{{ paymentStatus.toLowerCase() }}">{{paymentStatusName}}</span>' },
-                { alias: 'payment', header: 'Payment', align: 'right', template: '<span class="vendr-table-cell-value--multiline"><strong>{{totalPrice}}</strong><span>{{paymentMethod.name}}</span></span>' }
+                { alias: 'rating', template: '<span class="vendr-table-cell-value--multiline" title="Rating: {{rating}}"><span class="rating"><i class="icon-rate" ng-repeat="n in [].constructor(5) track by $index" aria-hidden="true"></i></span><span>{{rating}}</span></span>' },
+                { alias: 'review', template: '<span>{{title}}</span><span class="vendr-table-cell-label">{{description}}</span>' },
+                { alias: 'createDate', header: 'Date', template: "{{ createDate | date : 'MMMM d, yyyy h:mm a' }}" },
+                { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-bg--blue" title="Status: {{ status }}">{{ status }}</span>' }
             ],
             itemClick: function (itm) {
                 $location.path(itm.routePath);
             }
         };
 
-        vm.reviews = [];
+        vm.loadItems = function (opts, callback) {
 
-        function init() {
+            if (typeof opts === "function") {
+                callback = opts;
+                opts = undefined;
+            }
 
-            // http://angular-tips.com/blog/2015/10/creating-a-rating-directive-in-angular-2/
-            // https://jsfiddle.net/n2h05z7e/3/
+            if (!opts) {
+                opts = {
+                    pageNumber: 1
+                };
+            }
 
-            vendrProductReviewsResource.getPagedProductReviews().then(function (data) {
-                console.log("data", data);
-                vm.reviews = data.items;
+            // Apply filters
+            vm.options.filters.forEach(fltr => {
+                if (fltr.value && fltr.value.length > 0) {
+                    opts[fltr.alias] = fltr.value;
+                } else {
+                    delete opts[fltr.alias];
+                }
             });
-        }
+
+            vendrProductReviewsResource.getPagedProductReviews().then(function (entities) {
+                //entities.forEach(function (itm) {
+                //    itm.routePath = '/commerce/vendr/review-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
+                //});
+                vm.options.items = entities;
+                console.log("vm.options.items", vm.options.items);
+                if (callback) {
+                    callback();
+                }
+            });
+
+            // Perform search
+            //vendrOrderResource.searchOrders(storeId, opts).then(function (entities) {
+            //    entities.items.forEach(function (itm) {
+            //        itm.routePath = '/commerce/vendr/order-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
+            //    });
+            //    vm.options.items = entities;
+            //    if (callback) {
+            //        callback();
+            //    }
+            //});
+        };
+
+        vm.init = function () {
+
+            navigationService.syncTree({ tree: "vendr", path: "-1," + storeId + ",1", forceReload: true }).then(function (syncArgs) {
+                vm.page.menu.currentNode = syncArgs.node;
+                vm.page.breadcrumb.items = vendrUtils.createBreadcrumbFromTreeNode(syncArgs.node);
+                vm.loadItems({
+                    pageNumber: 1
+                }, function () {
+                    vm.page.loading = false;
+                });
+            });
+
+        };
+
+        vm.init();
+
+        //var onVendrEvent = function (evt, args) {
+        //    if (args.entityType === 'Order' && args.storeId === storeId) {
+        //        vm.page.loading = true;
+        //        vm.loadItems({
+        //            pageNumber: 1
+        //        }, function () {
+        //            vm.page.loading = false;
+        //        });
+        //    }
+        //};
+
+        //$scope.$on("vendrEntitiesSorted", onVendrEvent);
+        //$scope.$on("vendrEntityDelete", onVendrEvent);
+
+        //vm.reviews = [];
+
+        //function init() {
+
+        //    // http://angular-tips.com/blog/2015/10/creating-a-rating-directive-in-angular-2/
+        //    // https://jsfiddle.net/n2h05z7e/3/
+
+        //    vendrProductReviewsResource.getPagedProductReviews().then(function (data) {
+        //        console.log("data", data);
+        //        vm.reviews = data.items;
+        //    });
+        //}
 
 
-        init();
+        //init();
     }
 
     angular.module('vendr').controller('Vendr.ProductReviews.Controllers.DashboardController', vendrProductReviewsDashboardController);
