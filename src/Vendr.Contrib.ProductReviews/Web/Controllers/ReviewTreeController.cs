@@ -34,17 +34,17 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             }
             else
             {
+                var stores = _storeService.GetStores();
+
                 if (id == "vendr")
                 {
                     var mainRoute = "/commerce/vendr";
-
-                    var stores = _storeService.GetStores();
 
                     if (stores != null && stores.Any())
                     {
                         foreach (var store in stores)
                         {
-                            var childNode = CreateTreeNode(Guid.NewGuid().ToString(), store.Id.ToString(), queryStrings, "Reviews", "icon-rate", false, string.Format("{0}/view/{1}", mainRoute, "reviews"));
+                            var childNode = CreateTreeNode(Guid.NewGuid().ToString(), store.Id.ToString(), queryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/view/reviews");
                             nodes.Add(childNode);
                         }
                     }

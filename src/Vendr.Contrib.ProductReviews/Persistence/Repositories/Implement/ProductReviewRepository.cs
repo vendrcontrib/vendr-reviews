@@ -55,8 +55,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             // apply ordering
             //ApplyOrdering(ref sql, ordering);
 
-            var pageIndexToFetch = pageIndex + 1;
-            var page = _uow.Database.Page<ProductReviewDto>(pageIndexToFetch, pageSize, sql);
+            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
             totalRecords = page.TotalItems;
 
