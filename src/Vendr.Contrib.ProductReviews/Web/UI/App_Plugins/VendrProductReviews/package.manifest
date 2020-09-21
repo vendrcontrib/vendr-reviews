@@ -9,6 +9,7 @@
   ],
   "javascript": [
     "~/App_Plugins/VendrProductReviews/backoffice/resources/vendrproductreviews.resource.js",
+    "~/App_Plugins/VendrProductReviews/backoffice/controllers/review-list.controller.js",
     "~/App_Plugins/VendrProductReviews/backoffice/controllers/vendrproductreviews.dashboard.controller.js"
   ]
 }

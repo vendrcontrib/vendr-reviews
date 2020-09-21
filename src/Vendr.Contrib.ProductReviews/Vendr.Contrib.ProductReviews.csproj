@@ -309,7 +309,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\vendrproductreviews.dashboard.controller.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\directives\rating.directive.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\resources\vendrproductreviews.resource.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\components\rating.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\dashboards\productreviews.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\package.manifest" />
   </ItemGroup>
