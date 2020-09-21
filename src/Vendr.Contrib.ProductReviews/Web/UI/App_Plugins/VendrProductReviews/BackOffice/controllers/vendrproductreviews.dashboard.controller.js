@@ -75,8 +75,8 @@
             //],
             items: [],
             itemProperties: [
-                { alias: 'rating', template: '<span class="vendr-table-cell-value--multiline" title="Rating: {{rating}}"><span class="rating"><i class="icon-rate" ng-repeat="n in [].constructor(5) track by $index" aria-hidden="true"></i></span><span>{{rating}}</span></span>' },
-                { alias: 'review', template: '<span>{{title}}</span><span class="vendr-table-cell-label">{{description}}</span>' },
+                { alias: 'rating', header: 'Rating', template: '<span class="vendr-table-cell-value--multiline" title="Rating: {{rating}}"><span class="rating"><i class="icon-rate" ng-repeat="n in [].constructor(5) track by $index" aria-hidden="true"></i></span><span>{{rating}}</span></span>' },
+                { alias: 'review', header: 'Review', template: '<span class="db bold">{{title}}</span><span class="vendr-table-cell-label">{{description}}</span>' },
                 { alias: 'createDate', header: 'Date', template: "{{ createDate | date : 'MMMM d, yyyy h:mm a' }}" },
                 { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-bg--blue" title="Status: {{ status }}">{{ status }}</span>' }
             ],
