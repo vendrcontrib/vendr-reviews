@@ -14,7 +14,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
     using Constants = Umbraco.Core.Constants;
 
-    [Tree("commerce", "review", TreeTitle = "Reviews", SortOrder = 10)]
+    //[Tree("commerce", "review", TreeTitle = "Reviews", SortOrder = 10)]
     [PluginController("VendrProductReviews")]
     public class ReviewTreeController : TreeController
     {
@@ -34,19 +34,27 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             }
             else
             {
-                var stores = _storeService.GetStores();
-
-                if (stores != null && stores.Any())
+                if (id == "vendr")
                 {
-                    foreach (var store in stores)
+                    var mainRoute = "/commerce/vendr";
+
+                    var stores = _storeService.GetStores();
+
+                    if (stores != null && stores.Any())
                     {
-                        var childNode = CreateTreeNode(Guid.NewGuid().ToString(), store.Id.ToString(), queryStrings, "Reviews", "icon-rate", false);
-                        nodes.Add(childNode);
+                        foreach (var store in stores)
+                        {
+                            var childNode = CreateTreeNode(Guid.NewGuid().ToString(), store.Id.ToString(), queryStrings, "Reviews", "icon-rate", false, string.Format("{0}/view/{1}", mainRoute, "reviews"));
+                            nodes.Add(childNode);
+                        }
                     }
                 }
             }
 
             return nodes;
+
+            //this tree doesn't suport rendering more than 1 level
+            throw new NotSupportedException();
         }
 
         protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
