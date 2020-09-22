@@ -52,12 +52,12 @@ namespace Vendr.Contrib.ProductReviews.Composing
         {
             // normally you will want to target a specific tree, this can be done by checking the
             // tree alias of by checking the tree type (casting 'sender')
-            if (sender.TreeAlias == "vendr" && e.QueryStrings["NodeType"] == Vendr.Core.Constants.Entities.EntityTypes.Store)
+            if (sender.TreeAlias == "vendr" && e.QueryStrings["nodeType"] == Vendr.Core.Constants.Entities.EntityTypes.Store)
             {
                 var index = e.Nodes.Count; // e.Nodes.Count - 1;
-                var mainRoute = "commerce/vendr";
+                var mainRoute = "commerce/vendrproductreviews";
 
-                var parentId = "1438";
+                var parentId = e.QueryStrings["id"]; // "1438";
                 var id = Guid.NewGuid().ToString();
                 var childNode = sender.CreateTreeNode(id, parentId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
                 childNode.Path = $"-1,{parentId},{id}";
