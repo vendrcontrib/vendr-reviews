@@ -48,7 +48,7 @@
         };
 
         vm.init = function () {
-            vendrProductReviewsResource.getProductReview(storeId, id).then(function (review) {
+            vendrProductReviewsResource.getProductReview(id).then(function (review) {
 
                 var promises = [];
 
