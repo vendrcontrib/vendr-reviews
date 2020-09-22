@@ -26,7 +26,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             {
                 using (var uow = _vendrApi.Uow.Create())
                 {
-                    _productReviewService.AddProductReview("", "", model.Rating, model.Title, model.Name, model.Description);
+                    _productReviewService.AddProductReview(model.StoreId, "", "", model.Rating, model.Title, model.Name, model.Description);
 
                     uow.Complete();
                 }

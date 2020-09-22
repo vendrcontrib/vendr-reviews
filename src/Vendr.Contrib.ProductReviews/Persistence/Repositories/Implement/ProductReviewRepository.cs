@@ -37,6 +37,43 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return DoFetchInternal(_uow, "WHERE id = IN(@0)", ids);
         }
 
+        public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords)
+        {
+            var sql = new Sql()
+                .Select()
+                .From(Constants.DatabaseSchema.Tables.ProductReviews)
+                .Where("productReference = @0", productReference);
+
+            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
+            var dtos = page.Items;
+            totalRecords = page.TotalItems;
+
+            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
+
+            return result;
+        }
+
+        public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null)
+        {
+            var sql = new Sql()
+                .Select()
+                .From(Constants.DatabaseSchema.Tables.ProductReviews)
+                .Where("storeId = @0", storeId)
+                .Where("customerReference = @0", customerReference);
+
+            if (!string.IsNullOrWhiteSpace(productReference))
+                sql.Where("productReference = @0", productReference);
+
+
+            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
+            var dtos = page.Items;
+            totalRecords = page.TotalItems;
+
+            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
+
+            return result;
+        }
+
         public void Save(ProductReview review)
         {
             var dto = ProductReviewFactory.BuildProductReview(review);

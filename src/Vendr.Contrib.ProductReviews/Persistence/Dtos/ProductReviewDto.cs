@@ -13,6 +13,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         [PrimaryKeyColumn]
         public Guid Id { get; set; }
 
+        [Column("storeId")]
+        public Guid StoreId { get; set; }
+
         [Column("createDate")]
         public DateTime CreateDate { get; set; }
 

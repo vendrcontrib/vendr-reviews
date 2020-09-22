@@ -16,6 +16,9 @@ namespace Vendr.ProductReviews.Models
         [DataMember(Name = "id")]
         public Guid Id { get; set; }
 
+        [DataMember(Name = "storeId")]
+        public Guid StoreId { get; set; }
+
         [DataMember(Name = "icon")]
         public string Icon { get; set; }
 

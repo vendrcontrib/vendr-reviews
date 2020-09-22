@@ -12,6 +12,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
 
             var review = new ProductReview(dto.Id)
             {
+                StoreId = dto.StoreId,
                 CreateDate = dto.CreateDate,
                 Rating = dto.Rating,
                 Title = dto.Title,
@@ -31,6 +32,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
             var dto = new ProductReviewDto
             {
                 Id = review.Id,
+                StoreId = review.StoreId,
                 CreateDate = review.CreateDate,
                 Rating = review.Rating,
                 Title = review.Title,

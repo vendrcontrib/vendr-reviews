@@ -19,7 +19,12 @@ namespace Vendr.ProductReviews.Services
         /// <summary>
         /// Gets product reviews.
         /// </summary>
-        IEnumerable<ProductReview> GetProductReviews(string productReference);
+        IEnumerable<ProductReview> GetProductReviews(Guid storeId, string productReference, long currentPage, long itemsPerPage, out long totalRecords);
+
+        /// <summary>
+        /// Gets product reviews for customer.
+        /// </summary>
+        IEnumerable<ProductReview> GetProductReviewsForCustomer(Guid storeId, string customerReference, long currentPage, long itemsPerPage, out long totalRecords, string productReference = null);
 
         /// <summary>
         /// Gets paged result of product reviews.
@@ -27,14 +32,9 @@ namespace Vendr.ProductReviews.Services
         IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords);
 
         /// <summary>
-        /// Gets product reviews for customer.
-        /// </summary>
-        IEnumerable<ProductReview> GetProductReviewsForCustomer(string customerReference);
-
-        /// <summary>
         /// Add product review.
         /// </summary>
-        void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description);
+        void AddProductReview(Guid storeId, string productReference, string customerReference, decimal rating, string title, string name, string description);
 
         /// <summary>
         /// Save product review.

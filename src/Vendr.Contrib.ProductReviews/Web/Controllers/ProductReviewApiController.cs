@@ -38,6 +38,30 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpGet]
+        public PagedResult<ProductReview> GetProductReviews(Guid storeId, string productReference, long pageNumber = 1, int pageSize = 50)
+        {
+            long total;
+            var items = _productReviewService.GetProductReviews(storeId, productReference, pageNumber, pageSize, out total);
+
+            return new PagedResult<ProductReview>(total, pageNumber, pageSize)
+            {
+                Items = items
+            };
+        }
+
+        [HttpGet]
+        public PagedResult<ProductReview> GetProductReviewsForCustomer(Guid storeId, string customerReference, long pageNumber = 1, int pageSize = 50)
+        {
+            long total;
+            var items = _productReviewService.GetProductReviewsForCustomer(storeId, customerReference, pageNumber, pageSize, out total);
+
+            return new PagedResult<ProductReview>(total, pageNumber, pageSize)
+            {
+                Items = items
+            };
+        }
+
+        [HttpGet]
         public PagedResult<ProductReview> GetPagedProductReviews(long pageNumber = 1, int pageSize = 50)
         {
             long total;

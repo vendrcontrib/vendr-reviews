@@ -50,24 +50,49 @@ namespace Vendr.ProductReviews.Services.Implement
             return productReviews;
         }
 
-        public void AddProductReview(string productReference, string customerReference, decimal rating, string name, string description)
+        public void AddProductReview(Guid storeId, string productReference, string customerReference, decimal rating, string title, string name, string description)
         {
-            throw new NotImplementedException();
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                // Insert product review
+
+                uow.Complete();
+            }
         }
 
-        public IEnumerable<ProductReview> GetProductReviews(string productReference)
+        public IEnumerable<ProductReview> GetProductReviews(Guid storeId, string productReference, long currentPage, long itemsPerPage, out long totalRecords)
         {
-            throw new NotImplementedException();
+            long total;
+            List<ProductReview> results = new List<ProductReview>();
+
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                var items = repo.GetMany(storeId, productReference, currentPage - 1, itemsPerPage, out total);
+                results.AddRange(items);
+                totalRecords = total;
+                uow.Complete();
+            }
+
+            return results;
         }
 
-        public IEnumerable<ProductReview> GetProductReviewsForCustomer(string customerReference)
+        public IEnumerable<ProductReview> GetProductReviewsForCustomer(Guid storeId, string customerReference, long currentPage, long itemsPerPage, out long totalRecords, string productReference = null)
         {
-            throw new NotImplementedException();
-        }
+            long total;
+            List<ProductReview> results = new List<ProductReview>();
 
-        public void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description)
-        {
-            throw new NotImplementedException();
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                var items = repo.GetForCustomer(storeId, customerReference, currentPage - 1, itemsPerPage, out total, productReference: productReference);
+                results.AddRange(items);
+                totalRecords = total;
+                uow.Complete();
+            }
+
+            return results;
         }
 
         public IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords)
