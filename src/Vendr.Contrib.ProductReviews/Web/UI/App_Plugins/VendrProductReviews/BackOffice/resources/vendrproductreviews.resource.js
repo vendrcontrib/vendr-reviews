@@ -6,12 +6,16 @@
 
         return {
 
-            getProductReview: function (id) {
-                
+            getProductReview: function (storeId, id) {
+                return umbRequestHelper.resourcePromise(
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductReview", { params: { id: id } }),
+                    "Failed to get product reviews");
             },
 
-            getProductReviews: function (ids) {
-                
+            getProductReviews: function (storeId, ids) {
+                return umbRequestHelper.resourcePromise(
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductReview", { params: { ids: ids } }),
+                    "Failed to get product reviews");
             },
 
             getPagedProductReviews: function () {

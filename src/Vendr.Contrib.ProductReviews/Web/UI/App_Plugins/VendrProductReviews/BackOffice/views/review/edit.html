@@ -2,6 +2,11 @@
 
     <umb-load-indicator ng-if="vm.page.loading"></umb-load-indicator>
 
+    <style>
+      .vendr-product-review .rating { color: #dfdfdf; font-size: 32px; }
+      .vendr-product-review .rating > .active { color: #ffbb3f; }
+    </style>
+
     <form name="contentForm"
           ng-submit="vm.save()"
           novalidate
@@ -26,7 +31,36 @@
 
                 <vendr-license-check></vendr-license-check>
 
-                
+                <umb-box>
+                    <umb-box-content>
+
+                        <umb-control-group label="Rating">
+                            <span class="rating" aria-hidden="true">
+                                <i class="icon-rate"
+                                   ng-repeat="n in [].constructor(5) track by $index"
+                                   ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
+                                </i>
+                            </span>
+                        </umb-control-group>
+
+                        <umb-control-group label="Date">
+                            <span>{{vm.content.createDate | date: 'MMMM d, yyyy h:mm a'}}</span>
+                        </umb-control-group>
+
+                        <umb-control-group label="Name">
+                            <span>{{vm.content.name}}</span>
+                        </umb-control-group>
+
+                        <umb-control-group label="Title">
+                            <span>{{vm.content.title}}</span>
+                        </umb-control-group>
+
+                        <umb-control-group label="Description">
+                            <span>{{vm.content.description}}</span>
+                        </umb-control-group>
+
+                    </umb-box-content>
+                </umb-box>
 
 
             </umb-editor-container>

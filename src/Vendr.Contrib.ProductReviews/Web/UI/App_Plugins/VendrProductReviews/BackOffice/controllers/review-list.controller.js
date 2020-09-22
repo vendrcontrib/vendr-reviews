@@ -87,6 +87,7 @@
                 { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-bg--blue" title="Status: {{ status }}">{{ status }}</span>' }
             ],
             itemClick: function (itm) {
+                console.log("routePath", itm.routePath);
                 $location.path(itm.routePath);
             }
         };
@@ -148,9 +149,9 @@
             });
 
             vendrProductReviewsResource.getPagedProductReviews().then(function (entities) {
-                //entities.forEach(function (itm) {
-                //    itm.routePath = '/commerce/vendr/review-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
-                //});
+                entities.items.forEach(function (itm) {
+                    itm.routePath = '/commerce/vendrproductreviews/review-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
+                });
                 vm.options.items = entities;
                 console.log("vm.options.items", vm.options.items);
                 if (callback) {
