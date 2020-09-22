@@ -40,12 +40,18 @@ namespace Vendr.Contrib.ProductReviews.Composing
                 var mainRoute = "commerce/vendrproductreviews";
 
                 var storeId = e.QueryStrings["id"];
-                var id = "5"; //Guid.NewGuid().ToString();
-                var childNode = sender.CreateTreeNode(id, storeId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{storeId}");
-                childNode.Path = $"-1,{storeId},{id}";
-                childNode.NodeType = "Review";
+                var id = "100"; //Guid.NewGuid().ToString();
 
-                e.Nodes.Insert(index, childNode);
+                var reviewsNode = sender.CreateTreeNode(id, storeId, e.QueryStrings, "Reviews", Constants.Trees.Icons.Review, false, $"{mainRoute}/review-list/{storeId}");
+
+                reviewsNode.Path = $"-1,{storeId},{id}";
+                reviewsNode.NodeType = "Review";
+
+                //reviewsNode.AdditionalData.Add("uniqueId", id);
+                reviewsNode.AdditionalData.Add("storeId", storeId);
+                reviewsNode.AdditionalData.Add("tree", Vendr.Web.Constants.Trees.Stores.Alias);
+
+                e.Nodes.Insert(index, reviewsNode);
 
                 //var stores = e.Nodes.Where(n => n.NodeType == Vendr.Core.Constants.Entities.EntityTypes.Store).ToList();
 

@@ -16,5 +16,17 @@
                 public const string ProductReviews = TableNamePrefix + "ProductReviews";
             }
         }
+
+        public static class Trees
+        {
+            public static class Icons
+            {
+                /// <summary>
+                /// System review icon
+                /// </summary>
+                public const string Review = "icon-rate";
+            }
+        }
+
     }
 }
