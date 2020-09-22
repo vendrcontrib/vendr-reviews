@@ -19,11 +19,16 @@
             'request': function (config) {
                 console.log("config", config);
 
-                routeMap.forEach(function (m) {
-                    console.log("config url 1", config.url, m.pattern, m.map);
-                    config.url = config.url.replace(m.pattern, m.map);
-                    console.log("config url 2", config.url);
-                });
+                if (config.url.toLowerCase().includes('views/vendrproductreviews/review-list.html')) {
+                    config.url = '/app_plugins/vendrproductreviews/backoffice/views/review/list.html';
+                }
+
+                //routeMap.forEach(function (m) {
+                //    console.log("config url 1", config.url, m.pattern, m.map);
+                //    config.url = config.url.replace(m.pattern, m.map);
+                //    console.log("config url 2", config.url);
+                //});
+
                 return config || $q.when(config);
             }
         };
