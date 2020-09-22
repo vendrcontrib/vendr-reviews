@@ -61,10 +61,10 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpGet]
-        public PagedResult<ProductReview> SearchProductReviews(Guid storeId, long pageNumber = 1, int pageSize = 50, string searchTerm = null)
+        public PagedResult<ProductReview> SearchProductReviews(Guid storeId, long pageNumber = 1, int pageSize = 50, [FromUri] string[] statuses = null, string searchTerm = null)
         {
             long total;
-            var items = _productReviewService.SearchProductReviews(storeId, pageNumber, pageSize, out total, statuses: null, searchTerm: searchTerm);
+            var items = _productReviewService.SearchProductReviews(storeId, pageNumber, pageSize, out total, statuses: statuses, searchTerm: searchTerm);
 
             return new PagedResult<ProductReview>(total, pageNumber, pageSize)
             {

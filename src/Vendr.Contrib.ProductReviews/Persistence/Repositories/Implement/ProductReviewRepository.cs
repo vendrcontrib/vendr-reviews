@@ -122,17 +122,18 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             var sql = new Sql()
                 .Select("*")
                 .From(Constants.DatabaseSchema.Tables.ProductReviews)
-                .Where("storeId = @0", storeId)
-                .OrderBy("createDate DESC");
+                .Where("storeId = @0", storeId);
 
-            //if (statuses.Length > 0) {
-            //    sql.Where("WHERE status = IN(@0)", statuses);
-            //}
+            if (statuses.Length > 0) {
+                sql.Where("status = IN(@0)", statuses);
+            }
 
-            //if (!string.IsNullOrWhiteSpace(searchTerm))
-            //{
-            //    sql.Where("title LIKE @0 OR ", $"%{searchTerm}%");
-            //}
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                sql.Where("title LIKE @0", $"%{searchTerm}%");
+            }
+
+            sql.OrderBy("createDate DESC");
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
