@@ -40,9 +40,9 @@ namespace Vendr.Contrib.ProductReviews.Composing
                 var mainRoute = "commerce/vendrproductreviews";
 
                 var storeId = e.QueryStrings["id"];
-                var id = Guid.NewGuid().ToString();
+                var id = "5"; //Guid.NewGuid().ToString();
                 var childNode = sender.CreateTreeNode(id, storeId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{storeId}");
-                //childNode.Path = $"-1,{parentId},{id}";
+                childNode.Path = $"-1,{storeId},{id}";
                 childNode.NodeType = "Review";
 
                 e.Nodes.Insert(index, childNode);

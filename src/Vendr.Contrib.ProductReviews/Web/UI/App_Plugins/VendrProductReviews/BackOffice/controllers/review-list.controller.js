@@ -171,7 +171,7 @@
 
         vm.init = function () {
 
-            navigationService.syncTree({ tree: "vendr", path: "-1," + storeId + ",1", forceReload: true }).then(function (syncArgs) {
+            navigationService.syncTree({ tree: "vendr", path: "-1," + storeId + ",5", forceReload: true }).then(function (syncArgs) {
                 vm.page.menu.currentNode = syncArgs.node;
                 vm.page.breadcrumb.items = vendrUtils.createBreadcrumbFromTreeNode(syncArgs.node);
                 vm.loadItems({
