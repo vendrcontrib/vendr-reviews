@@ -30,3 +30,13 @@
     angular.module('umbraco.interceptors').factory('vendrProductReviewRouteRewritesInterceptor', vendrProductReviewRouteRewritesInterceptor);
 
 }());
+
+
+(() => {
+    'use strict';
+
+    angular.module('umbraco')
+        .config(function ($httpProvider) {
+            $httpProvider.interceptors.push('vendrProductReviewRouteRewritesInterceptor');
+        });
+})();
