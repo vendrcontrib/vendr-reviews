@@ -57,10 +57,10 @@ namespace Vendr.Contrib.ProductReviews.Composing
                 var index = e.Nodes.Count; // e.Nodes.Count - 1;
                 var mainRoute = "commerce/vendrproductreviews";
 
-                var parentId = e.QueryStrings["id"]; // "1438";
+                var storeId = e.QueryStrings["id"];
                 var id = Guid.NewGuid().ToString();
-                var childNode = sender.CreateTreeNode(id, parentId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
-                childNode.Path = $"-1,{parentId},{id}";
+                var childNode = sender.CreateTreeNode(id, storeId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{storeId}");
+                //childNode.Path = $"-1,{parentId},{id}";
                 childNode.NodeType = "Review";
 
                 e.Nodes.Insert(index, childNode);
