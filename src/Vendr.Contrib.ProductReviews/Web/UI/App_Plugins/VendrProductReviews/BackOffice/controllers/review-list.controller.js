@@ -153,7 +153,6 @@
                     itm.routePath = '/commerce/vendrproductreviews/review-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
                 });
                 vm.options.items = entities;
-                console.log("vm.options.items", vm.options.items);
                 if (callback) {
                     callback();
                 }

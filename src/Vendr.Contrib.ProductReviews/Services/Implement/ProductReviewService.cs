@@ -70,16 +70,6 @@ namespace Vendr.ProductReviews.Services.Implement
             throw new NotImplementedException();
         }
 
-        public void DeleteProductReview(Guid id)
-        {
-            using (var uow = _uowProvider.Create())
-            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
-            {
-                repo.Delete(id);
-                uow.Complete();
-            }
-        }
-
         public IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords)
         {
             long total;
@@ -98,6 +88,26 @@ namespace Vendr.ProductReviews.Services.Implement
             }
 
             return results;
+        }
+
+        public void SaveProductReview(ProductReview review)
+        {
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                repo.Save(review);
+                uow.Complete();
+            }
+        }
+
+        public void DeleteProductReview(Guid id)
+        {
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                repo.Delete(id);
+                uow.Complete();
+            }
         }
     }
 }

@@ -37,6 +37,11 @@ namespace Vendr.ProductReviews.Services
         void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description);
 
         /// <summary>
+        /// Save product review.
+        /// </summary>
+        void SaveProductReview(ProductReview review);
+
+        /// <summary>
         /// Delete product review.
         /// </summary>
         void DeleteProductReview(Guid id);

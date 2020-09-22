@@ -32,6 +32,12 @@
 
             },
 
+            saveProductReview: function (review) {
+                return umbRequestHelper.resourcePromise(
+                    $http.post("/umbraco/backoffice/VendrProductReviews/SaveReview", review),
+                    "Failed to save review");
+            },
+
             deleteProductReview: function (id) {
                 return umbRequestHelper.resourcePromise(
                     $http.delete("/umbraco/backoffice/VendrProductReviews/DeleteReview", { params: { id: id } } ),

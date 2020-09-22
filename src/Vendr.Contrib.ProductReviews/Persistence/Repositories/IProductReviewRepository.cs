@@ -13,6 +13,8 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 
         IEnumerable<ProductReview> GetPagedReviewsByQuery(IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords);
 
+        void Save(ProductReview review);
+
         void Delete(Guid id);
     }
 }

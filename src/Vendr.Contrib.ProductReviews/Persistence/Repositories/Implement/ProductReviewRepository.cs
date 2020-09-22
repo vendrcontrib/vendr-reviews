@@ -37,6 +37,11 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return DoFetchInternal(_uow, "WHERE id = IN(@0)", ids);
         }
 
+        public void Save(ProductReview review)
+        {
+            var dto = ProductReviewFactory.BuildProductReview(review);
+            _uow.Database.Save(dto);
+        }
         public void Delete(Guid id)
         {
             _uow.Database.Delete<ProductReviewDto>("WHERE id = @0", id);

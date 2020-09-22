@@ -50,9 +50,15 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpPost]
+        public void SaveReview(ProductReview review)
+        {
+            _productReviewService.SaveProductReview(review);
+        }
+
+        [HttpDelete]
         public void DeleteReview(Guid id)
         {
-            return _productReviewService.DeleteProductReview(id);
+            _productReviewService.DeleteProductReview(id);
         }
         
     }
