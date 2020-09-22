@@ -1,6 +1,11 @@
-﻿<div ng-controller="Vendr.ProductReviews.Controllers.ReviewListController as vm" class="vendr">
+﻿<div ng-controller="Vendr.ProductReviews.Controllers.ReviewListController as vm" class="vendr vendr-product-review">
 
     <umb-load-indicator ng-if="vm.page.loading"></umb-load-indicator>
+
+    <style>
+      .vendr-product-review .vendr-table .vendr-table-cell .rating { color: #dfdfdf; font-size: 20px; }
+      .vendr-product-review .vendr-table .vendr-table-cell .rating > .active { color: #ffbb3f; }
+    </style>
 
     <umb-editor-view ng-if="!vm.page.loading">
 
