@@ -1,5 +1,4 @@
 ﻿(function () {
-
     'use strict';
 
     var routeMap = [
@@ -14,6 +13,8 @@
     ];
 
     function vendrProductReviewRouteRewritesInterceptor($q) {
+        console.log("vendrProductReviewRouteRewritesInterceptor");
+
         return {
             'request': function (config) {
                 console.log("config", config);
