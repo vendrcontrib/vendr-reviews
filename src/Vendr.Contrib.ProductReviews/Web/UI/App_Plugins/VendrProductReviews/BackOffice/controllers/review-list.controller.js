@@ -6,8 +6,6 @@
 
         var compositeId = vendrUtils.parseCompositeId($routeParams.id);
         var storeId = compositeId[0];
-        console.log("store id", storeId);
-        console.log("$routeParams", $routeParams);
 
         var vm = this;
 
@@ -148,7 +146,8 @@
                 }
             });
 
-            vendrProductReviewsResource.getPagedProductReviews().then(function (entities) {
+            // Perform search
+            vendrProductReviewsResource.searchProductReviews(storeId, opts).then(function (entities) {
                 entities.items.forEach(function (itm) {
                     itm.routePath = '/commerce/vendrproductreviews/review-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
                 });
@@ -157,17 +156,6 @@
                     callback();
                 }
             });
-
-            // Perform search
-            //vendrOrderResource.searchOrders(storeId, opts).then(function (entities) {
-            //    entities.items.forEach(function (itm) {
-            //        itm.routePath = '/commerce/vendr/order-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
-            //    });
-            //    vm.options.items = entities;
-            //    if (callback) {
-            //        callback();
-            //    }
-            //});
         };
 
         vm.init = function () {
@@ -200,21 +188,8 @@
         //$scope.$on("vendrEntitiesSorted", onVendrEvent);
         //$scope.$on("vendrEntityDelete", onVendrEvent);
 
-        //vm.reviews = [];
-
-        //function init() {
-
-        //    // http://angular-tips.com/blog/2015/10/creating-a-rating-directive-in-angular-2/
-        //    // https://jsfiddle.net/n2h05z7e/3/
-
-        //    vendrProductReviewsResource.getPagedProductReviews().then(function (data) {
-        //        console.log("data", data);
-        //        vm.reviews = data.items;
-        //    });
-        //}
-
-
-        //init();
+        // http://angular-tips.com/blog/2015/10/creating-a-rating-directive-in-angular-2/
+        // https://jsfiddle.net/n2h05z7e/3/
     }
 
     angular.module('vendr').controller('Vendr.ProductReviews.Controllers.ReviewListController', vendrProductReviewListController);

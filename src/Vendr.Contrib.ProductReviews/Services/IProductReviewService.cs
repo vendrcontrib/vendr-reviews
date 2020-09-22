@@ -29,7 +29,12 @@ namespace Vendr.ProductReviews.Services
         /// <summary>
         /// Gets paged result of product reviews.
         /// </summary>
-        IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords);
+        IEnumerable<ProductReview> GetPagedResults(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords);
+
+        /// <summary>
+        /// Search product reviews.
+        /// </summary>
+        IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, string searchTerm = "");
 
         /// <summary>
         /// Add product review.

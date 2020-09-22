@@ -89,9 +89,13 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();
         }
 
-        public IEnumerable<ProductReview> GetPagedReviewsByQuery(IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords) //, Ordering ordering)
+        public IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords) //, Ordering ordering)
         {
-            string sql = $"SELECT * FROM {Constants.DatabaseSchema.Tables.ProductReviews} ORDER BY id";
+            var sql = new Sql()
+                .Select("*")
+                .From(Constants.DatabaseSchema.Tables.ProductReviews)
+                .Where("storeId = @0", storeId)
+                .OrderBy("createDate DESC");
 
             //if (ordering == null || ordering.IsEmpty)
             //    ordering = Ordering.By(_sqlSyntax.GetQuotedColumnName(Constants.DatabaseSchema.Tables.ProductReviews, "id"));
@@ -101,6 +105,34 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
             // apply ordering
             //ApplyOrdering(ref sql, ordering);
+
+            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
+            var dtos = page.Items;
+            totalRecords = page.TotalItems;
+
+            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
+
+            return result;
+        }
+
+        public IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses = null, string searchTerm = null)
+        {
+            statuses = statuses ?? new string[0];
+
+            var sql = new Sql()
+                .Select("*")
+                .From(Constants.DatabaseSchema.Tables.ProductReviews)
+                .Where("storeId = @0", storeId)
+                .OrderBy("createDate DESC");
+
+            //if (statuses.Length > 0) {
+            //    sql.Where("WHERE status = IN(@0)", statuses);
+            //}
+
+            //if (!string.IsNullOrWhiteSpace(searchTerm))
+            //{
+            //    sql.Where("title LIKE @0 OR ", $"%{searchTerm}%");
+            //}
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;

@@ -18,12 +18,6 @@
                     "Failed to get product reviews");
             },
 
-            getPagedProductReviews: function () {
-                return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetPagedProductReviews"),
-                    "Failed to get product reviews");
-            },
-
             getProductReviewsForProduct: function (storeId, productReference) {
                 return umbRequestHelper.resourcePromise(
                     $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductReviews", {
@@ -47,10 +41,16 @@
             },
 
             searchProductReviews: function (storeId, opts) {
+                console.log("searchProductReviews", storeId, opts);
+
+                var params = angular.extend({}, {
+                    storeId: storeId
+                }, opts);
+
+                console.log("params", params);
+
                 return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SearchProductReviews", angular.extend({}, {
-                        storeId: storeId
-                    }, opts)),
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SearchProductReviews", { params: params }),
                     "Failed to search reviews");
             },
 

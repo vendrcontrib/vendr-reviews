@@ -95,7 +95,7 @@ namespace Vendr.ProductReviews.Services.Implement
             return results;
         }
 
-        public IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords)
+        public IEnumerable<ProductReview> GetPagedResults(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords)
         {
             long total;
             var results = new List<ProductReview>();
@@ -105,7 +105,27 @@ namespace Vendr.ProductReviews.Services.Implement
             {
                 //var query = Query<ProductReview>().Where(x => x.Id == id);
 
-                var items = repo.GetPagedReviewsByQuery(null, currentPage - 1, itemsPerPage, out total);
+                var items = repo.GetPagedReviewsByQuery(storeId, null, currentPage - 1, itemsPerPage, out total);
+                results.AddRange(items);
+                totalRecords = total;
+
+                uow.Complete();
+            }
+
+            return results;
+        }
+
+        public IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, string searchTerm = "")
+        {
+            long total;
+            var results = new List<ProductReview>();
+
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                //var query = Query<ProductReview>().Where(x => x.Id == id);
+
+                var items = repo.SearchReviews(storeId, currentPage - 1, itemsPerPage, out total, statuses: statuses, searchTerm: searchTerm);
                 results.AddRange(items);
                 totalRecords = total;
 

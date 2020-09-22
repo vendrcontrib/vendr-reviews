@@ -19,9 +19,8 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         //private readonly IVendrApi _vendrApi;
         private readonly IProductReviewService _productReviewService;
 
-        public ProductReviewApiController(/*IVendrApi vendrApi, */IProductReviewService productReviewService)
+        public ProductReviewApiController(IProductReviewService productReviewService)
         {
-            //_vendrApi = vendrApi;
             _productReviewService = productReviewService;
         }
 
@@ -62,10 +61,10 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpGet]
-        public PagedResult<ProductReview> GetPagedProductReviews(long pageNumber = 1, int pageSize = 50)
+        public PagedResult<ProductReview> SearchProductReviews(Guid storeId, long pageNumber = 1, int pageSize = 50, string searchTerm = null)
         {
             long total;
-            var items = _productReviewService.GetPagedResults(pageNumber, pageSize, out total);
+            var items = _productReviewService.SearchProductReviews(storeId, pageNumber, pageSize, out total, statuses: null, searchTerm: searchTerm);
 
             return new PagedResult<ProductReview>(total, pageNumber, pageSize)
             {
