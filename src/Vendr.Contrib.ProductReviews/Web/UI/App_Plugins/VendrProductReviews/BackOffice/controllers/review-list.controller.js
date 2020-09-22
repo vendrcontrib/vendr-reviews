@@ -55,6 +55,20 @@
                             { id: 3, name: 'Pending', color: 'light-blue' }
                         ]);
                     }
+                },
+                {
+                    name: 'Rating',
+                    alias: 'reviewRatings',
+                    localStorageKey: 'store_' + storeId + '_reviewRatingFilter',
+                    getFilterOptions: function () {
+                        return $q.resolve([
+                            { id: 1, name: '1', color: 'light-grey' },
+                            { id: 2, name: '2', color: 'light-grey' },
+                            { id: 3, name: '3', color: 'light-grey' },
+                            { id: 4, name: '4', color: 'light-grey' },
+                            { id: 5, name: '5', color: 'light-grey' }
+                        ]);
+                    }
                 }
             ],
             bulkActions: [
