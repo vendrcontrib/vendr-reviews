@@ -5,6 +5,39 @@
     <style>
       .vendr-product-review .rating { color: #dfdfdf; font-size: 32px; }
       .vendr-product-review .rating > .active { color: #ffbb3f; }
+
+      .vendr-header--review .umb-panel-header-name { 
+          display: flex;
+          align-items: center;
+          font-size: 18px;
+          margin: 0;
+          line-height: 20px;
+      }
+
+      .vendr-header--review .umb-panel-header-locked-description {
+          color: #817f85;
+          font-size: 12px;
+          line-height: 12px;
+          height: auto;
+          margin: 6px 0 0;
+      }
+
+      .vendr-header--review-status .umb-panel-header-name:after {
+          font-size: 13px;
+          font-weight: normal;
+          padding: 1px 10px;
+          display: inline-block;
+          border-radius: 100px;
+          margin-left: 10px;
+          vertical-align: bottom;
+      }
+
+      .vendr-header--review-status-pending .umb-panel-header-name:after {
+          color: white;
+          background-color: #03a9f4;
+      }
+
+      .vendr-header--review-status .umb-panel-header-name:after { content: '{{ vm.content.status.replace("'","\\'") }}'; }
     </style>
 
     <form name="contentForm"
@@ -14,17 +47,19 @@
 
         <umb-editor-view ng-if="!vm.page.loading">
 
-            <umb-editor-header name="vm.content.name"
-                               description="vm.content.createDate | date: 'MMMM d, yyyy h:mm a'"
-                               name-locked="true"
-                               description-locked="true"
-                               hide-icon="true"
-                               hide-description="false"
-                               hide-alias="true"
-                               show-back-button="!vm.page.isInfiniteMode"
-                               on-back="vm.back()"
-                               menu="vm.page.menu"
-                               hide-menu="vm.page.isInfiniteMode">
+            <umb-editor-header
+                name="vm.content.name"
+                description="vm.content.createDate | date: 'MMMM d, yyyy h:mm a'"
+                name-locked="true"
+                description-locked="true"
+                hide-icon="true"
+                hide-description="false"
+                hide-alias="true"
+                show-back-button="!vm.page.isInfiniteMode"
+                on-back="vm.back()"
+                menu="vm.page.menu"
+                hide-menu="vm.page.isInfiniteMode"
+                class="vendr-header vendr-header--review vendr-header--review-status vendr-header--review-status-{{ vm.content.status.toLowerCase() }}">
             </umb-editor-header>
 
             <umb-editor-container class="form-horizontal">
