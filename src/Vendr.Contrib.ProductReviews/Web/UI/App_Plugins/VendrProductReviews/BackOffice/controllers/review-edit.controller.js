@@ -2,8 +2,8 @@
 
     'use strict';
 
-    function ReviewEditController($scope, $routeParams, $location, formHelper,
-        appState, editorState, editorService, localizationService, notificationsService, navigationService, memberResource,
+    function ReviewEditController($scope, $routeParams, $location, $q, formHelper,
+        appState, editorState, editorService, localizationService, notificationsService, navigationService, contentResource, memberResource,
         vendrUtils, vendrProductReviewsResource, vendrStoreResource) {
 
         var infiniteMode = editorService.getNumberOfEditors() > 0 ? true : false;
@@ -34,7 +34,8 @@
 
         vm.options = {};
         vm.content = {};
-        vm.reviewMember = null;
+        vm.product = null;
+        vm.customer = null;
 
         vm.close = function () {
             if ($scope.model.close) {
@@ -49,15 +50,43 @@
         vm.init = function () {
             vendrProductReviewsResource.getProductReview(storeId, id).then(function (review) {
 
+                var promises = [];
+
+
                 // Check to see if we have a customer ref, and if so, try and fetch a member
                 if (review.customerReference) {
-                    memberResource.getByKey(review.customerReference).then(function (member) {
-                        vm.reviewMember = member;
-                        vm.ready(review);
-                    });
-                } else {
-                    vm.ready(review);
+                    promises.push(memberResource.getByKey(review.customerReference));
                 }
+                else {
+                    promises.push(angular.noop());
+                }
+
+                // Check to see if we have a product ref, and if so, try and fetch a product
+                if (review.productReference) {
+                    promises.push(contentResource.getById(review.productReference));
+                }
+                else {
+                    promises.push(angular.noop());
+                }
+
+                $q.all(promises).then(function (responses) {
+                    
+                    var contentVariant = responses[1].variants[0];
+
+                    vm.customer = {
+                        name: responses[0].name
+                    };
+
+                    vm.product = {
+                        name: contentVariant.name
+                    };
+
+                    vm.ready(review);
+                });
+
+                $q.all(promises).then(function (result) {
+                    vm.ready(review);
+                });
 
             });
         };
