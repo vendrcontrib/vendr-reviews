@@ -37,7 +37,17 @@ namespace Vendr.ProductReviews.Services.Implement
 
         public IEnumerable<ProductReview> GetProductReviews(Guid[] ids)
         {
-            throw new NotImplementedException();
+            List<ProductReview> productReviews = new List<ProductReview>();
+
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                var reviews = repo.Get(ids);
+                productReviews.AddRange(reviews);
+                uow.Complete();
+            }
+
+            return productReviews;
         }
 
         public void AddProductReview(string productReference, string customerReference, decimal rating, string name, string description)
@@ -58,6 +68,16 @@ namespace Vendr.ProductReviews.Services.Implement
         public void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description)
         {
             throw new NotImplementedException();
+        }
+
+        public void DeleteProductReview(Guid id)
+        {
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                repo.Delete(id);
+                uow.Complete();
+            }
         }
 
         public IEnumerable<ProductReview> GetPagedResults(long currentPage, long itemsPerPage, out long totalRecords)

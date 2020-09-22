@@ -30,6 +30,12 @@
 
             getProductReviewsForCustomer: function (customerReference) {
 
+            },
+
+            deleteProductReview: function (id) {
+                return umbRequestHelper.resourcePromise(
+                    $http.delete("/umbraco/backoffice/VendrProductReviews/DeleteReview", { params: { id: id } } ),
+                    "Failed to delete review");
             }
         };
 

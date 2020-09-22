@@ -12,5 +12,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
         IEnumerable<ProductReview> Get(Guid[] ids);
 
         IEnumerable<ProductReview> GetPagedReviewsByQuery(IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords);
+
+        void Delete(Guid id);
     }
 }

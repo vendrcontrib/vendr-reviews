@@ -35,5 +35,10 @@ namespace Vendr.ProductReviews.Services
         /// Add product review.
         /// </summary>
         void AddProductReview(string productReference, string customerReference, decimal rating, string title, string name, string description);
+
+        /// <summary>
+        /// Delete product review.
+        /// </summary>
+        void DeleteProductReview(Guid id);
     }
 }

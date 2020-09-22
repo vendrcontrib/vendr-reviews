@@ -48,5 +48,12 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
                 Items = items
             };
         }
+
+        [HttpPost]
+        public void DeleteReview(Guid id)
+        {
+            return _productReviewService.DeleteProductReview(id);
+        }
+        
     }
 }
