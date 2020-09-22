@@ -20,7 +20,9 @@
                 console.log("config", config);
 
                 routeMap.forEach(function (m) {
+                    console.log("config url 1", config.url, m.pattern, m.map);
                     config.url = config.url.replace(m.pattern, m.map);
+                    console.log("config url 2", config.url);
                 });
                 return config || $q.when(config);
             }
@@ -30,13 +32,3 @@
     angular.module('umbraco.interceptors').factory('vendrProductReviewRouteRewritesInterceptor', vendrProductReviewRouteRewritesInterceptor);
 
 }());
-
-
-(() => {
-    'use strict';
-
-    angular.module('umbraco')
-        .config(function ($httpProvider) {
-            $httpProvider.interceptors.push('vendrProductReviewRouteRewritesInterceptor');
-        });
-})();
