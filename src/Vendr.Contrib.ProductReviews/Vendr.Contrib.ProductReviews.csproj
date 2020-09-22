@@ -310,6 +310,7 @@
     </None>
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\review-edit.controller.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\review-list.controller.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\css\vendrproductreviews.css" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\interceptors\config.interceptors.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\interceptors\routeRewrite.interceptor.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\resources\vendrproductreviews.resource.js" />
