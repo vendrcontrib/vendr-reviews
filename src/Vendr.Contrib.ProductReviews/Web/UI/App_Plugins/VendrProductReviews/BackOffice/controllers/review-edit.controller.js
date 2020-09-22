@@ -58,7 +58,7 @@
                     promises.push(memberResource.getByKey(review.customerReference));
                 }
                 else {
-                    promises.push(angular.noop());
+                    promises.push($q.resolve(null));
                 }
 
                 // Check to see if we have a product ref, and if so, try and fetch a product
@@ -66,20 +66,25 @@
                     promises.push(contentResource.getById(review.productReference));
                 }
                 else {
-                    promises.push(angular.noop());
+                    promises.push($q.resolve(null));
                 }
 
                 $q.all(promises).then(function (responses) {
+
+                    var resp1 = responses[0];
+                    var resp2 = responses[1];
+
+                    if (resp1 !== null) {
+                        vm.customer = {
+                            name: resp1.name
+                        };
+                    }
                     
-                    var contentVariant = responses[1].variants[0];
-
-                    vm.customer = {
-                        name: responses[0].name
-                    };
-
-                    vm.product = {
-                        name: contentVariant.name
-                    };
+                    if (resp2 !== null) {
+                        vm.product = {
+                            name: resp2.variants[0].name
+                        };
+                    }
 
                     vm.ready(review);
                 });
