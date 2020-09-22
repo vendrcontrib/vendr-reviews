@@ -4,8 +4,9 @@
 
     function vendrProductReviewListController($scope, $routeParams, $location, $q, appState, vendrProductReviewsResource, navigationService, vendrUtils, vendrLocalStorage) {
 
-        //var compositeId = vendrUtils.parseCompositeId($routeParams.id);
-        var storeId = "b1e61994-b83b-420a-903e-63a7a15942dc"; //compositeId[0];
+        var compositeId = vendrUtils.parseCompositeId($routeParams.id);
+        var storeId = compositeId[0];
+        console.log("store id", storeId);
 
         var vm = this;
 
