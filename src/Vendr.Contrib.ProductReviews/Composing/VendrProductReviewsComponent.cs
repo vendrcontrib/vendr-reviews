@@ -20,37 +20,66 @@ namespace Vendr.Contrib.ProductReviews.Composing
 
         public void Initialize()
         {
-            TreeControllerBase.TreeNodesRendering += TreeControllerBase_RootNodeRendering;
+            TreeControllerBase.RootNodeRendering += TreeControllerBase_RootNodeRendering;
+            TreeControllerBase.TreeNodesRendering += TreeControllerBase_TreeNodesRendering;
         }
 
         public void Terminate()
         {
             // unsubscribe on shutdown
-            TreeControllerBase.TreeNodesRendering -= TreeControllerBase_RootNodeRendering;
+            TreeControllerBase.RootNodeRendering -= TreeControllerBase_RootNodeRendering;
+            TreeControllerBase.TreeNodesRendering -= TreeControllerBase_TreeNodesRendering;
         }
 
         // the event listener method:
-        void TreeControllerBase_RootNodeRendering(TreeControllerBase sender, TreeNodesRenderingEventArgs e)
+        void TreeControllerBase_RootNodeRendering(TreeControllerBase sender, TreeNodeRenderingEventArgs e)
         {
             // normally you will want to target a specific tree, this can be done by checking the
             // tree alias of by checking the tree type (casting 'sender')
-            if (sender.TreeAlias == "vendr")
+            if (sender.TreeAlias == "vendr" && sender is Vendr.Web.Trees.StoresTreeController)
             {
                 var mainRoute = "commerce/vendr";
 
-                var stores = e.Nodes.Where(n => n.NodeType == Vendr.Core.Constants.Entities.EntityTypes.Store).ToList();
+                // e.Node.NodeType
+                var id = Guid.NewGuid().ToString();
+                
+                var childNode = sender.CreateTreeNode(id, e.Node.Id.ToString(), e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
+            }
+        }
 
-                foreach (var node in stores)
-                {
-                    var parentId = node.Id.ToString();
-                    if (parentId == "b1e61994-b83b-420a-903e-63a7a15942dc")
-                    {
-                        var id = Guid.NewGuid().ToString();
-                        var childNode = sender.CreateTreeNode(id, parentId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
-                        childNode.Path = $"-1,{parentId},{id}";
-                        e.Nodes.Insert(e.Nodes.Count - 1, childNode);
-                    }
-                }
+        // the event listener method:
+        void TreeControllerBase_TreeNodesRendering(TreeControllerBase sender, TreeNodesRenderingEventArgs e)
+        {
+            // normally you will want to target a specific tree, this can be done by checking the
+            // tree alias of by checking the tree type (casting 'sender')
+            if (sender.TreeAlias == "vendr" && e.QueryStrings["NodeType"] == Vendr.Core.Constants.Entities.EntityTypes.Store)
+            {
+                var index = e.Nodes.Count; // e.Nodes.Count - 1;
+                var mainRoute = "commerce/vendr";
+
+                var parentId = "1438";
+                var id = Guid.NewGuid().ToString();
+                var childNode = sender.CreateTreeNode(id, parentId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
+                childNode.Path = $"-1,{parentId},{id}";
+                childNode.NodeType = "Review";
+
+                e.Nodes.Insert(index, childNode);
+
+                //var stores = e.Nodes.Where(n => n.NodeType == Vendr.Core.Constants.Entities.EntityTypes.Store).ToList();
+
+                //foreach (var node in e.Nodes)
+                //{
+                //    var parentId = node.Id.ToString();
+                //    if (parentId == "b1e61994-b83b-420a-903e-63a7a15942dc")
+                //    {
+                //        var id = Guid.NewGuid().ToString();
+                //        var childNode = sender.CreateTreeNode(id, parentId, e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
+                //        childNode.Path = $"-1,{parentId},{id}";
+                //        childNode.NodeType = "Review";
+
+                //        e.Nodes.Insert(index, childNode);
+                //    }
+                //}
 
                 //var stores = e.Nodes.Where(n => n.NodeType == "Store").ToList();
 
