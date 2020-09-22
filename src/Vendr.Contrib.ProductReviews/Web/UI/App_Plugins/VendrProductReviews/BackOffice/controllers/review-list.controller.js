@@ -64,7 +64,7 @@
                     name: 'Delete',
                     icon: 'icon-trash',
                     doAction: function (bulkItem) {
-                        //return vendrProductReviewsResource.deleteReview(bulkItem.id);
+                        return vendrProductReviewsResource.deleteProductReview(bulkItem.id);
                     },
                     getConfirmMessage: function (total) {
                         return $q.resolve("Are you sure you want to delete " + total + " " + (total > 1 ? "items" : "item") + "?");
