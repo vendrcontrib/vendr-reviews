@@ -14,41 +14,17 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
     using Constants = Umbraco.Core.Constants;
 
-    //[Tree("commerce", "review", TreeTitle = "Reviews", SortOrder = 10)]
+    [Tree("commerce", "review", TreeTitle = "Reviews", SortOrder = 10, TreeUse = TreeUse.None)]
     [PluginController("VendrProductReviews")]
     public class ReviewTreeController : TreeController
     {
-        private readonly IStoreService _storeService;
-
-        public ReviewTreeController(IStoreService storeService)
-        {
-            _storeService = storeService;
-        }
-
         protected override TreeNodeCollection GetTreeNodes(string id, FormDataCollection queryStrings)
         {
             var nodes = new TreeNodeCollection();
 
             if (id == Constants.System.Root.ToInvariantString())
             {
-            }
-            else
-            {
-                var stores = _storeService.GetStores();
 
-                if (id == "vendr")
-                {
-                    var mainRoute = "/commerce/vendr";
-
-                    if (stores != null && stores.Any())
-                    {
-                        foreach (var store in stores)
-                        {
-                            var childNode = CreateTreeNode(id, store.Id.ToString(), queryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/view/reviews");
-                            nodes.Add(childNode);
-                        }
-                    }
-                }
             }
 
             return nodes;
@@ -77,15 +53,15 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             return menu;
         }
 
-        protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
-        {
-            var root = base.CreateRootNode(queryStrings);
+        //protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
+        //{
+        //    var root = base.CreateRootNode(queryStrings);
 
-            root.Icon = "icon-rate";
-            root.HasChildren = false;
-            root.MenuUrl = null;
+        //    root.Icon = "icon-rate";
+        //    root.HasChildren = false;
+        //    root.MenuUrl = null;
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }
