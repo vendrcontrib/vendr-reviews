@@ -5,11 +5,11 @@
     var routeMap = [
         {
             pattern: /^views\/vendrproductreviews\/(.*)-(.*).html$/gi,
-            map: '/app_plugins/vendrproductreviews/views/$1/$2.html'
+            map: '/app_plugins/vendrproductreviews/backoffice/views/$1/$2.html'
         },
         {
             pattern: /^views\/vendrproductreviews\/(.*).html$/gi,
-            map: '/app_plugins/vendrproductreviews/views/$1/edit.html'
+            map: '/app_plugins/vendrproductreviews/backoffice/views/$1/edit.html'
         }
     ];
 
@@ -26,6 +26,6 @@
         };
     }
 
-    angular.module('vendr.interceptors').factory('vendrProductReviewRouteRewritesInterceptor', vendrProductReviewRouteRewritesInterceptor);
+    angular.module('umbraco.interceptors').factory('vendrProductReviewRouteRewritesInterceptor', vendrProductReviewRouteRewritesInterceptor);
 
 }());
