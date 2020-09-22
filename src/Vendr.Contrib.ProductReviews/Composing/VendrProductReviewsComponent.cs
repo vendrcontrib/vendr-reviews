@@ -20,31 +20,13 @@ namespace Vendr.Contrib.ProductReviews.Composing
 
         public void Initialize()
         {
-            TreeControllerBase.RootNodeRendering += TreeControllerBase_RootNodeRendering;
             TreeControllerBase.TreeNodesRendering += TreeControllerBase_TreeNodesRendering;
         }
 
         public void Terminate()
         {
             // unsubscribe on shutdown
-            TreeControllerBase.RootNodeRendering -= TreeControllerBase_RootNodeRendering;
             TreeControllerBase.TreeNodesRendering -= TreeControllerBase_TreeNodesRendering;
-        }
-
-        // the event listener method:
-        void TreeControllerBase_RootNodeRendering(TreeControllerBase sender, TreeNodeRenderingEventArgs e)
-        {
-            // normally you will want to target a specific tree, this can be done by checking the
-            // tree alias of by checking the tree type (casting 'sender')
-            if (sender.TreeAlias == "vendr" && sender is Vendr.Web.Trees.StoresTreeController)
-            {
-                var mainRoute = "commerce/vendr";
-
-                // e.Node.NodeType
-                var id = Guid.NewGuid().ToString();
-                
-                var childNode = sender.CreateTreeNode(id, e.Node.Id.ToString(), e.QueryStrings, "Reviews", "icon-rate", false, $"{mainRoute}/review-list/{id}");
-            }
         }
 
         // the event listener method:
