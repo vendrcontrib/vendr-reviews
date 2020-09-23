@@ -44,8 +44,12 @@
                             </span>
                         </umb-control-group>
 
-                        <umb-control-group label="Date">
+                        <umb-control-group label="Created">
                             <span>{{vm.content.createDate | date: 'MMMM d, yyyy h:mm a'}}</span>
+                        </umb-control-group>
+
+                        <umb-control-group label="Updated">
+                            <span>{{vm.content.updateDate | date: 'MMMM d, yyyy h:mm a'}}</span>
                         </umb-control-group>
 
                         <umb-control-group label="Product" ng-if="vm.product">
