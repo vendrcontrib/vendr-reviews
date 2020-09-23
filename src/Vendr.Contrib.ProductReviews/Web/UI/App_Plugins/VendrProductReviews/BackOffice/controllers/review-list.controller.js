@@ -99,7 +99,6 @@
                 { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-badge-{{ status.toLowerCase() }}" title="Status: {{status}}">{{status}}</span>' }
             ],
             itemClick: function (itm) {
-                console.log("routePath", itm.routePath);
                 $location.path(itm.routePath);
             }
         };

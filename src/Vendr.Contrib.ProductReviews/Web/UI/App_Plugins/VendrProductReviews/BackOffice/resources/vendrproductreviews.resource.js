@@ -41,13 +41,10 @@
             },
 
             searchProductReviews: function (storeId, opts) {
-                console.log("searchProductReviews", storeId, opts);
 
                 var params = angular.extend({}, {
                     storeId: storeId
                 }, opts);
-
-                console.log("params", params);
 
                 return umbRequestHelper.resourcePromise(
                     $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SearchProductReviews", { params: params }),
