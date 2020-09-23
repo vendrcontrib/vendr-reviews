@@ -134,33 +134,35 @@
             });
         };
 
-        //vm.save = function (suppressNotification) {
+        vm.save = function (suppressNotification) {
 
-        //    if (formHelper.submitForm({ scope: $scope, statusMessage: "Saving..." })) {
+            if (formHelper.submitForm({ scope: $scope, statusMessage: "Saving..." })) {
 
-        //        vm.page.saveButtonState = "busy";
+                vm.page.saveButtonState = "busy";
 
-        //        vendrOrderResource.saveOrder(vm.content).then(function (saved) {
+                vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
 
-        //            formHelper.resetForm({ scope: $scope, notifications: saved.notifications });
+                    //formHelper.resetForm({ scope: $scope, notifications: saved.notifications });
+                    formHelper.resetForm({ scope: $scope });
 
-        //            vm.page.saveButtonState = "success";
+                    vm.page.saveButtonState = "success";
 
-        //            vm.ready(saved);
+                    //vm.ready(saved);
+                    vm.ready(vm.content);
 
-        //        }, function (err) {
+                }, function (err) {
 
-        //            if (!suppressNotification) {
-        //                vm.page.saveButtonState = "error";
-        //                notificationsService.error("Failed to save order",
-        //                    err.data.message || err.data.Message || err.errorMsg);
-        //            }
+                    if (!suppressNotification) {
+                        vm.page.saveButtonState = "error";
+                        notificationsService.error("Failed to save product review",
+                            err.data.message || err.data.Message || err.errorMsg);
+                    }
 
-        //            vm.page.saveButtonState = "error";
-        //        });
-        //    }
+                    vm.page.saveButtonState = "error";
+                });
+            }
 
-        //};
+        };
 
         vm.init();
 
