@@ -17,11 +17,7 @@ namespace Vendr.Contrib.ProductReviews.Models
         }
 
         [DataMember(Name = "path")]
-        public string Path {
-            get {
-                return $"-1,{StoreId},{Constants.Trees.Reviews.Id}";
-            }
-        }
+        public string[] Path => new string[] { "-1", StoreId.ToString(), Constants.Trees.Reviews.Id, Id.ToString() };
 
         [DataMember(Name = "notifications")]
         public List<Notification> Notifications { get; private set; }
