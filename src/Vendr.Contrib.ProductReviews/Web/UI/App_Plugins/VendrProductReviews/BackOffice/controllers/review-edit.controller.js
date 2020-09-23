@@ -142,7 +142,7 @@
 
                 vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
 
-                    formHelper.resetForm({ scope: $scope, notifications: saved.notifications });;
+                    formHelper.resetForm({ scope: $scope, notifications: saved.notifications });
 
                     vm.page.saveButtonState = "success";
 
