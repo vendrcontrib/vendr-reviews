@@ -112,17 +112,21 @@
 
                 var name = vm.content.name;
 
+                console.log("syncArgs", syncArgs);
+
                 // Fake a current node
                 // This is used in the header to generate the actions menu
                 var application = syncArgs.node.metaData.application;
                 var tree = syncArgs.node.metaData.tree;
+                console.log("application: ", application);
+                console.log("tree: ", tree);
                 vm.page.menu.currentNode = {
                     id: id,
                     name: name,
                     nodeType: "Review",
                     menuUrl: "/umbraco/backoffice/VendrProductReviews/ReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
                     metaData: {
-                        tree: tree,
+                        treeAlias: tree,
                         storeId: storeId
                     }
                 };
@@ -165,13 +169,13 @@
 
         vm.init();
 
-        //$scope.$on("vendrEntityDeleted", function (evt, args) {
-        //    if (args.entityType === 'Order' && args.storeId === storeId && args.entityId === id) {
-        //        vm.back();
-        //    }
-        //});
+        $scope.$on("vendrProductReviewDeleted", function (evt, args) {
+            if (args.entityType === 'Review' && args.storeId === storeId && args.entityId === id) {
+                vm.back();
+            }
+        });
 
-    };
+    }
 
     angular.module('vendr').controller('Vendr.ProductReviews.Controllers.ReviewEditController', ReviewEditController);
 

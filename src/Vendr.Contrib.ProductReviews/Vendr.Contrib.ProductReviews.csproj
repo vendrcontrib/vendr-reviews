@@ -309,12 +309,14 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\dialogs\delete.controller.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\review-edit.controller.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\review-list.controller.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\css\vendrproductreviews.css" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\interceptors\config.interceptors.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\interceptors\routeRewrite.interceptor.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\resources\vendrproductreviews.resource.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\dialogs\delete.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\review\edit.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\review\list.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\package.manifest" />

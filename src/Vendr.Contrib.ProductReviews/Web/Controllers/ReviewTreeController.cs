@@ -12,10 +12,9 @@ using Vendr.Core.Services;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
-    using Umbraco.Web.WebApi.Filters;
     using Constants = Umbraco.Core.Constants;
 
-    [Tree("commerce", "review", TreeTitle = "Reviews", SortOrder = 10, TreeUse = TreeUse.None)]
+    [Tree("commerce", "reviews", TreeTitle = "Reviews", SortOrder = 10, TreeUse = TreeUse.None)]
     [PluginController("VendrProductReviews")]
     public class ReviewTreeController : TreeController
     {
@@ -33,20 +32,23 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             //throw new NotSupportedException();
         }
 
-        //public MenuItemCollection GetMenu(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings)
-        //{
-        //    var menu = new MenuItemCollection();
-
-        //    menu.Items.Add<ActionDelete>(Services.TextService, true, opensDialog: true);
-
-        //    return menu;
-        //}
-
-        protected override MenuItemCollection GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings)
+        protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
         {
             var menu = new MenuItemCollection();
 
-            menu.Items.Add<ActionDelete>(Services.TextService, true, opensDialog: true);
+            //MenuItem deleteAction = new MenuItem("delete", Services.TextService)
+            //{
+            //    Icon = "delete",
+            //    OpensDialog = true,
+            //};
+
+            //deleteAction.AdditionalData.Add("parentId", id);
+            //deleteAction.AdditionalData.Add("actionView", "/app_plugins/vendr/views/entity/delete.html");
+            //deleteAction.NavigateToRoute("/path/to/view/delete/0");
+            //menu.Items.Add(deleteAction);
+
+            menu.Items.Add<ActionDelete>(Services.TextService).LaunchDialogView("/app_plugins/vendrproductreviews/backoffice/views/dialogs/delete.html", "Delete");
+            //menu.Items.Add<ActionDelete>(Services.TextService, true, opensDialog: true);
 
             return menu;
         }
