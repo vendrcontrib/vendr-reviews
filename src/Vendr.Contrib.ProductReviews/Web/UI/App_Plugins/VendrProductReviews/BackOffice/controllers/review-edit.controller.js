@@ -106,7 +106,8 @@
             if (infiniteMode)
                 return;
 
-            var pathToSync = vm.content.path.slice(0, -1);
+            var pathToSync = vm.content.path;
+
             navigationService.syncTree({ tree: "vendr", path: pathToSync, forceReload: true }).then(function (syncArgs) {
 
                 var name = vm.content.name;
@@ -119,7 +120,7 @@
                     id: id,
                     name: name,
                     nodeType: "Review",
-                    //menuUrl: "/umbraco/backoffice/VendrProductReviews/ReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
+                    menuUrl: "/umbraco/backoffice/VendrProductReviews/ReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
                     metaData: {
                         tree: tree,
                         storeId: storeId
