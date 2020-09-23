@@ -46,7 +46,7 @@
                 //    },
                 {
                     name: 'Status',
-                    alias: 'reviewStatuses',
+                    alias: 'statuses',
                     localStorageKey: 'store_' + storeId + '_reviewStatusFilter',
                     getFilterOptions: function () {
                         return $q.resolve([
@@ -58,7 +58,7 @@
                 },
                 {
                     name: 'Rating',
-                    alias: 'reviewRatings',
+                    alias: 'ratings',
                     localStorageKey: 'store_' + storeId + '_reviewRatingFilter',
                     getFilterOptions: function () {
                         return $q.resolve([
