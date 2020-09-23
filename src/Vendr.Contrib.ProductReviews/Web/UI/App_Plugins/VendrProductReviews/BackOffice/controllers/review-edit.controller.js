@@ -106,7 +106,7 @@
             if (infiniteMode)
                 return;
 
-            var pathToSync = "-1," + storeId; //vm.content.path.slice(0, -1);
+            var pathToSync = "-1," + storeId + ",100"; //vm.content.path.slice(0, -1);
             navigationService.syncTree({ tree: "vendr", path: pathToSync, forceReload: true }).then(function (syncArgs) {
 
                 var name = vm.content.name;
