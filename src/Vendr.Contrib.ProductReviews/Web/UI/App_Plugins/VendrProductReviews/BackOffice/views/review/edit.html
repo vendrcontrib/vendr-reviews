@@ -65,11 +65,11 @@
                         </umb-control-group>
 
                         <umb-control-group label="Title">
-                            <span>{{vm.content.title}}</span>
+                            <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
                         </umb-control-group>
 
                         <umb-control-group label="Description">
-                            <textarea class="umb-property-editor" rows="10" ng-model="vm.content.description"></textarea>
+                            <textarea class="umb-property-editor" rows="10" ng-model="vm.content.description" required></textarea>
                         </umb-control-group>
 
                     </umb-box-content>
