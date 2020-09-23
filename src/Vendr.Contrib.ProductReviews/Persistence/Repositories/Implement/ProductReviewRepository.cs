@@ -115,9 +115,10 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return result;
         }
 
-        public IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses = null, string searchTerm = null)
+        public IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses = null, decimal[] ratings = null, string searchTerm = null)
         {
             statuses = statuses ?? new string[0];
+            ratings = ratings ?? new decimal[0];
 
             var sql = new Sql()
                 .Select("*")
@@ -126,6 +127,10 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
             if (statuses.Length > 0) {
                 sql.Where("status = IN(@0)", statuses);
+            }
+
+            if (ratings.Length > 0) {
+                sql.Where("rating = IN(@0)", ratings);
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))

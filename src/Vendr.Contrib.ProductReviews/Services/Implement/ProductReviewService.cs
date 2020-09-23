@@ -115,7 +115,7 @@ namespace Vendr.ProductReviews.Services.Implement
             return results;
         }
 
-        public IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, string searchTerm = "")
+        public IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, decimal[] ratings, string searchTerm = "")
         {
             long total;
             var results = new List<ProductReview>();
@@ -125,7 +125,7 @@ namespace Vendr.ProductReviews.Services.Implement
             {
                 //var query = Query<ProductReview>().Where(x => x.Id == id);
 
-                var items = repo.SearchReviews(storeId, currentPage - 1, itemsPerPage, out total, statuses: statuses, searchTerm: searchTerm);
+                var items = repo.SearchReviews(storeId, currentPage - 1, itemsPerPage, out total, statuses: statuses, ratings: ratings, searchTerm: searchTerm);
                 results.AddRange(items);
                 totalRecords = total;
 
