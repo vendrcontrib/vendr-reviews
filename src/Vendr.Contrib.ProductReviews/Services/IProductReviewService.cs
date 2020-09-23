@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vendr.ProductReviews.Models;
+using Vendr.Contrib.ProductReviews.Models;
 
-namespace Vendr.ProductReviews.Services
+namespace Vendr.Contrib.ProductReviews.Services
 {
     public interface IProductReviewService
     {

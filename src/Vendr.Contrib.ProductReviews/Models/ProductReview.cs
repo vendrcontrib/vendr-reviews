@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Vendr.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Enums;
 
-namespace Vendr.ProductReviews.Models
+namespace Vendr.Contrib.ProductReviews.Models
 {
     [DataContract]
     public class ProductReview
@@ -11,6 +11,13 @@ namespace Vendr.ProductReviews.Models
         {
             Id = id;
             Icon = "icon-rate";
+        }
+
+        [DataMember(Name = "path")]
+        public string Path {
+            get {
+                return $"-1,{StoreId},{Constants.Trees.Reviews.Id}";
+            }
         }
 
         [DataMember(Name = "id")]

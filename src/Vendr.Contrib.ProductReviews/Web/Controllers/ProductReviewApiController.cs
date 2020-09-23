@@ -6,10 +6,9 @@ using System.Web.Http;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
-//using Vendr.Core.Models;
 using Vendr.Core.Web.Api;
-using Vendr.ProductReviews.Models;
-using Vendr.ProductReviews.Services;
+using Vendr.Contrib.ProductReviews.Models;
+using Vendr.Contrib.ProductReviews.Services;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {

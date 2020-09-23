@@ -119,7 +119,7 @@
                     id: id,
                     name: name,
                     nodeType: "Review",
-                    //menuUrl: "/umbraco/backoffice/Vendr/StoresTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Order&storeId=" + storeId + "&id=" + id,
+                    menuUrl: "/umbraco/backoffice/VendrProductReviews/ReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
                     metaData: {
                         tree: tree,
                         storeId: storeId

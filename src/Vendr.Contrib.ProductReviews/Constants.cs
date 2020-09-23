@@ -19,12 +19,22 @@
 
         public static class Trees
         {
-            public static class Icons
+            public static class Reviews
             {
                 /// <summary>
-                /// System review icon
+                /// Id for reviews node
                 /// </summary>
-                public const string Review = "icon-rate";
+                public const string Id = "100";
+
+                /// <summary>
+                /// System reviews icon
+                /// </summary>
+                public const string Icon = "icon-rate";
+
+                /// <summary>
+                /// System reviews node type
+                /// </summary>
+                public const string NodeType = "Review";
             }
         }
 

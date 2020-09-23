@@ -9,7 +9,7 @@ using Umbraco.Core.Services;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
-using Vendr.ProductReviews.Models;
+using Vendr.Contrib.ProductReviews.Models;
 using Constants = Vendr.Contrib.ProductReviews.Constants;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement

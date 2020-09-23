@@ -1,6 +1,6 @@
 ﻿using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
-using Vendr.ProductReviews.Models;
+using Vendr.Contrib.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Factories
 {

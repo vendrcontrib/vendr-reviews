@@ -3,7 +3,7 @@ using Umbraco.Web.Mvc;
 using Vendr.Contrib.ProductReviews.Web.Dtos;
 using Vendr.Core.Exceptions;
 using Vendr.Core.Web.Api;
-using Vendr.ProductReviews.Services;
+using Vendr.Contrib.ProductReviews.Services;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {

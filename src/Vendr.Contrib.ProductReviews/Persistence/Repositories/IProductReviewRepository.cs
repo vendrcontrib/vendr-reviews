@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Umbraco.Core.Persistence.Querying;
-using Vendr.ProductReviews.Models;
+using Vendr.Contrib.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 {

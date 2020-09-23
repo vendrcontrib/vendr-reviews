@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace Vendr.ProductReviews.Enums
+namespace Vendr.Contrib.ProductReviews.Enums
 {
     [DataContract]
     [JsonConverter(typeof(StringEnumConverter))]

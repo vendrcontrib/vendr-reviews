@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Umbraco.Core.Models;
 using Vendr.Contrib.ProductReviews.Factories;
+using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
 using Vendr.Core.Models;
 using Vendr.Core.Persistence;
-using Vendr.ProductReviews.Models;
 
-namespace Vendr.ProductReviews.Services.Implement
+namespace Vendr.Contrib.ProductReviews.Services.Implement
 {
     public class ProductReviewService : IProductReviewService
     {

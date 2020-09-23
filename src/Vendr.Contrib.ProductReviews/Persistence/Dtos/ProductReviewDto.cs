@@ -1,7 +1,7 @@
 ﻿using NPoco;
 using System;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
-using Vendr.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
 {
