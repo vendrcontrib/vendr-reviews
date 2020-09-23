@@ -13,7 +13,6 @@
     ];
 
     function vendrProductReviewRouteRewritesInterceptor($q) {
-        console.log("vendrProductReviewRouteRewritesInterceptor");
 
         return {
             'request': function (config) {
