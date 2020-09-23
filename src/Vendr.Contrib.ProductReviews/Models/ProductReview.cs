@@ -25,6 +25,9 @@ namespace Vendr.ProductReviews.Models
         [DataMember(Name = "createDate")]
         public DateTime CreateDate { get; set; }
 
+        [DataMember(Name = "updateDate")]
+        public DateTime UpdateDate { get; set; }
+
         [DataMember(Name = "status")]
         public ReviewStatus Status { get; set; }
 

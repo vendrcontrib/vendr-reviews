@@ -20,6 +20,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         [Column("createDate")]
         public DateTime CreateDate { get; set; }
 
+        [Column("updateDate")]
+        public DateTime UpdateDate { get; set; }
+
         [Column("status")]
         public ReviewStatus Status { get; set; }
 
