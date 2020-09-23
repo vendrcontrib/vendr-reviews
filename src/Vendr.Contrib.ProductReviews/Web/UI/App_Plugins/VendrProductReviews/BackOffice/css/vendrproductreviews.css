@@ -1,4 +1,9 @@
-﻿.vendr-product-review .vendr-table .vendr-table-cell .rating {
+﻿.vendr-product-review .vendr-table .vendr-table-cell.umb-table__name {
+    flex: 1 1 5%;
+    min-width: 180px;
+}
+
+.vendr-product-review .vendr-table .vendr-table-cell .rating {
     color: #dfdfdf;
     font-size: 20px;
 }
