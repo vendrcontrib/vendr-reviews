@@ -135,14 +135,18 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             return results;
         }
 
-        public void SaveProductReview(ProductReview review)
+        public ProductReview SaveProductReview(ProductReview review)
         {
+            ProductReview productReview;
+
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                repo.Save(review);
+                productReview = repo.Save(review);
                 uow.Complete();
             }
+
+            return productReview;
         }
 
         public void DeleteProductReview(Guid id)

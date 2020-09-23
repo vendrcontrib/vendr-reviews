@@ -19,7 +19,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 
         IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses, decimal[] ratings, string searchTerm = "");
 
-        void Save(ProductReview review);
+        ProductReview Save(ProductReview review);
 
         void Delete(Guid id);
     }

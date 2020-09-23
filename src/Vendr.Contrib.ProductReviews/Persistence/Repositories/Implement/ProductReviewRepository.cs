@@ -74,10 +74,11 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return result;
         }
 
-        public void Save(ProductReview review)
+        public ProductReview Save(ProductReview review)
         {
             var dto = ProductReviewFactory.BuildProductReview(review);
             _uow.Database.Save(dto);
+            return review;
         }
         public void Delete(Guid id)
         {

@@ -9,6 +9,10 @@ using Umbraco.Web.WebApi;
 using Vendr.Core.Web.Api;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Services;
+using Umbraco.Core.Services;
+using Umbraco.Web.Models;
+using Umbraco.Web.Models.ContentEditing;
+using Notification = Umbraco.Web.Models.ContentEditing.Notification;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -17,10 +21,14 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
     {
         //private readonly IVendrApi _vendrApi;
         private readonly IProductReviewService _productReviewService;
+        private readonly ILocalizedTextService _textService;
 
-        public ProductReviewApiController(IProductReviewService productReviewService)
+        public ProductReviewApiController(
+            IProductReviewService productReviewService,
+            ILocalizedTextService textService)
         {
             _productReviewService = productReviewService;
+            _textService = textService;
         }
 
         [HttpGet]
@@ -72,12 +80,31 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpPost]
-        public void SaveReview(ProductReview review)
+        public ProductReview SaveReview(ProductReview review)
         {
-            _productReviewService.SaveProductReview(review);
+            review.Notifications.Clear();
+
+            try
+            {
+                var result = _productReviewService.SaveProductReview(review);
+                result.Notifications.Add(new Notification(
+                        _textService.Localize("speechBubbles/operationSavedHeader"),
+                        string.Empty,
+                        NotificationStyle.Success));
+            }
+            catch
+            {
+                review.Notifications.Add(new Notification(
+                        _textService.Localize("speechBubbles/operationFailedHeader"),
+                        string.Empty,
+                        NotificationStyle.Error));
+            }
+
+            return review;
         }
 
         [HttpDelete]
+        [HttpPost]
         public void DeleteReview(Guid id)
         {
             _productReviewService.DeleteProductReview(id);

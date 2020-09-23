@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Umbraco.Web.Models.ContentEditing;
 using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Models
 {
-    [DataContract]
+    [DataContract(Name = "productReview", Namespace = "")]
     public class ProductReview
     {
         public ProductReview(Guid id)
         {
             Id = id;
             Icon = "icon-rate";
+            Notifications = new List<Notification>();
         }
 
         [DataMember(Name = "path")]
@@ -19,6 +22,9 @@ namespace Vendr.Contrib.ProductReviews.Models
                 return $"-1,{StoreId},{Constants.Trees.Reviews.Id}";
             }
         }
+
+        [DataMember(Name = "notifications")]
+        public List<Notification> Notifications { get; private set; }
 
         [DataMember(Name = "id")]
         public Guid Id { get; set; }

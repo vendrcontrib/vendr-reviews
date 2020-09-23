@@ -119,7 +119,7 @@
                     id: id,
                     name: name,
                     nodeType: "Review",
-                    menuUrl: "/umbraco/backoffice/VendrProductReviews/ReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
+                    //menuUrl: "/umbraco/backoffice/VendrProductReviews/ReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
                     metaData: {
                         tree: tree,
                         storeId: storeId
@@ -142,13 +142,11 @@
 
                 vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
 
-                    //formHelper.resetForm({ scope: $scope, notifications: saved.notifications });
-                    formHelper.resetForm({ scope: $scope });
+                    formHelper.resetForm({ scope: $scope, notifications: saved.notifications });;
 
                     vm.page.saveButtonState = "success";
 
-                    //vm.ready(saved);
-                    vm.ready(vm.content);
+                    vm.ready(saved);
 
                 }, function (err) {
 

@@ -44,7 +44,7 @@ namespace Vendr.Contrib.ProductReviews.Services
         /// <summary>
         /// Save product review.
         /// </summary>
-        void SaveProductReview(ProductReview review);
+        ProductReview SaveProductReview(ProductReview review);
 
         /// <summary>
         /// Delete product review.
