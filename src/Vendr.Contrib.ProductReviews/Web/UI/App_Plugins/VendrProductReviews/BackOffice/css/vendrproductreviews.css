@@ -21,6 +21,7 @@
 .vendr-product-review .rating {
     color: #dfdfdf;
     font-size: 32px;
+    user-select: none;
 }
 
 .vendr-product-review .rating > .active {
