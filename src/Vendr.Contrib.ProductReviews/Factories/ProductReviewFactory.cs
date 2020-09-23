@@ -14,6 +14,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
             {
                 StoreId = dto.StoreId,
                 CreateDate = dto.CreateDate,
+                Status = dto.Status,
                 Rating = dto.Rating,
                 Title = dto.Title,
                 Name = dto.Name,
@@ -34,6 +35,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 Id = review.Id,
                 StoreId = review.StoreId,
                 CreateDate = review.CreateDate,
+                Status = review.Status,
                 Rating = review.Rating,
                 Title = review.Title,
                 Name = review.Name,

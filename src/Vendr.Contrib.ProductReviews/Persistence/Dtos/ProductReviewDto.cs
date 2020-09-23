@@ -1,6 +1,7 @@
 ﻿using NPoco;
 using System;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
+using Vendr.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
 {
@@ -18,6 +19,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
 
         [Column("createDate")]
         public DateTime CreateDate { get; set; }
+
+        [Column("status")]
+        public ReviewStatus Status { get; set; }
 
         [Column("rating")]
         public decimal Rating { get; set; }

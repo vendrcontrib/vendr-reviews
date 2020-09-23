@@ -7,7 +7,7 @@
     color: #ffbb3f;
 }
 
-.vendr-product-review .dropdown-menu umb-checkbox[name='filter-reviewRatings'] ~ label > .umb-badge:before {
+.vendr-product-review .dropdown-menu umb-checkbox[name='filter-ratings'] ~ label > .umb-badge:before {
     content: "\e0fa";
     color: #ffbb3f;
     font-family: icomoon;

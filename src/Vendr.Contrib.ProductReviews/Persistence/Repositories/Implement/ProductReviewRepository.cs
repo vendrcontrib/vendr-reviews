@@ -34,7 +34,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public IEnumerable<ProductReview> Get(Guid[] ids)
         {
-            return DoFetchInternal(_uow, "WHERE id = IN(@0)", ids);
+            return DoFetchInternal(_uow, "WHERE id IN(@0)", ids);
         }
 
         public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords)
@@ -126,11 +126,11 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
                 .Where("storeId = @0", storeId);
 
             if (statuses.Length > 0) {
-                sql.Where("status = IN(@0)", statuses);
+                sql.Where("status IN(@statuses)", new { statuses });
             }
 
             if (ratings.Length > 0) {
-                sql.Where("rating = IN(@0)", ratings);
+                sql.Where("rating IN(@ratings)", new { ratings });
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
