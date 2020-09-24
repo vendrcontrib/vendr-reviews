@@ -22,3 +22,4 @@ Insert the following partial on the product page:
 - [x] Add page to view and edit some properties on review.
 - [x] Allow to delete review(s).
 - [ ] Allow to change status og review(s).
+- [ ] Change review UpdateDate on save.
