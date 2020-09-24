@@ -1,0 +1,275 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Current = Umbraco.Web.Composing.Current;
+@{
+    //var store = Model.AncestorOrSelf<Vendr.DemoStore.Models.HomePage>()?.Store;
+    var storeId = new Guid("b1e61994-b83b-420a-903e-63a7a15942dc");
+    var productReference = ViewData["productReference"]?.ToString();
+}
+
+<style>
+    svg {
+      width: 2em;
+      height: 2em;
+      fill: white;
+      pointer-events: none;
+    }
+
+    .stars {
+      display: flex;
+      flex-flow: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .star.is-selected svg, 
+    .star.is-selected ~ .star svg {
+      fill: #996300;
+    }
+
+    .star:hover svg, 
+    .star:hover ~ .star svg {
+      fill: orange;
+    }
+
+    .product-reviews {
+        margin-top: 50px;
+        padding: 20px 0;
+        border-top: 1px solid #ccc;
+    }
+
+    .review-summary {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        padding: 10px 3px;
+    }
+
+    .review-summary .aggregated-rating-absolute {
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .aggregated-rating-view {
+        margin: 0 25px 0 10px;
+    }
+
+    .aggregated-rating-view > .rating {
+      display: flex;
+      flex-flow: row-reverse;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .aggregated-rating-view > .rating .stars-empty,
+    .aggregated-rating-view > .rating .stars-fill {
+        display: flex;
+        flex-flow: wrap;
+        white-space: nowrap;
+    }
+
+    .aggregated-rating-view > .rating .stars-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .aggregated-rating-view > .rating .stars-fill svg {
+        fill: orange;
+    }
+
+    .aggregated-rating-view > .rating svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .aggregated-rating-view > .reviews-count {
+      font-size: 14px;
+      color: #a4a4a4;
+    }
+
+    #rated {
+      margin-left: 1em;
+    }
+
+    .rtl {
+      direction: rtl;
+    }
+
+    .review-form {
+        border-top: 1px solid #efefef;
+        padding: 15px 0;
+    }
+</style>
+
+<section class="product-reviews">
+
+    <h2 class="text-2xl font-bold">Customer Reviews</h2>
+
+    <div class="review-summary">
+        @{
+            var uowProvicer = Current.Factory.GetInstance<Vendr.Core.IUnitOfWorkProvider>();
+            var repository = Current.Factory.GetInstance<Vendr.Contrib.ProductReviews.Factories.IProductReviewRepositoryFactory>();
+            var service = new Vendr.Contrib.ProductReviews.Services.Implement.ProductReviewService(uowProvicer, repository);
+            long total = 0;
+            var reviews = service.GetProductReviews(storeId, productReference, 1, 10, out total);
+
+            decimal totalScore = 5;
+            decimal avgScore = reviews?.Average(x => x.Rating) ?? 0;
+
+            <svg style="display: none;">
+                <symbol id="star" viewBox="0 0 98 92">
+                    <title>star</title>
+                    <path stroke='#000' stroke-width='5' d='M49 73.5L22.55 87.406l5.05-29.453-21.398-20.86 29.573-4.296L49 6l13.225 26.797 29.573 4.297-21.4 20.86 5.052 29.452z' fill-rule='evenodd' />
+                </symbol>
+            </svg>
+
+            <div class="review-summary">
+                <div class="aggregated-rating-absolute">
+                    <span>@String.Format("{0:0.0}", avgScore)</span>
+                </div>
+                <div class="aggregated-rating-view">
+                    <div class="rating">
+                        <div class="stars-empty">
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                        </div>
+                        <div class="stars-fill" style="width: @Math.Round(avgScore / totalScore * 100)%">
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                            <svg><use xlink:href="#star"></use></svg>
+                        </div>
+                    </div>
+                    <div class="reviews-count">@total Reviews</div>
+                </div>
+            </div>
+            @*<div class="column-summary">
+                    <div class="detailed-summary">
+                        <div class="rating-values-statistics">
+                            <div class="rating-value-row" data-bind="css: {_active: $parent.isSelected(value)}, click: $parent.apply.bind($parent, detailedSummaryDataRow.value)">
+                                <span class="rating-value-label" data-bind="text: $parent.getRatingLabel(detailedSummaryDataRow)">5 stars</span>
+                                <span class="rating-bar"><span class="progress-bar" data-bind="style: { width: $parent.getRatingReviewsPercent(detailedSummaryDataRow)+'%'  }" style="width: 50%;"></span></span>
+                                <span class="rating-value-reviews-count" data-bind="text: $parent.getRatingReviewsCount(detailedSummaryDataRow)">6</span>
+                                <span class="rating-value-reviews-percent" data-bind="text: '(' + $parent.getRatingReviewsPercent(detailedSummaryDataRow) + '%)'">(50%)</span>
+                            </div>
+
+                            <div class="rating-value-row" data-bind="css: {_active: $parent.isSelected(value)}, click: $parent.apply.bind($parent, detailedSummaryDataRow.value)">
+                                <span class="rating-value-label" data-bind="text: $parent.getRatingLabel(detailedSummaryDataRow)">4 stars</span>
+                                <span class="rating-bar"><span class="progress-bar" data-bind="style: { width: $parent.getRatingReviewsPercent(detailedSummaryDataRow)+'%'  }" style="width: 25%;"></span></span>
+                                <span class="rating-value-reviews-count" data-bind="text: $parent.getRatingReviewsCount(detailedSummaryDataRow)">3</span>
+                                <span class="rating-value-reviews-percent" data-bind="text: '(' + $parent.getRatingReviewsPercent(detailedSummaryDataRow) + '%)'">(25%)</span>
+                            </div>
+
+                            <div class="rating-value-row" data-bind="css: {_active: $parent.isSelected(value)}, click: $parent.apply.bind($parent, detailedSummaryDataRow.value)">
+                                <span class="rating-value-label" data-bind="text: $parent.getRatingLabel(detailedSummaryDataRow)">3 stars</span>
+                                <span class="rating-bar"><span class="progress-bar" data-bind="style: { width: $parent.getRatingReviewsPercent(detailedSummaryDataRow)+'%'  }" style="width: 17%;"></span></span>
+                                <span class="rating-value-reviews-count" data-bind="text: $parent.getRatingReviewsCount(detailedSummaryDataRow)">2</span>
+                                <span class="rating-value-reviews-percent" data-bind="text: '(' + $parent.getRatingReviewsPercent(detailedSummaryDataRow) + '%)'">(17%)</span>
+                            </div>
+
+                            <div class="rating-value-row" data-bind="css: {_active: $parent.isSelected(value)}, click: $parent.apply.bind($parent, detailedSummaryDataRow.value)">
+                                <span class="rating-value-label" data-bind="text: $parent.getRatingLabel(detailedSummaryDataRow)">2 stars</span>
+                                <span class="rating-bar"><span class="progress-bar" data-bind="style: { width: $parent.getRatingReviewsPercent(detailedSummaryDataRow)+'%'  }" style="width: 0%;"></span></span>
+                                <span class="rating-value-reviews-count" data-bind="text: $parent.getRatingReviewsCount(detailedSummaryDataRow)">0</span>
+                                <span class="rating-value-reviews-percent" data-bind="text: '(' + $parent.getRatingReviewsPercent(detailedSummaryDataRow) + '%)'">(0%)</span>
+                            </div>
+
+                            <div class="rating-value-row" data-bind="css: {_active: $parent.isSelected(value)}, click: $parent.apply.bind($parent, detailedSummaryDataRow.value)">
+                                <span class="rating-value-label" data-bind="text: $parent.getRatingLabel(detailedSummaryDataRow)">1 star</span>
+                                <span class="rating-bar"><span class="progress-bar" data-bind="style: { width: $parent.getRatingReviewsPercent(detailedSummaryDataRow)+'%'  }" style="width: 8%;"></span></span>
+                                <span class="rating-value-reviews-count" data-bind="text: $parent.getRatingReviewsCount(detailedSummaryDataRow)">1</span>
+                                <span class="rating-value-reviews-percent" data-bind="text: '(' + $parent.getRatingReviewsPercent(detailedSummaryDataRow) + '%)'">(8%)</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>*@
+            <div>
+                <button type="button" id="btnToggleReview" class="font-bold border-2 border-gray-900 px-4 py-1">Write a Review</button>
+            </div>
+        }
+    </div>
+
+    @using (Html.BeginUmbracoForm("AddProductReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg" }))
+    {
+        @Html.AntiForgeryToken();
+
+        <input type="hidden" name="storeId" value="@storeId" />
+        <input type="hidden" name="productReference" value="@productReference" />
+
+        <div class="flex flex-wrap mb-4">
+
+            <div style="display: inline-block">
+                <div id="stars" class="stars">
+                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                </div>
+            </div>
+            <div id="rated"></div>
+
+            <input type="hidden" name="rating" id="hdnRating" />
+        </div>
+
+        <div class="flex flex-wrap mb-4">
+            <input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" />
+        </div>
+        <div class="flex flex-wrap mb-4">
+            <input type="text" name="title" placeholder="Enter a title" class="flex-1 bg-gray-200 px-4 py-2" />
+        </div>
+        <div class="flex flex-wrap mb-4">
+            <textarea type="text" name="description" placeholder="Enter a description" class="flex-1 bg-gray-200 px-4 py-2"></textarea>
+        </div>
+        <div class="flex flex-wrap mb-4">
+            <button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Add review</button>
+        </div>
+    }
+</section>
+
+<script>
+    var btnToggleReview = document.getElementById('btnToggleReview');
+    var reviewFormContainer = document.getElementById('reviewForm');
+
+    btnToggleReview.addEventListener('click', function (e) {
+        reviewFormContainer.classList.toggle('hidden');
+    });
+
+    var starContainer = document.getElementById('stars');
+    var stars = Array.prototype.slice.call(starContainer.children);
+    var totalStars = stars.length;
+    var hdnRating = document.getElementById('hdnRating');
+    var rated = document.getElementById('rated');
+
+    starContainer.addEventListener("mouseover", function (e) {
+        var index = stars.indexOf(e.target);
+        var count = count = totalStars - index;
+        stars.forEach((el,i) => {
+            if (i <= index) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
+        });
+    });
+
+    starContainer.addEventListener("mouseout", function (e) {
+      console.log("Mouse out");
+    });
+
+    starContainer.addEventListener('click', function (e) {
+        var index = stars.indexOf(e.target);
+        var count = count = totalStars - index;
+        hdnRating.value = count;
+        stars.forEach((el,i) => {
+            el.classList.remove('is-selected');
+        });
+        e.target.classList.add('is-selected');
+        rated.textContent = 'You have rated ' + count + ' stars';
+    });
+</script>
