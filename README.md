@@ -23,3 +23,4 @@ Insert the following partial on the product page:
 - [x] Allow to delete review(s).
 - [ ] Allow to change status og review(s).
 - [ ] Change review UpdateDate on save.
+- [ ] Add email field to review.
