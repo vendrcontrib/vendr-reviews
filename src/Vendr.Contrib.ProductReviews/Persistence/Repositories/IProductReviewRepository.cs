@@ -21,6 +21,8 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 
         ProductReview Save(ProductReview review);
 
+        void Insert(ProductReview review);
+
         void Delete(Guid id);
     }
 }

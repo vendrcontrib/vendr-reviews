@@ -9,6 +9,8 @@ namespace Vendr.Contrib.ProductReviews.Models
     [DataContract(Name = "productReview", Namespace = "")]
     public class ProductReview
     {
+        public ProductReview() { }
+
         public ProductReview(Guid id)
         {
             Id = id;

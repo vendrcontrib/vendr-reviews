@@ -55,7 +55,18 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                // Insert product review
+                var review = new ProductReview
+                {
+                    StoreId = storeId,
+                    ProductReference = productReference,
+                    CustomerReference = customerReference,
+                    Rating = rating,
+                    Title = title,
+                    Name = name,
+                    Description = description
+                };
+
+                repo.Insert(review);
 
                 uow.Complete();
             }

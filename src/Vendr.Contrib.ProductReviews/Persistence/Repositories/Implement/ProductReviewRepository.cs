@@ -82,6 +82,13 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             _uow.Database.Save(dto);
             return review;
         }
+
+        public void Insert(ProductReview review)
+        {
+            var dto = ProductReviewFactory.BuildProductReview(review);
+            _uow.Database.Insert(dto);
+        }
+
         public void Delete(Guid id)
         {
             _uow.Database.Delete<ProductReviewDto>("WHERE id = @0", id);
