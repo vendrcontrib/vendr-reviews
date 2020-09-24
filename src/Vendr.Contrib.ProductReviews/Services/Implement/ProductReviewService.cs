@@ -55,11 +55,15 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
+                var now = DateTime.Now;
+
                 var review = new ProductReview
                 {
                     StoreId = storeId,
                     ProductReference = productReference,
                     CustomerReference = customerReference,
+                    CreateDate = now,
+                    UpdateDate = now,
                     Rating = rating,
                     Title = title,
                     Name = name,
