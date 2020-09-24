@@ -18,6 +18,7 @@ Insert the following partial on the product page:
 - [x] Extract reviews for product and calculated average score.
 - [x] Add tree nodes for each store in backoffice.
 - [x] Add paged list of reviews in backoffice with filter options.
+- [ ] Search reviews in specific properties.
 - [x] Add page to view and edit some properties on review.
 - [x] Allow to delete review(s).
 - [ ] Allow to change status og review(s).
