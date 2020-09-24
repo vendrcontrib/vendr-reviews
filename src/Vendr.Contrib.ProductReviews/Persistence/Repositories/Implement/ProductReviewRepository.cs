@@ -40,9 +40,10 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords)
         {
             var sql = new Sql()
-                .Select()
+                .Select("*")
                 .From(Constants.DatabaseSchema.Tables.ProductReviews)
-                .Where("productReference = @0", productReference);
+                .Where("productReference = @0", productReference)
+                .OrderBy("createDate DESC");
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
@@ -56,7 +57,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null)
         {
             var sql = new Sql()
-                .Select()
+                .Select("*")
                 .From(Constants.DatabaseSchema.Tables.ProductReviews)
                 .Where("storeId = @0", storeId)
                 .Where("customerReference = @0", customerReference);
@@ -64,6 +65,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             if (!string.IsNullOrWhiteSpace(productReference))
                 sql.Where("productReference = @0", productReference);
 
+            sql.OrderBy("createDate DESC");
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
