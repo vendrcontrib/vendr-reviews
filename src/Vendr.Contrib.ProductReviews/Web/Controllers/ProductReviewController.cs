@@ -26,14 +26,14 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             {
                 using (var uow = _vendrApi.Uow.Create())
                 {
-                    _productReviewService.AddProductReview(model.StoreId, "", "", model.Rating, model.Title, model.Name, model.Description);
+                    _productReviewService.AddProductReview(model.StoreId, model.ProductReference, model.CustomerReference, model.Rating, model.Title, model.Name, model.Description);
 
                     uow.Complete();
                 }
             }
             catch (ValidationException ex)
             {
-                ModelState.AddModelError("", "Failed to redeem discount code: " + ex.Message);
+                ModelState.AddModelError("", "Failed to submit product review: " + ex.Message);
 
                 return CurrentUmbracoPage();
             }

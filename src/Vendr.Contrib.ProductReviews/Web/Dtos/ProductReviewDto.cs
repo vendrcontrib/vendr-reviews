@@ -6,6 +6,10 @@ namespace Vendr.Contrib.ProductReviews.Web.Dtos
     {
         public Guid StoreId { get; set; }
 
+        public string ProductReference { get; set; }
+
+        public string CustomerReference { get; set; }
+
         public decimal Rating { get; set; }
 
         public string Title { get; set; }
