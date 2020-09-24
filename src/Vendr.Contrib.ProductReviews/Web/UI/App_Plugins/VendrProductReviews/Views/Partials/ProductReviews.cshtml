@@ -1,8 +1,7 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @using Current = Umbraco.Web.Composing.Current;
 @{
-    //var store = Model.AncestorOrSelf<Vendr.DemoStore.Models.HomePage>()?.Store;
-    var storeId = new Guid("b1e61994-b83b-420a-903e-63a7a15942dc");
+    var storeId = Guid.TryParse(ViewData["storeId"]?.ToString(), out Guid result) ? result : Guid.Empty;
     var productReference = ViewData["productReference"]?.ToString();
 }
 
