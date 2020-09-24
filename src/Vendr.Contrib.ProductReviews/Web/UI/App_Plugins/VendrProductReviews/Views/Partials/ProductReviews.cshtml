@@ -100,7 +100,9 @@
     }
 
     .review-list .review-item {
-        padding: 15px 0;
+        margin: 10px 0;
+        padding: 8px 0;
+        border-top: 1px solid #efefef;
     }
 
     .review-list .review-item h4 {
@@ -108,7 +110,7 @@
         font-weight: bold;
     }
 
-    .review-list .review-item .review-rating svg {
+    .review-list .review-item svg {
         height: 20px;
         width: 20px;
     }
@@ -174,18 +176,15 @@
                 @foreach (var review in reviews)
                 {
                     <div class="review-item">
-                        <div class="review-rating">
-                            <div class="stars-small">
-                                @for (var i = 0; i < 5; i++)
-                                {
-                                    <svg style="@(i < review.Rating ? "fill: orange;" : null)"><use xlink:href="#star"></use></svg>
-                                }
-                            </div>
-                            <h4>@review.Title</h4>
-                            <p>@review.Description</p>
-                            <em>@review.Name</em>
+                        <div class="stars-small">
+                            @for (var i = 0; i < 5; i++)
+                            {
+                                <svg style="@(i < review.Rating ? "fill: orange;" : null)"><use xlink:href="#star"></use></svg>
+                            }
                         </div>
-                        <strong></strong>
+                        <h4>@review.Title</h4>
+                        <p>@review.Description</p>
+                        <em>@review.Name</em>
                     </div>
                 }
             </div>
