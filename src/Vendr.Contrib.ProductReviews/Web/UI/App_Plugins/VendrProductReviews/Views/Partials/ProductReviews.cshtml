@@ -3,7 +3,29 @@
 @{
     var storeId = Guid.TryParse(ViewData["storeId"]?.ToString(), out Guid result) ? result : Guid.Empty;
     var productReference = ViewData["productReference"]?.ToString();
+
+    var uowProvicer = Current.Factory.GetInstance<Vendr.Core.IUnitOfWorkProvider>();
+    var repository = Current.Factory.GetInstance<Vendr.Contrib.ProductReviews.Factories.IProductReviewRepositoryFactory>();
+    var service = new Vendr.Contrib.ProductReviews.Services.Implement.ProductReviewService(uowProvicer, repository);
+    long total = 0;
+    var reviews = service.GetProductReviews(storeId, productReference, 1, 10, out total);
+
+    decimal totalScore = 5;
+    decimal avgScore = reviews?.Average(x => x.Rating) ?? 0;
 }
+
+<script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "Product",
+        "aggregateRating": {
+            "@@type": "AggregateRating",
+            "bestRating": "@totalScore",
+            "ratingValue": "@avgScore"
+            "reviewCount": "@total"
+        }
+    }
+</script>
 
 <style>
     svg {
@@ -125,107 +147,96 @@
     <h2 class="text-2xl font-bold">Customer Reviews</h2>
 
     <div>
-        @{
-            var uowProvicer = Current.Factory.GetInstance<Vendr.Core.IUnitOfWorkProvider>();
-            var repository = Current.Factory.GetInstance<Vendr.Contrib.ProductReviews.Factories.IProductReviewRepositoryFactory>();
-            var service = new Vendr.Contrib.ProductReviews.Services.Implement.ProductReviewService(uowProvicer, repository);
-            long total = 0;
-            var reviews = service.GetProductReviews(storeId, productReference, 1, 10, out total);
+        <svg style="display: none;">
+            <symbol id="star" viewBox="0 0 98 92">
+                <title>star</title>
+                <path stroke='#000' stroke-width='5' d='M49 73.5L22.55 87.406l5.05-29.453-21.398-20.86 29.573-4.296L49 6l13.225 26.797 29.573 4.297-21.4 20.86 5.052 29.452z' fill-rule='evenodd' />
+            </symbol>
+        </svg>
 
-            decimal totalScore = 5;
-            decimal avgScore = reviews?.Average(x => x.Rating) ?? 0;
-
-            <svg style="display: none;">
-                <symbol id="star" viewBox="0 0 98 92">
-                    <title>star</title>
-                    <path stroke='#000' stroke-width='5' d='M49 73.5L22.55 87.406l5.05-29.453-21.398-20.86 29.573-4.296L49 6l13.225 26.797 29.573 4.297-21.4 20.86 5.052 29.452z' fill-rule='evenodd' />
-                </symbol>
-            </svg>
-
-            <div class="review-summary">
-                <div class="aggregated-rating-absolute">
-                    <span>@String.Format("{0:0.0}", avgScore)</span>
-                </div>
-                <div class="aggregated-rating-view">
-                    <div class="rating">
-                        <div class="stars-empty">
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                        </div>
-                        <div class="stars-fill" style="width: @Math.Round(avgScore / totalScore * 100)%">
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                            <svg><use xlink:href="#star"></use></svg>
-                        </div>
+        <div class="review-summary">
+            <div class="aggregated-rating-absolute">
+                <span>@String.Format("{0:0.0}", avgScore)</span>
+            </div>
+            <div class="aggregated-rating-view">
+                <div class="rating">
+                    <div class="stars-empty">
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
                     </div>
-                    <div class="reviews-count">@total Reviews</div>
+                    <div class="stars-fill" style="width: @Math.Round(avgScore / totalScore * 100)%">
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                    </div>
                 </div>
-
-                <div>
-                    <button type="button" id="btnToggleReview" class="font-bold border-2 border-gray-900 px-4 py-1">Write a Review</button>
-                </div>
+                <div class="reviews-count">@total Reviews</div>
             </div>
 
-            <div class="review-list">
-                @foreach (var review in reviews)
-                {
-                    <div class="review-item">
-                        <div class="stars-small">
-                            @for (var i = 0; i < 5; i++)
-                            {
-                                <svg style="@(i < review.Rating ? "fill: orange;" : null)"><use xlink:href="#star"></use></svg>
-                            }
-                        </div>
-                        <h4>@review.Title</h4>
-                        <p>@review.Description</p>
-                        <em>@review.Name</em>
-                    </div>
-                }
+            <div>
+                <button type="button" id="btnToggleReview" class="font-bold border-2 border-gray-900 px-4 py-1">Write a Review</button>
             </div>
-        }
+        </div>
+		
+		@using (Html.BeginUmbracoForm("AddProductReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg hidden" }))
+		{
+			@Html.AntiForgeryToken();
+
+			<input type="hidden" name="storeId" value="@storeId" />
+			<input type="hidden" name="productReference" value="@productReference" />
+
+			<div class="flex flex-wrap mb-4">
+
+				<div style="display: inline-block">
+					<div id="stars" class="stars">
+						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+					</div>
+				</div>
+				<div id="rated"></div>
+
+				<input type="hidden" name="rating" id="hdnRating" />
+			</div>
+
+			<div class="flex flex-wrap mb-4">
+				<input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" required />
+			</div>
+			<div class="flex flex-wrap mb-4">
+				<input type="text" name="title" placeholder="Enter a title" class="flex-1 bg-gray-200 px-4 py-2" required />
+			</div>
+			<div class="flex flex-wrap mb-4">
+				<textarea rows="5" name="description" placeholder="Enter a description" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
+			</div>
+			<div class="flex flex-wrap mb-4">
+				<button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Add review</button>
+			</div>
+		}
+
+        <div class="review-list">
+            @foreach (var review in reviews)
+            {
+                <div class="review-item">
+                    <div class="stars-small">
+                        @for (var i = 0; i < 5; i++)
+                        {
+                            <svg style="@(i < review.Rating ? "fill: orange;" : null)"><use xlink:href="#star"></use></svg>
+                        }
+                    </div>
+                    <h4>@review.Title</h4>
+                    <p>@review.Description</p>
+                    <em>@review.Name</em>
+                </div>
+            }
+        </div>
     </div>
-
-    @using (Html.BeginUmbracoForm("AddProductReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg" }))
-    {
-        @Html.AntiForgeryToken();
-
-        <input type="hidden" name="storeId" value="@storeId" />
-        <input type="hidden" name="productReference" value="@productReference" />
-
-        <div class="flex flex-wrap mb-4">
-
-            <div style="display: inline-block">
-                <div id="stars" class="stars">
-                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-                    <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-                </div>
-            </div>
-            <div id="rated"></div>
-
-            <input type="hidden" name="rating" id="hdnRating" />
-        </div>
-
-        <div class="flex flex-wrap mb-4">
-            <input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" required />
-        </div>
-        <div class="flex flex-wrap mb-4">
-            <input type="text" name="title" placeholder="Enter a title" class="flex-1 bg-gray-200 px-4 py-2" required />
-        </div>
-        <div class="flex flex-wrap mb-4">
-            <textarea rows="5" name="description" placeholder="Enter a description" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
-        </div>
-        <div class="flex flex-wrap mb-4">
-            <button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Add review</button>
-        </div>
-    }
 </section>
 
 <script>
