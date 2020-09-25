@@ -1,4 +1,5 @@
 ﻿using NPoco;
+using NPoco.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,16 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
     internal class ProductReviewRepository : RepositoryBase, IProductReviewRepository
     {
         private readonly IDatabaseUnitOfWork _uow;
-        //private readonly ISqlSyntaxProvider _sqlSyntax;
+        private readonly ISqlContext _sqlSyntax;
 
-        public ProductReviewRepository(IDatabaseUnitOfWork uow) //, ISqlSyntaxProvider sqlSyntax)
+        public ProductReviewRepository(IDatabaseUnitOfWork uow, ISqlContext sqlSyntax)
         {
             _uow = uow;
-            //_sqlSyntax = sqlSyntax;
+            _sqlSyntax = sqlSyntax;
         }
+
+        protected Sql<ISqlContext> Sql() => _sqlSyntax.Sql();
+        protected ISqlSyntaxProvider SqlSyntax => _sqlSyntax.SqlSyntax;
 
         public ProductReview Get(Guid id)
         {
@@ -130,17 +134,17 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             statuses = statuses ?? new string[0];
             ratings = ratings ?? new decimal[0];
 
-            var sql = new Sql()
+            var sql = Sql()
                 .Select("*")
-                .From(Constants.DatabaseSchema.Tables.ProductReviews)
-                .Where("storeId = @0", storeId);
+                .From<ProductReviewDto>()
+                .Where<ProductReviewDto>(x => x.StoreId == storeId);
 
-            if (statuses.Length > 0) {
-                sql.Where("status IN(@statuses)", new { statuses });
-            }
+            //if (statuses.Length > 0) {
+            //    sql.Where<ProductReviewDto>(x => x.Status.In(statuses));
+            //}
 
             if (ratings.Length > 0) {
-                sql.Where("rating IN(@ratings)", new { ratings });
+                sql.Where<ProductReviewDto>(x => x.Rating.In(ratings));
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -148,7 +152,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
                 sql.Where("title LIKE @0", $"%{searchTerm}%");
             }
 
-            sql.OrderBy("createDate DESC");
+            sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
