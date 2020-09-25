@@ -1,17 +1,14 @@
 ﻿using NPoco;
-using NPoco.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.Querying;
 using Umbraco.Core.Persistence.SqlSyntax;
-using Umbraco.Core.Services;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
 using Vendr.Contrib.ProductReviews.Models;
-using Constants = Vendr.Contrib.ProductReviews.Constants;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 {
@@ -31,8 +28,6 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public ProductReview Get(Guid id)
         {
-            //Constants.DatabaseSchema.Tables.ProductReviews
-
             return DoFetchInternal(_uow, "WHERE id = @0", id).SingleOrDefault();
         }
 
@@ -43,11 +38,11 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords)
         {
-            var sql = new Sql()
+            var sql = Sql()
                 .Select("*")
-                .From(Constants.DatabaseSchema.Tables.ProductReviews)
-                .Where("productReference = @0", productReference)
-                .OrderBy("createDate DESC");
+                .From<ProductReviewDto>()
+                .Where<ProductReviewDto>(x => x.ProductReference == productReference)
+                .OrderByDescending<ProductReviewDto>(x => x.CreateDate);
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
@@ -60,16 +55,16 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null)
         {
-            var sql = new Sql()
+            var sql = Sql()
                 .Select("*")
-                .From(Constants.DatabaseSchema.Tables.ProductReviews)
-                .Where("storeId = @0", storeId)
-                .Where("customerReference = @0", customerReference);
+                .From<ProductReviewDto>()
+                .Where<ProductReviewDto>(x => x.StoreId == storeId)
+                .Where<ProductReviewDto>(x => x.CustomerReference == customerReference);
 
             if (!string.IsNullOrWhiteSpace(productReference))
-                sql.Where("productReference = @0", productReference);
+                sql.Where<ProductReviewDto>(x => x.ProductReference == productReference);
 
-            sql.OrderBy("createDate DESC");
+            sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
@@ -105,11 +100,11 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords) //, Ordering ordering)
         {
-            var sql = new Sql()
+            var sql = Sql()
                 .Select("*")
-                .From(Constants.DatabaseSchema.Tables.ProductReviews)
-                .Where("storeId = @0", storeId)
-                .OrderBy("createDate DESC");
+                .From<ProductReviewDto>()
+                .Where<ProductReviewDto>(x => x.StoreId == storeId)
+                .OrderByDescending<ProductReviewDto>(x => x.CreateDate);
 
             //if (ordering == null || ordering.IsEmpty)
             //    ordering = Ordering.By(_sqlSyntax.GetQuotedColumnName(Constants.DatabaseSchema.Tables.ProductReviews, "id"));
@@ -139,12 +134,12 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
                 .From<ProductReviewDto>()
                 .Where<ProductReviewDto>(x => x.StoreId == storeId);
 
-            //if (statuses.Length > 0) {
-            //    sql.Where<ProductReviewDto>(x => x.Status.In(statuses));
-            //}
+            if (statuses.Length > 0) {
+                sql.WhereIn<ProductReviewDto>(x => x.Status, statuses);
+            }
 
             if (ratings.Length > 0) {
-                sql.Where<ProductReviewDto>(x => x.Rating.In(ratings));
+                sql.WhereIn<ProductReviewDto>(x => x.Rating, ratings);
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
