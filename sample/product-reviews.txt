@@ -11,6 +11,8 @@ CREATE TABLE vendrProductReviews (
    [title] NVARCHAR(255) NOT NULL,
    [name] NVARCHAR(255) NOT NULL,
    [description] NVARCHAR(255) NOT NULL,
+   [verifiedPurchase] BIT NOT NULL DEFAULT 0,
+   [recommendedProduct] INT,
    PRIMARY KEY ([id])
 );
 

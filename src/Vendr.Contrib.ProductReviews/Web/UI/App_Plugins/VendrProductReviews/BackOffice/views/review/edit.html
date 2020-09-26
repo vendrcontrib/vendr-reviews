@@ -60,6 +60,14 @@
                             <span>{{vm.customer.name}}</span>
                         </umb-control-group>
 
+                        <umb-control-group label="Verified Purchase">
+                            <umb-toggle model="vm.customer.verifiedPurchase"></umb-toggle>
+                        </umb-control-group>
+
+                        <umb-control-group label="Recommend Product">
+                            <span>{{vm.customer.recommendProduct ? 'Yes' : No}}</span>
+                        </umb-control-group>
+
                         <umb-control-group label="Name">
                             <span>{{vm.content.name}}</span>
                         </umb-control-group>

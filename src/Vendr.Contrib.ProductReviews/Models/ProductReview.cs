@@ -62,5 +62,11 @@ namespace Vendr.Contrib.ProductReviews.Models
 
         [DataMember(Name = "description")]
         public string Description { get; set; }
+
+        [DataMember(Name = "verifiedPurchase")]
+        public bool VerifiedPurchase { get; set; }
+
+        [DataMember(Name = "recommendedProduct")]
+        public bool? RecommendedProduct { get; set; }
     }
 }
