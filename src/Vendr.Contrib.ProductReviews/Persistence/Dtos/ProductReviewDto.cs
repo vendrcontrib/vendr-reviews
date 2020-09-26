@@ -38,6 +38,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         [Column("title")]
         public string Title { get; set; }
 
+        [Column("email")]
+        public string Email { get; set; }
+
         [Column("name")]
         public string Name { get; set; }
 

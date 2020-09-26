@@ -7,6 +7,7 @@ CREATE TABLE vendrProductReviews (
    [rating] DECIMAL(19,4) NOT NULL,
    [productReference] NVARCHAR(255) NOT NULL,
    [customerReference] NVARCHAR(255),
+   [email] NVARCHAR(255),
    [title] NVARCHAR(255) NOT NULL,
    [name] NVARCHAR(255) NOT NULL,
    [description] NVARCHAR(255) NOT NULL,

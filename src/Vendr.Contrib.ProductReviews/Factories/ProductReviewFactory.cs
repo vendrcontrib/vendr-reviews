@@ -18,6 +18,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 Status = dto.Status,
                 Rating = dto.Rating,
                 Title = dto.Title,
+                Email = dto.Email,
                 Name = dto.Name,
                 Description = dto.Description,
                 CustomerReference = dto.CustomerReference,

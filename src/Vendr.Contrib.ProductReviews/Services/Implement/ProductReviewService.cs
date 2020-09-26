@@ -49,7 +49,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             return productReviews;
         }
 
-        public void AddProductReview(Guid storeId, string productReference, string customerReference, decimal rating, string title, string name, string description)
+        public void AddProductReview(Guid storeId, string productReference, string customerReference, decimal rating, string title, string email, string name, string description)
         {
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
@@ -65,6 +65,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
                     UpdateDate = now,
                     Rating = rating,
                     Title = title,
+                    Email = email,
                     Name = name,
                     Description = description
                 };

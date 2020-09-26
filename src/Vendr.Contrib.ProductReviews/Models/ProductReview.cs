@@ -54,6 +54,9 @@ namespace Vendr.Contrib.ProductReviews.Models
         [DataMember(Name = "title")]
         public string Title { get; set; }
 
+        [DataMember(Name = "email")]
+        public string Email { internal get; set; }
+
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
