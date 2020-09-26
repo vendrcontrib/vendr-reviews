@@ -182,43 +182,52 @@
                 <button type="button" id="btnToggleReview" class="font-bold border-2 border-gray-900 px-4 py-1">Write a Review</button>
             </div>
         </div>
-		
-		@using (Html.BeginUmbracoForm("AddProductReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg hidden" }))
-		{
-			@Html.AntiForgeryToken();
 
-			<input type="hidden" name="storeId" value="@storeId" />
-			<input type="hidden" name="productReference" value="@productReference" />
+        @using (Html.BeginUmbracoForm("AddProductReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg hidden" }))
+        {
+            @Html.AntiForgeryToken();
 
-			<div class="flex flex-wrap mb-4">
+            <input type="hidden" name="storeId" value="@storeId" />
+            <input type="hidden" name="productReference" value="@productReference" />
 
-				<div style="display: inline-block">
-					<div id="stars" class="stars">
-						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-						<button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
-					</div>
-				</div>
-				<div id="rated"></div>
+            <div class="flex flex-col flex-wrap mb-4">
 
-				<input type="hidden" name="rating" id="hdnRating" />
-			</div>
+                <label class="font-bold mb-1">How would you rate this product?</label>
 
-			<div class="flex flex-wrap mb-4">
-				<input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" required />
-			</div>
-			<div class="flex flex-wrap mb-4">
-				<input type="text" name="title" placeholder="Enter a title" class="flex-1 bg-gray-200 px-4 py-2" required />
-			</div>
-			<div class="flex flex-wrap mb-4">
-				<textarea rows="5" name="description" placeholder="Enter a description" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
-			</div>
-			<div class="flex flex-wrap mb-4">
-				<button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Add review</button>
-			</div>
-		}
+                <div style="display: inline-block">
+                    <div id="stars" class="stars">
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                    </div>
+                </div>
+                <div id="rated"></div>
+
+                <input type="hidden" name="rating" id="hdnRating" />
+            </div>
+            <div class="flex flex-col flex-wrap mb-4">
+                <label class="font-bold mb-1">Name</label>
+                <input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" required />
+            </div>
+            <div class="flex flex-col flex-wrap mb-4">
+                <label class="font-bold mb-1">Email</label>
+                <small>Your email will not be published.</small>
+                <input type="text" name="email" placeholder="Enter your email" class="flex-1 bg-gray-200 px-4 py-2" required />
+            </div>
+            <div class="flex flex-col flex-wrap mb-4">
+                <label class="font-bold mb-1">Title</label>
+                <input type="text" name="title" placeholder="Enter a title" class="flex-1 bg-gray-200 px-4 py-2" required />
+            </div>
+            <div class="flex flex-col flex-wrap mb-4">
+                <label class="font-bold mb-1">Your review</label>
+                <textarea rows="5" name="description" placeholder="Enter a description" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
+            </div>
+            <div class="flex flex-wrap mb-4">
+                <button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Add review</button>
+            </div>
+        }
 
         <div class="review-list">
             @foreach (var review in reviews)
