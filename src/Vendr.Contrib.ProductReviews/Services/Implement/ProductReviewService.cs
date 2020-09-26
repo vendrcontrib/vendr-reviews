@@ -156,6 +156,8 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
+                review.UpdateDate = DateTime.Now;
+
                 productReview = repo.Save(review);
                 uow.Complete();
             }
