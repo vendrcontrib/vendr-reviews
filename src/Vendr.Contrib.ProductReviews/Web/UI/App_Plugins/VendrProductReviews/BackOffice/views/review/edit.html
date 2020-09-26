@@ -32,56 +32,84 @@
 
                 <vendr-license-check></vendr-license-check>
 
-                <umb-box>
-                    <umb-box-content>
+                <div class="vendr-layout vendr-layout--layout1">
+                    <div class="vendr-layout__left">
 
-                        <umb-control-group label="Rating">
-                            <span class="rating" aria-hidden="true">
-                                <i class="icon-rate"
-                                   ng-repeat="n in [].constructor(5) track by $index"
-                                   ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
-                                </i>
-                            </span>
-                        </umb-control-group>
+                        <umb-box>
+                            <umb-box-content>
 
-                        <umb-control-group label="Created">
-                            <span>{{vm.content.createDate | date: 'MMMM d, yyyy h:mm a'}}</span>
-                        </umb-control-group>
+                                <umb-control-group label="Rating">
+                                    <span class="rating" aria-hidden="true">
+                                        <i class="icon-rate"
+                                           ng-repeat="n in [].constructor(5) track by $index"
+                                           ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
+                                        </i>
+                                    </span>
+                                </umb-control-group>
 
-                        <umb-control-group label="Updated">
-                            <span>{{vm.content.updateDate | date: 'MMMM d, yyyy h:mm a'}}</span>
-                        </umb-control-group>
+                                <umb-control-group label="Verified Purchase">
+                                    <umb-toggle model="vm.customer.verifiedPurchase"></umb-toggle>
+                                </umb-control-group>
 
-                        <umb-control-group label="Product" ng-if="vm.product">
-                            <span>{{vm.product.name}}</span>
-                        </umb-control-group>
+                                <umb-control-group label="Recommend Product">
+                                    <span>{{vm.customer.recommendProduct ? 'Yes' : No}}</span>
+                                </umb-control-group>
 
-                        <umb-control-group label="Customer" ng-if="vm.customer">
-                            <span>{{vm.customer.name}}</span>
-                        </umb-control-group>
+                                <umb-control-group label="Name">
+                                    <span>{{vm.content.name}}</span>
+                                </umb-control-group>
 
-                        <umb-control-group label="Verified Purchase">
-                            <umb-toggle model="vm.customer.verifiedPurchase"></umb-toggle>
-                        </umb-control-group>
+                                <umb-control-group label="Title">
+                                    <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
+                                </umb-control-group>
 
-                        <umb-control-group label="Recommend Product">
-                            <span>{{vm.customer.recommendProduct ? 'Yes' : No}}</span>
-                        </umb-control-group>
+                                <umb-control-group label="Description">
+                                    <textarea class="umb-property-editor" rows="10" ng-model="vm.content.description" required></textarea>
+                                </umb-control-group>
 
-                        <umb-control-group label="Name">
-                            <span>{{vm.content.name}}</span>
-                        </umb-control-group>
+                            </umb-box-content>
+                        </umb-box>
 
-                        <umb-control-group label="Title">
-                            <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
-                        </umb-control-group>
+                    </div>
+                    <div class="vendr-layout__right">
 
-                        <umb-control-group label="Description">
-                            <textarea class="umb-property-editor" rows="10" ng-model="vm.content.description" required></textarea>
-                        </umb-control-group>
+                        <umb-box>
+                            <umb-box-header title="Actions"></umb-box-header>
+                            <umb-box-content class="block-form">
+                                <button type="button" class="btn btn-block btn-action" ng-click="vm.changeStatus()">Change Status</button>
+                                <button type="button" class="btn btn-block" ng-click="vm.addReply()">Add Reply</button>
+                            </umb-box-content>
+                        </umb-box>
 
-                    </umb-box-content>
-                </umb-box>
+                        <umb-box>
+                            <umb-box-header title-key="general_general"></umb-box-header>
+                            <umb-box-content class="block-form">
+
+                                <umb-control-group label="Product" ng-if="vm.product">
+                                    <span>{{vm.product.name}}</span><br>
+                                    <span>SKU: {{vm.product.sku}}</span>
+                                </umb-control-group>
+
+                                <umb-control-group label="Customer" ng-if="vm.customer">
+                                    <span>{{vm.customer.name}}</span>
+                                </umb-control-group>
+
+                                <umb-control-group label="Created">
+                                    <span>{{vm.content.createDate | date: 'MMMM d, yyyy h:mm a'}}</span>
+                                </umb-control-group>
+
+                                <umb-control-group label="Updated">
+                                    <span>{{vm.content.updateDate | date: 'MMMM d, yyyy h:mm a'}}</span>
+                                </umb-control-group>
+
+                            </umb-box-content>
+                        </umb-box>
+
+                    </div>
+                </div>
+                
+
+                
 
 
             </umb-editor-container>

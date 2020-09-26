@@ -52,7 +52,6 @@
 
                 var promises = [];
 
-
                 // Check to see if we have a customer ref, and if so, try and fetch a member
                 if (review.customerReference) {
                     promises.push(memberResource.getByKey(review.customerReference));
@@ -81,15 +80,39 @@
                     }
                     
                     if (resp2 !== null) {
+                        var variant = resp2.variants[0];
+
+                        var sku = "";
+                        var image = null;
+                        var name = variant.name;
+                        var tabs = variant.tabs;
+
+                        console.log("variant", variant);
+
+                        tabs.forEach(function (tab) {
+                            tab.properties.forEach(function (prop) {
+                                if (prop.alias === "sku") {
+                                    sku = prop.value;
+                                }
+                                console.log("prop", prop);
+                                if (prop.alias === "images" &&
+                                    prop.value !== undefined &&
+                                    prop.value !== null &&
+                                    prop.value.startsWith("umb://")) {
+                                    image = prop.value.split(',')[0];
+                                }
+                            });
+                        });
+
                         vm.product = {
-                            name: resp2.variants[0].name
+                            name: name,
+                            sku: sku,
+                            image: image
                         };
+
+                        console.log("vm.product", vm.product);
                     }
 
-                    vm.ready(review);
-                });
-
-                $q.all(promises).then(function (result) {
                     vm.ready(review);
                 });
 
