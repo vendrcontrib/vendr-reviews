@@ -20,7 +20,7 @@
                 {
                     alias: "pending",
                     color: "light-blue",
-                    icon: "icon-time",
+                    icon: "icon-light-up",
                     id: 0, //"37cd2c8f-48d8-4416-bb37-b2c7d7bb992f",
                     name: "Pending",
                     sortOrder: 0
@@ -29,7 +29,7 @@
                 {
                     alias: "approved",
                     color: "green",
-                    icon: "icon-check",
+                    icon: "icon-light-up",
                     id: 1, //"37cd2c8f-48d8-4416-bb37-b2c7d7bb992f",
                     name: "Approved",
                     sortOrder: 1
@@ -38,7 +38,7 @@
                 {
                     alias: "declined",
                     color: "grey",
-                    icon: "icon-block",
+                    icon: "icon-light-up",
                     id: 2, //"37cd2c8f-48d8-4416-bb37-b2c7d7bb992f",
                     name: "Declined",
                     sortOrder: 2
