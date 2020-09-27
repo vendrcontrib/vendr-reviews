@@ -27,4 +27,6 @@ Insert the following partial on the product page:
 - [ ] Show product details like sku, name and image on edit page.
 - [ ] Recommend this product (yes/no).
 - [ ] Verified purchase (yes/no).
+- [ ] Votes positive
+- [ ] Votes negative
 - [ ] Reply/comment on review.
