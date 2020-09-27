@@ -30,3 +30,4 @@ Insert the following partial on the product page:
 - [ ] Votes positive
 - [ ] Votes negative
 - [ ] Reply/comment on review.
+- [ ] Add basic configuration (e.g. as config file).
