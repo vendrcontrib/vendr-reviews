@@ -6,8 +6,8 @@
         vendrOrderStatusResource) {
         var defaultConfig = {
             title: "Select a status",
-            enableFilter: true //,
-            //orderBy: "sortOrder"
+            enableFilter: true,
+            orderBy: "sortOrder"
         };
 
         var vm = this;

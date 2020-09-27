@@ -14,6 +14,7 @@ using Umbraco.Web.Models;
 using Umbraco.Web.Models.ContentEditing;
 using Notification = Umbraco.Web.Models.ContentEditing.Notification;
 using Vendr.Contrib.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Web.Dtos;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -112,12 +113,9 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpPost]
-        public void ChangeReviewStatus(Guid reviewId, int statusId)
+        public ProductReview ChangeReviewStatus(StatusDto model)
         {
-            if (Enum.TryParse(statusId.ToString(), out ReviewStatus status))
-            {
-                _productReviewService.ChangeStatus(reviewId, status);
-            }
+            return _productReviewService.ChangeStatus(model.ReviewId, model.Status);
         }
     }
 }

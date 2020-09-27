@@ -153,18 +153,18 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
 
         public ProductReview SaveProductReview(ProductReview review)
         {
-            ProductReview productReview;
+            ProductReview result;
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
                 review.UpdateDate = DateTime.Now;
 
-                productReview = repo.Save(review);
+                result = repo.Save(review);
                 uow.Complete();
             }
 
-            return productReview;
+            return result;
         }
 
         public void DeleteProductReview(Guid id)
@@ -177,14 +177,18 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             }
         }
 
-        public void ChangeProductReviewStatus(Guid id, ReviewStatus status)
+        public ProductReview ChangeStatus(Guid id, ReviewStatus status)
         {
+            ProductReview result;
+
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                repo.ChangeStatus(id, status);
+                result = repo.ChangeStatus(id, status);
                 uow.Complete();
             }
+
+            return result;
         }
     }
 }

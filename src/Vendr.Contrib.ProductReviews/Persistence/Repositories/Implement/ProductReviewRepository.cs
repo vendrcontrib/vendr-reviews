@@ -94,7 +94,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             _uow.Database.Delete<ProductReviewDto>("WHERE id = @0", id);
         }
 
-        public void ChangeStatus(Guid id, ReviewStatus status)
+        public ProductReview ChangeStatus(Guid id, ReviewStatus status)
         {
             //var sql = Sql().Update<ProductReviewDto>(r => r.Set(x => x.Status, status))
             //     .Where<ProductReviewDto>(x => x.Id == id);
@@ -105,6 +105,8 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             review.Status = status;
 
             _uow.Database.Update(review);
+
+            return ProductReviewFactory.BuildProductReview(review);
         }
 
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)

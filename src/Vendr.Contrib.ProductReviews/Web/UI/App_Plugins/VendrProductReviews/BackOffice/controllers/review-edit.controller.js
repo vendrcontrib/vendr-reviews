@@ -128,9 +128,8 @@
                     storeId: storeId
                 },
                 submit: function (model) {
-                    vendrProductReviewsResource.changeProductReviewStatus(id, model.id).then(function () {
-                        //vm.content.orderStatusId = order.orderStatusId;
-                        //vm.content.orderStatus = order.orderStatus;
+                    vendrProductReviewsResource.changeProductReviewStatus(id, model.id).then(function (review) {
+                        vm.content.status = review.status;
                         notificationsService.success("Status Changed", "Status successfully changed to " + model.name + ".");
                         editorService.close();
                     }).catch(function (e) {

@@ -63,11 +63,11 @@
                     "Failed to delete review");
             },
 
-            changeProductReviewStatus: function (reviewId, statusId) {
+            changeProductReviewStatus: function (reviewId, status) {
                 return umbRequestHelper.resourcePromise(
                     $http.post("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/ChangeReviewStatus", {
                         reviewId: reviewId,
-                        statusId: statusId
+                        status: status
                     }),
                     "Failed to change review status");
             }

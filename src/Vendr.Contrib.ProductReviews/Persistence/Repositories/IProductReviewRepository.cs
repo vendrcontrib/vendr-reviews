@@ -26,6 +26,6 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 
         void Delete(Guid id);
 
-        void ChangeStatus(Guid id, ReviewStatus status);
+        ProductReview ChangeStatus(Guid id, ReviewStatus status);
     }
 }

@@ -55,6 +55,6 @@ namespace Vendr.Contrib.ProductReviews.Services
         /// <summary>
         /// Change status of product review.
         /// </summary>
-        void ChangeStatus(Guid id, ReviewStatus status);
+        ProductReview ChangeStatus(Guid id, ReviewStatus status);
     }
 }
