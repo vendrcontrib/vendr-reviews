@@ -47,7 +47,7 @@
 
     .star.is-selected svg, 
     .star.is-selected ~ .star svg {
-      fill: #996300;
+      fill: #df9e26;
     }
 
     .star:hover svg, 
@@ -69,7 +69,7 @@
     }
 
     .review-summary .aggregated-rating-absolute {
-        font-size: 32px;
+        font-size: 36px;
         font-weight: bold;
     }
 
@@ -134,6 +134,23 @@
     .review-list .review-item svg {
         height: 20px;
         width: 20px;
+    }
+
+    .review-list .review-item .stars-small,
+    .review-list .review-item .verified-buyer {
+        display: inline-flex;
+    }
+
+    .review-list .review-item .verified-buyer {
+        display: inline-flex;
+        color: #a4a4a4;
+        font-size: 14px;
+        margin-left: 15px;
+    }
+
+    .review-list .review-item .verified-buyer svg {
+        fill: #24ac24;
+        margin-right: 0.25rem;
     }
 
     .review-form {
@@ -239,6 +256,16 @@
                             <svg style="@(i < review.Rating ? "fill: orange;" : null)"><use xlink:href="#star"></use></svg>
                         }
                     </div>
+                    @if (review.VerifiedBuyer)
+                    {
+                        <span class="verified-buyer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                <path d="M0 0h48v48H0z" fill="none" />
+                                <path d="M24 2L6 10v12c0 11.11 7.67 21.47 18 24 10.33-2.53 18-12.89 18-24V10L24 2zm-4 32l-8-8 2.83-2.83L20 28.34l13.17-13.17L36 18 20 34z" />
+                            </svg>
+                            Verified Buyer
+                        </span>
+                    }
                     <h4>@review.Title</h4>
                     <p>@review.Description</p>
                     <em>@review.Name</em>
@@ -261,22 +288,6 @@
     var totalStars = stars.length;
     var hdnRating = document.getElementById('hdnRating');
     var rated = document.getElementById('rated');
-
-    starContainer.addEventListener("mouseover", function (e) {
-        var index = stars.indexOf(e.target);
-        var count = count = totalStars - index;
-        stars.forEach((el,i) => {
-            if (i <= index) {
-                el.classList.add('active');
-            } else {
-                el.classList.remove('active');
-            }
-        });
-    });
-
-    starContainer.addEventListener("mouseout", function (e) {
-      console.log("Mouse out");
-    });
 
     starContainer.addEventListener('click', function (e) {
         var index = stars.indexOf(e.target);
