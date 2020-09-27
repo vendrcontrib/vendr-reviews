@@ -24,9 +24,9 @@ Insert the following partial on the product page:
 - [ ] Allow to change status og review(s).
 - [x] Change review UpdateDate on save.
 - [x] Add email field to review.
-- [ ] Show product details like sku, name and image on edit page.
+- [x] Show product details like sku, name and image on edit page.
 - [ ] Recommend this product (yes/no).
-- [ ] Verified purchase (yes/no).
+- [x] Verified buyer (yes/no).
 - [ ] Votes positive
 - [ ] Votes negative
 - [ ] Reply/comment on review.
