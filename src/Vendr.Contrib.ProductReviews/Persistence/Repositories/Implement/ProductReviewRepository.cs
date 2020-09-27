@@ -79,13 +79,18 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         public ProductReview Save(ProductReview review)
         {
             var dto = ProductReviewFactory.BuildProductReview(review);
+            dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
+
             _uow.Database.Save(dto);
+
             return review;
         }
 
         public void Insert(ProductReview review)
         {
             var dto = ProductReviewFactory.BuildProductReview(review);
+            dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
+
             _uow.Database.Insert(dto);
         }
 
