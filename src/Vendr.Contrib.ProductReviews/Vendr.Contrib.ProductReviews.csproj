@@ -320,6 +320,7 @@
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\review\edit.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\review\list.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\package.manifest" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\Views\Partials\ProductReviews.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
