@@ -48,7 +48,9 @@
                                 </umb-control-group>
 
                                 <umb-control-group label="Verified Buyer">
-                                    <umb-toggle model="vm.customer.verifiedBuyer"></umb-toggle>
+                                    <umb-toggle checked="vm.content.verifiedBuyer"
+                                                on-click="vm.content.verifiedBuyer = !vm.content.verifiedBuyer">
+                                    </umb-toggle>
                                 </umb-control-group>
 
                                 <umb-control-group label="Recommend Product">
