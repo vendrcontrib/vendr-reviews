@@ -23,7 +23,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 Description = dto.Description,
                 CustomerReference = dto.CustomerReference,
                 ProductReference = dto.ProductReference,
-                VerifiedPurchase = dto.VerifiedPurchase,
+                VerifiedBuyer = dto.VerifiedBuyer,
                 RecommendedProduct = dto.RecommendedProduct
             };
 
@@ -47,7 +47,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 Description = review.Description,
                 CustomerReference = review.CustomerReference,
                 ProductReference = review.ProductReference,
-                VerifiedPurchase = review.VerifiedPurchase,
+                VerifiedBuyer = review.VerifiedBuyer,
                 RecommendedProduct = review.RecommendedProduct
             };
 

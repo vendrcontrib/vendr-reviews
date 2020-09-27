@@ -47,8 +47,8 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         [Column("description")]
         public string Description { get; set; }
 
-        [Column("verifiedPurchase")]
-        public bool VerifiedPurchase { get; set; }
+        [Column("verifiedBuyer")]
+        public bool VerifiedBuyer { get; set; }
 
         [Column("recommendedProduct")]
         public bool? RecommendedProduct { get; set; }
