@@ -2,9 +2,9 @@
 
     'use strict';
 
-    function ReviewEditController($scope, $routeParams, $location, $q, formHelper,
-        appState, editorState, editorService, localizationService, notificationsService, navigationService, contentResource, memberResource,
-        vendrUtils, vendrProductReviewsResource, vendrStoreResource) {
+    function ReviewEditController($scope, $routeParams, $location, $q, formHelper, mediaHelper,
+        appState, editorState, editorService, notificationsService, navigationService, entityResource,
+        contentResource, memberResource, vendrUtils, vendrProductReviewsResource) {
 
         var infiniteMode = editorService.getNumberOfEditors() > 0 ? true : false;
         var compositeId = infiniteMode
@@ -82,9 +82,12 @@
                     if (resp2 !== null) {
                         var variant = resp2.variants[0];
 
-                        var sku = "";
-                        var image = null;
-                        var name = variant.name;
+                        vm.product = {
+                            name: variant.name,
+                            sku: "",
+                            image: null
+                        };
+                        
                         var tabs = variant.tabs;
 
                         console.log("variant", variant);
@@ -92,23 +95,25 @@
                         tabs.forEach(function (tab) {
                             tab.properties.forEach(function (prop) {
                                 if (prop.alias === "sku") {
-                                    sku = prop.value;
+                                    vm.product.sku = prop.value;
                                 }
                                 console.log("prop", prop);
                                 if (prop.alias === "images" &&
                                     prop.value !== undefined &&
                                     prop.value !== null &&
                                     prop.value.startsWith("umb://")) {
-                                    image = prop.value.split(',')[0];
+
+                                    var udi = prop.value.split(',')[0];
+
+                                    entityResource.getById(udi, "Media").then(function (media) {
+                                        console.log("media", media);
+                                        vm.product.image = mediaHelper.resolveFileFromEntity(media, true);
+                                        console.log("vm.product.image", vm.product.image);
+                                    });
+                                    
                                 }
                             });
                         });
-
-                        vm.product = {
-                            name: name,
-                            sku: sku,
-                            image: image
-                        };
 
                         console.log("vm.product", vm.product);
                     }

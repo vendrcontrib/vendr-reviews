@@ -52,7 +52,7 @@
                                 </umb-control-group>
 
                                 <umb-control-group label="Recommend Product">
-                                    <span>{{vm.customer.recommendProduct ? 'Yes' : No}}</span>
+                                    <span>{{vm.content.recommendProduct ? 'Yes' : No}}</span>
                                 </umb-control-group>
 
                                 <umb-control-group label="Name">
@@ -86,6 +86,9 @@
                             <umb-box-content class="block-form">
 
                                 <umb-control-group label="Product" ng-if="vm.product">
+                                    <div ng-if="vm.product.image">
+                                        <img ng-src="{{vm.product.image}}" alt="{{vm.product.name}}" width="200" />
+                                    </div>
                                     <span>{{vm.product.name}}</span><br>
                                     <span>SKU: {{vm.product.sku}}</span>
                                 </umb-control-group>
