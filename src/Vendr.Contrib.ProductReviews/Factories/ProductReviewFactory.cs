@@ -43,6 +43,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 Status = review.Status,
                 Rating = review.Rating,
                 Title = review.Title,
+                Email = review.Email,
                 Name = review.Name,
                 Description = review.Description,
                 CustomerReference = review.CustomerReference,
