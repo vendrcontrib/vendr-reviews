@@ -13,6 +13,7 @@ using Umbraco.Core.Services;
 using Umbraco.Web.Models;
 using Umbraco.Web.Models.ContentEditing;
 using Notification = Umbraco.Web.Models.ContentEditing.Notification;
+using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -109,6 +110,14 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         {
             _productReviewService.DeleteProductReview(id);
         }
-        
+
+        [HttpPost]
+        public void ChangeReviewStatus(Guid reviewId, int statusId)
+        {
+            if (Enum.TryParse(statusId.ToString(), out ReviewStatus status))
+            {
+                _productReviewService.ChangeStatus(reviewId, status);
+            }
+        }
     }
 }

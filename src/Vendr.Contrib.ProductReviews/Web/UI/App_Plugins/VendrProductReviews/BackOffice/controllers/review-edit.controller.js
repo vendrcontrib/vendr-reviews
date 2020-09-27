@@ -90,27 +90,22 @@
                         
                         var tabs = variant.tabs;
 
-                        console.log("variant", variant);
-
                         tabs.forEach(function (tab) {
                             tab.properties.forEach(function (prop) {
                                 if (prop.alias === "sku") {
                                     vm.product.sku = prop.value;
                                 }
-                                console.log("prop", prop);
-                                if (prop.alias === "images" &&
+                                else if (prop.alias === "images" &&
                                     prop.value !== undefined &&
                                     prop.value !== null &&
                                     prop.value.startsWith("umb://")) {
 
                                     var udi = prop.value.split(',')[0];
-
-                                    entityResource.getById(udi, "Media").then(function (media) {
-                                        console.log("media", media);
-                                        vm.product.image = mediaHelper.resolveFileFromEntity(media, true);
-                                        console.log("vm.product.image", vm.product.image);
-                                    });
-                                    
+                                    if (udi) {
+                                        entityResource.getById(udi, "Media").then(function (media) {
+                                            vm.product.image = mediaHelper.resolveFileFromEntity(media, true);
+                                        });
+                                    }
                                 }
                             });
                         });
@@ -122,6 +117,32 @@
                 });
 
             });
+        };
+
+        vm.changeStatus = function () {
+
+            var dialog = {
+                view: '/app_plugins/vendrproductreviews/backoffice/views/dialogs/statuspicker.html',
+                size: 'small',
+                config: {
+                    storeId: storeId
+                },
+                submit: function (model) {
+                    vendrProductReviewsResource.changeProductReviewStatus(id, model.id).then(function () {
+                        //vm.content.orderStatusId = order.orderStatusId;
+                        //vm.content.orderStatus = order.orderStatus;
+                        notificationsService.success("Status Changed", "Status successfully changed to " + model.name + ".");
+                        editorService.close();
+                    }).catch(function (e) {
+                        notificationsService.error("Error Changing Status", "Unabled to change status to " + model.name + ". Please check the error log for details.");
+                    });
+                },
+                close: function () {
+                    editorService.close();
+                }
+            };
+
+            editorService.open(dialog);
         };
 
         vm.ready = function (model) {
@@ -140,14 +161,11 @@
 
                 var name = vm.content.name;
 
-                console.log("syncArgs", syncArgs);
-
                 // Fake a current node
                 // This is used in the header to generate the actions menu
                 var application = syncArgs.node.metaData.application;
                 var tree = syncArgs.node.metaData.tree;
-                console.log("application: ", application);
-                console.log("tree: ", tree);
+
                 vm.page.menu.currentNode = {
                     id: id,
                     name: name,

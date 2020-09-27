@@ -61,7 +61,17 @@
                 return umbRequestHelper.resourcePromise(
                     $http.delete("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/DeleteReview", { params: { id: id } } ),
                     "Failed to delete review");
+            },
+
+            changeProductReviewStatus: function (reviewId, statusId) {
+                return umbRequestHelper.resourcePromise(
+                    $http.post("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/ChangeReviewStatus", {
+                        reviewId: reviewId,
+                        statusId: statusId
+                    }),
+                    "Failed to change review status");
             }
+
         };
 
     }

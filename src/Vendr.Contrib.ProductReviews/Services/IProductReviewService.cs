@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Services
@@ -50,5 +51,10 @@ namespace Vendr.Contrib.ProductReviews.Services
         /// Delete product review.
         /// </summary>
         void DeleteProductReview(Guid id);
+
+        /// <summary>
+        /// Change status of product review.
+        /// </summary>
+        void ChangeStatus(Guid id, ReviewStatus status);
     }
 }

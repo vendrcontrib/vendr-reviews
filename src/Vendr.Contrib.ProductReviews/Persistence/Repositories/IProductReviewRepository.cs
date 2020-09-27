@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Umbraco.Core.Persistence.Querying;
+using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
@@ -24,5 +25,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
         void Insert(ProductReview review);
 
         void Delete(Guid id);
+
+        void ChangeStatus(Guid id, ReviewStatus status);
     }
 }

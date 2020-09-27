@@ -38,7 +38,7 @@
                         <umb-box>
                             <umb-box-content>
 
-                                <umb-control-group label="Rating">
+                                <umb-control-group label="Rating" description="The rating of the product">
                                     <span class="rating" aria-hidden="true">
                                         <i class="icon-rate"
                                            ng-repeat="n in [].constructor(5) track by $index"
@@ -47,25 +47,26 @@
                                     </span>
                                 </umb-control-group>
 
-                                <umb-control-group label="Verified Buyer">
+                                <umb-control-group label="Verified Buyer" description="It is verified that the reviewer has bought this product">
                                     <umb-toggle checked="vm.content.verifiedBuyer"
                                                 on-click="vm.content.verifiedBuyer = !vm.content.verifiedBuyer">
                                     </umb-toggle>
                                 </umb-control-group>
 
-                                <umb-control-group label="Recommend Product">
-                                    <span>{{vm.content.recommendProduct ? 'Yes' : 'No'}}</span>
+                                <umb-control-group label="Recommend Product" description="The customer recommend this product">
+                                    <span ng-if="vm.content.recommendProduct === null">Not specified</span>
+                                    <span ng-if="vm.content.recommendProduct !== null">{{vm.content.recommendProduct ? 'Yes' : 'No'}}</span>
                                 </umb-control-group>
 
-                                <umb-control-group label="Name">
+                                <umb-control-group label="Name" description="The name of the reviewer">
                                     <span>{{vm.content.name}}</span>
                                 </umb-control-group>
 
-                                <umb-control-group label="Title">
+                                <umb-control-group label="Title" description="The title of the review">
                                     <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
                                 </umb-control-group>
 
-                                <umb-control-group label="Description">
+                                <umb-control-group label="Description" description="The comments from the reviewer about this product">
                                     <textarea class="umb-property-editor" rows="10" maxlength="255" ng-model="vm.content.description" required></textarea>
                                 </umb-control-group>
 

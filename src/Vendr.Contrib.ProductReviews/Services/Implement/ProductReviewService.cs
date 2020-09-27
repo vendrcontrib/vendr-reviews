@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Umbraco.Core.Models;
+using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
@@ -172,6 +173,16 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
                 repo.Delete(id);
+                uow.Complete();
+            }
+        }
+
+        public void ChangeProductReviewStatus(Guid id, ReviewStatus status)
+        {
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                repo.ChangeStatus(id, status);
                 uow.Complete();
             }
         }

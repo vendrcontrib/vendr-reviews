@@ -9,6 +9,7 @@ using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
 using Vendr.Contrib.ProductReviews.Models;
+using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 {
@@ -91,6 +92,19 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         public void Delete(Guid id)
         {
             _uow.Database.Delete<ProductReviewDto>("WHERE id = @0", id);
+        }
+
+        public void ChangeStatus(Guid id, ReviewStatus status)
+        {
+            //var sql = Sql().Update<ProductReviewDto>(r => r.Set(x => x.Status, status))
+            //     .Where<ProductReviewDto>(x => x.Id == id);
+
+            //_uow.Database.Execute(sql);
+
+            var review = _uow.Database.SingleById<ProductReviewDto>(id);
+            review.Status = status;
+
+            _uow.Database.Update(review);
         }
 
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
