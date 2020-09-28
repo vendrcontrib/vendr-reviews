@@ -93,13 +93,8 @@
                             <umb-box-content class="block-form">
 
                                 <umb-control-group label="Product" ng-if="vm.product">
-                                    <div ng-if="vm.product.image" class="mb1">
-                                        <img ng-src="{{vm.product.image}}" alt="{{vm.product.name}}" width="200" />
-                                    </div>
-                                    <div>
-                                        <span>{{vm.product.name}}</span><br>
-                                        <span style="color: #999;">SKU: {{vm.product.sku}}</span>
-                                    </div>
+                                    <span>{{vm.product.name}}</span><br>
+                                    <span style="color: #999;">SKU: {{vm.product.sku}}</span>
                                 </umb-control-group>
 
                                 <umb-control-group label="Customer" ng-if="vm.customer">
