@@ -1,26 +1,32 @@
 ﻿using NPoco;
 using System;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
+using Umbraco.Core.Persistence.DatabaseModelDefinitions;
 using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
 {
-    [TableName(Constants.DatabaseSchema.Tables.ProductReviews)]
+    [TableName(TableName)]
     [PrimaryKey("id", AutoIncrement = false)]
     [ExplicitColumns]
     public class ProductReviewDto
     {
+        public const string TableName = Constants.DatabaseSchema.Tables.ProductReviews;
+
         [Column("id")]
         [PrimaryKeyColumn]
+        [Constraint(Default = SystemMethods.NewGuid)]
         public Guid Id { get; set; }
 
         [Column("storeId")]
         public Guid StoreId { get; set; }
 
         [Column("createDate")]
+        [Constraint(Default = SystemMethods.CurrentDateTime)]
         public DateTime CreateDate { get; set; }
 
         [Column("updateDate")]
+        [Constraint(Default = SystemMethods.CurrentDateTime)]
         public DateTime UpdateDate { get; set; }
 
         [Column("status")]
@@ -33,6 +39,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         public string ProductReference { get; set; }
 
         [Column("customerReference")]
+        [NullSetting(NullSetting = NullSettings.Null)]
         public string CustomerReference { get; set; }
 
         [Column("title")]
@@ -51,6 +58,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         public bool VerifiedBuyer { get; set; }
 
         [Column("recommendedProduct")]
+        [NullSetting(NullSetting = NullSettings.Null)]
         public bool? RecommendedProduct { get; set; }
     }
 }

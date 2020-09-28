@@ -9,7 +9,7 @@ namespace Vendr.Contrib.ProductReviews.Migrations
 
         public override void Migrate()
         {
-            if (TableExists(Constants.DatabaseSchema.Tables.ProductReviews)) return;
+            if (TableExists(ProductReviewDto.TableName)) return;
             Create.Table<ProductReviewDto>().Do();
         }
     }

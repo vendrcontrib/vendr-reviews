@@ -128,7 +128,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
                 .OrderByDescending<ProductReviewDto>(x => x.CreateDate);
 
             //if (ordering == null || ordering.IsEmpty)
-            //    ordering = Ordering.By(_sqlSyntax.GetQuotedColumnName(Constants.DatabaseSchema.Tables.ProductReviews, "id"));
+            //    ordering = Ordering.By(_sqlSyntax.GetQuotedColumnName(ProductReviews.TableName, "id"));
 
             //var translator = new SqlTranslator<IRelation>(sql, query);
             //sql = translator.Translate();
