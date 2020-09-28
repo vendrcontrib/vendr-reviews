@@ -41,6 +41,8 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         public Dictionary<string, string> GetProductData(string productReference, string languageIsoCode)
         {
             var snapshot = _productAdapter.GetProductSnapshot(productReference, languageIsoCode);
+            if (snapshot == null)
+                return null;
 
             return new Dictionary<string, string>
             {
