@@ -50,26 +50,15 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             return productReviews;
         }
 
-        public void AddProductReview(Guid storeId, string productReference, string customerReference, decimal rating, string title, string email, string name, string description)
+        public void AddProductReview(ProductReview review)
         {
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
                 var now = DateTime.UtcNow;
 
-                var review = new ProductReview
-                {
-                    StoreId = storeId,
-                    ProductReference = productReference,
-                    CustomerReference = customerReference,
-                    CreateDate = now,
-                    UpdateDate = now,
-                    Rating = rating,
-                    Title = title,
-                    Email = email,
-                    Name = name,
-                    Description = description
-                };
+                review.CreateDate = now;
+                review.UpdateDate = now;
 
                 repo.Insert(review);
 

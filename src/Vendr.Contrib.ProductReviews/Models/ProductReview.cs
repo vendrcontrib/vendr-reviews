@@ -25,13 +25,13 @@ namespace Vendr.Contrib.ProductReviews.Models
         public List<Notification> Notifications { get; private set; }
 
         [DataMember(Name = "id")]
-        public Guid Id { get; set; }
+        public Guid Id { get; internal set; }
 
         [DataMember(Name = "storeId")]
         public Guid StoreId { get; set; }
 
         [DataMember(Name = "icon")]
-        public string Icon { get; set; }
+        public string Icon { get; internal set; }
 
         [DataMember(Name = "createDate")]
         public DateTime CreateDate { get; set; }

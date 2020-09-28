@@ -4,6 +4,7 @@ using Vendr.Contrib.ProductReviews.Web.Dtos;
 using Vendr.Core.Exceptions;
 using Vendr.Core.Web.Api;
 using Vendr.Contrib.ProductReviews.Services;
+using Vendr.Contrib.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -26,7 +27,20 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             {
                 using (var uow = _vendrApi.Uow.Create())
                 {
-                    _productReviewService.AddProductReview(model.StoreId, model.ProductReference, model.CustomerReference, model.Rating, model.Title, model.Email, model.Name, model.Description);
+                    var review = new ProductReview()
+                    {
+                        StoreId = model.StoreId,
+                        ProductReference = model.ProductReference,
+                        CustomerReference = model.CustomerReference,
+                        Rating = model.Rating,
+                        Title = model.Title,
+                        Email = model.Email,
+                        Name = model.Name,
+                        Description = model.Description,
+                        RecommendedProduct = model.RecommendedProduct
+                    };
+
+                    _productReviewService.AddProductReview(review);
 
                     uow.Complete();
                 }
