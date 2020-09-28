@@ -54,8 +54,7 @@
                                 </umb-control-group>
 
                                 <umb-control-group label="Recommend Product" description="The customer recommend this product">
-                                    <span ng-if="vm.content.recommendProduct === null">Not specified</span>
-                                    <span ng-if="vm.content.recommendProduct !== null">{{vm.content.recommendProduct ? 'Yes' : 'No'}}</span>
+                                    <span>{{vm.content.recommendedProduct !== null ? (vm.content.recommendedProduct === true ? 'Yes' : 'No') : 'Not specified'}}</span>
                                 </umb-control-group>
 
                                 <umb-control-group label="Name" description="The name of the reviewer">
@@ -93,8 +92,8 @@
                             <umb-box-content class="block-form">
 
                                 <umb-control-group label="Product" ng-if="vm.product">
-                                    <span>{{vm.product.name}}</span><br>
-                                    <span style="color: #999;">SKU: {{vm.product.sku}}</span>
+                                    <span class="db">{{vm.product.name}}</span>
+                                    <small style="color: #999;">SKU: {{vm.product.sku}}</small>
                                 </umb-control-group>
 
                                 <umb-control-group label="Customer" ng-if="vm.customer">
