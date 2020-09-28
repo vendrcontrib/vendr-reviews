@@ -186,19 +186,18 @@
 
         vm.init();
 
-        //var onVendrEvent = function (evt, args) {
-        //    if (args.entityType === 'Order' && args.storeId === storeId) {
-        //        vm.page.loading = true;
-        //        vm.loadItems({
-        //            pageNumber: 1
-        //        }, function () {
-        //            vm.page.loading = false;
-        //        });
-        //    }
-        //};
+        var onVendrProductReviewEvent = function (evt, args) {
+            if (args.entityType === 'Review' && args.storeId === storeId) {
+                vm.page.loading = true;
+                vm.loadItems({
+                    pageNumber: 1
+                }, function () {
+                    vm.page.loading = false;
+                });
+            }
+        };
 
-        //$scope.$on("vendrEntitiesSorted", onVendrEvent);
-        //$scope.$on("vendrEntityDelete", onVendrEvent);
+        $scope.$on("vendrProductReviewDeleted", onVendrProductReviewEvent);
 
         // http://angular-tips.com/blog/2015/10/creating-a-rating-directive-in-angular-2/
         // https://jsfiddle.net/n2h05z7e/3/
