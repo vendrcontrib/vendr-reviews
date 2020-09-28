@@ -85,8 +85,7 @@
             ],
             items: [],
             itemProperties: [
-                {
-                    alias: 'rating', header: 'Rating', template: `<span class="vendr-table-cell-value--multiline" title="Rating: {{rating}}">
+                { alias: 'rating', header: 'Rating', template: `<span class="vendr-table-cell-value--multiline" title="Rating: {{rating}}">
                         <span class="rating" aria-hidden="true">
                             <i class="icon-rate {{rating >= 1 ? 'active' : ''}}"></i>
                             <i class="icon-rate {{rating >= 2 ? 'active' : ''}}"></i>
