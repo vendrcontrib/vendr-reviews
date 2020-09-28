@@ -55,7 +55,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var now = DateTime.Now;
+                var now = DateTime.UtcNow;
 
                 var review = new ProductReview
                 {
@@ -158,7 +158,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                review.UpdateDate = DateTime.Now;
+                review.UpdateDate = DateTime.UtcNow;
 
                 result = repo.Save(review);
                 uow.Complete();
