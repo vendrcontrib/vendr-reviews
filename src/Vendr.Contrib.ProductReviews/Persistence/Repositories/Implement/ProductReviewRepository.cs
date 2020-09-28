@@ -165,7 +165,12 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                sql.Where("title LIKE @0", $"%{searchTerm}%");
+                sql.Where<ProductReviewDto>(x => 
+                    x.Title.Contains(searchTerm) ||
+                    x.Name.Contains(searchTerm) ||
+                    x.Email.Contains(searchTerm) ||
+                    x.Description.Contains(searchTerm)
+                );
             }
 
             sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
