@@ -15,6 +15,7 @@ using Umbraco.Web.Models.ContentEditing;
 using Notification = Umbraco.Web.Models.ContentEditing.Notification;
 using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Web.Dtos;
+using Vendr.Core.Adapters;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -24,13 +25,29 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         //private readonly IVendrApi _vendrApi;
         private readonly IProductReviewService _productReviewService;
         private readonly ILocalizedTextService _textService;
+        private readonly IProductAdapter _productAdapter;
 
         public ProductReviewApiController(
             IProductReviewService productReviewService,
-            ILocalizedTextService textService)
+            ILocalizedTextService textService,
+            IProductAdapter productAdapter)
         {
             _productReviewService = productReviewService;
             _textService = textService;
+            _productAdapter = productAdapter;
+        }
+
+        [HttpGet]
+        public Dictionary<string, string> GetProductData(string productReference, string languageIsoCode)
+        {
+            var snapshot = _productAdapter.GetProductSnapshot(productReference, languageIsoCode);
+
+            return new Dictionary<string, string>
+            {
+                { "storeId", snapshot.StoreId.ToString() },
+                { "sku", snapshot.Sku },
+                { "name", snapshot.Name }
+            };
         }
 
         [HttpGet]

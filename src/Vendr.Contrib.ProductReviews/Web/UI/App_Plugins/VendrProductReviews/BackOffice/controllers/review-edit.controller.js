@@ -62,7 +62,8 @@
 
                 // Check to see if we have a product ref, and if so, try and fetch a product
                 if (review.productReference) {
-                    promises.push(contentResource.getById(review.productReference));
+                    //promises.push(contentResource.getById(review.productReference));
+                    promises.push(vendrProductReviewsResource.getProductData(review.productReference, "GB"));
                 }
                 else {
                     promises.push($q.resolve(null));
@@ -80,37 +81,46 @@
                     }
                     
                     if (resp2 !== null) {
-                        var variant = resp2.variants[0];
 
+                        console.log("resp2", resp2);
+                        
                         vm.product = {
-                            name: variant.name,
-                            sku: "",
+                            name: resp2.name,
+                            sku: resp2.sku,
                             image: null
                         };
+
+                        //var variant = resp2.variants[0];
+
+                        //vm.product = {
+                        //    name: variant.name,
+                        //    sku: "",
+                        //    image: null
+                        //};
                         
-                        var tabs = variant.tabs;
+                        //var tabs = variant.tabs;
 
-                        tabs.forEach(function (tab) {
-                            tab.properties.forEach(function (prop) {
-                                if (prop.alias === "sku") {
-                                    vm.product.sku = prop.value;
-                                }
-                                else if (prop.alias === "images" &&
-                                    prop.value !== undefined &&
-                                    prop.value !== null &&
-                                    prop.value.startsWith("umb://")) {
+                        //tabs.forEach(function (tab) {
+                        //    tab.properties.forEach(function (prop) {
+                        //        if (prop.alias === "sku") {
+                        //            vm.product.sku = prop.value;
+                        //        }
+                        //        else if (prop.alias === "images" &&
+                        //            prop.value !== undefined &&
+                        //            prop.value !== null &&
+                        //            prop.value.startsWith("umb://")) {
 
-                                    var udi = prop.value.split(',')[0];
-                                    if (udi) {
-                                        entityResource.getById(udi, "Media").then(function (media) {
-                                            vm.product.image = mediaHelper.resolveFileFromEntity(media, true);
-                                        });
-                                    }
-                                }
-                            });
-                        });
+                        //            var udi = prop.value.split(',')[0];
+                        //            if (udi) {
+                        //                entityResource.getById(udi, "Media").then(function (media) {
+                        //                    vm.product.image = mediaHelper.resolveFileFromEntity(media, true);
+                        //                });
+                        //            }
+                        //        }
+                        //    });
+                        //});
 
-                        console.log("vm.product", vm.product);
+                        //console.log("vm.product", vm.product);
                     }
 
                     vm.ready(review);

@@ -70,6 +70,16 @@
                         status: status
                     }),
                     "Failed to change review status");
+            },
+
+            getProductData: function (productReference, languageIsoCode) {
+                return umbRequestHelper.resourcePromise(
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductData", {
+                        params: {
+                            productReference: productReference,
+                            languageIsoCode: languageIsoCode
+                        }
+                    }), "Failed to get product data");
             }
 
         };
