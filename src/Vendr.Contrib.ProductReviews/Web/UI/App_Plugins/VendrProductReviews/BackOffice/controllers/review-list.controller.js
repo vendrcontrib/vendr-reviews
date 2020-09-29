@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function vendrProductReviewListController($scope, $routeParams, $location, $q, appState, vendrProductReviewsResource, navigationService, vendrUtils, vendrLocalStorage) {
+    function vendrProductReviewListController($scope, $routeParams, $location, $q, appState, vendrProductReviewsResource, navigationService, vendrUtils, vendrRouteCache, vendrLocalStorage) {
 
         var compositeId = vendrUtils.parseCompositeId($routeParams.id);
         var storeId = compositeId[0];
@@ -25,35 +25,23 @@
         vm.options = {
             createActions: [],
             filters: [
-                //    {
-                //        name: 'Order Status',
-                //        alias: 'orderStatusIds',
-                //        localStorageKey: 'store_' + storeId + '_orderStatusFilter',
-                //        getFilterOptions: function () {
-                //            return vendrRouteCache.getOrFetch("store_" + storeId + "_orderStatuses", function () {
-                //                return vendrOrderStatusResource.getOrderStatuses(storeId);
-                //            })
-                //                .then(function (items) {
-                //                    return items.map(function (itm) {
-                //                        return {
-                //                            id: itm.id,
-                //                            name: itm.name,
-                //                            color: itm.color
-                //                        };
-                //                    });
-                //                });
-                //        }
-                //    },
                 {
                     name: 'Status',
                     alias: 'statuses',
                     localStorageKey: 'store_' + storeId + '_reviewStatusFilter',
                     getFilterOptions: function () {
-                        return $q.resolve([
-                            { id: 1, name: 'Approved', color: 'green' },
-                            { id: 2, name: 'Declined', color: 'grey' },
-                            { id: 3, name: 'Pending', color: 'light-blue' }
-                        ]);
+                        return vendrRouteCache.getOrFetch("store_" + storeId + "_statuses", function () {
+                            return vendrProductReviewsResource.getStatuses(storeId);
+                        })
+                        .then(function (items) {
+                            return items.map(function (itm) {
+                                return {
+                                    id: itm.id,
+                                    name: itm.name,
+                                    color: itm.color
+                                };
+                            });
+                        });
                     }
                 },
                 {
@@ -198,9 +186,6 @@
         };
 
         $scope.$on("vendrProductReviewDeleted", onVendrProductReviewEvent);
-
-        // http://angular-tips.com/blog/2015/10/creating-a-rating-directive-in-angular-2/
-        // https://jsfiddle.net/n2h05z7e/3/
     }
 
     angular.module('vendr').controller('Vendr.ProductReviews.Controllers.ReviewListController', vendrProductReviewListController);

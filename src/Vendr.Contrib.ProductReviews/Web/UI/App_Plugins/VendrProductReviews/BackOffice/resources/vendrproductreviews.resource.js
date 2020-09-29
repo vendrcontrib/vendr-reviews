@@ -80,6 +80,15 @@
                             languageIsoCode: languageIsoCode
                         }
                     }), "Failed to get product data");
+            },
+
+            getStatuses: function (storeId) {
+                return umbRequestHelper.resourcePromise(
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetStatuses", {
+                        params: {
+                            storeId: storeId
+                        }
+                    }), "Failed to get statuses");
             }
 
         };

@@ -11,6 +11,7 @@ using Umbraco.Web.Models.ContentEditing;
 using Vendr.Contrib.ProductReviews.Web.Dtos;
 using Vendr.Core.Adapters;
 using Notification = Umbraco.Web.Models.ContentEditing.Notification;
+using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -29,6 +30,46 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             _productReviewService = productReviewService;
             _textService = textService;
             _productAdapter = productAdapter;
+        }
+
+        [HttpGet]
+        public IEnumerable<Status> GetStatuses(Guid storeId)
+        {
+            var values = Enum.GetValues(typeof(ReviewStatus));
+
+            var statuses = new List<Status>();
+
+            foreach (ReviewStatus val in values)
+            {
+                var name = val.ToString();
+                var color = "black";
+
+                switch (val)
+                {
+                    case ReviewStatus.Pending:
+                        color = "light-blue";
+                        break;
+                    case ReviewStatus.Approved:
+                        color = "green";
+                        break;
+                    case ReviewStatus.Declined:
+                        color = "grey";
+                        break;
+                }
+
+                statuses.Add(new Status
+                {
+                    Alias = name.ToLower(),
+                    Color = color,
+                    Icon = "icon-light-up",
+                    Id = (int)val,
+                    Name = name,
+                    SortOrder = 1,
+                    StoreId = storeId
+                });
+            }
+
+            return statuses;
         }
 
         [HttpGet]

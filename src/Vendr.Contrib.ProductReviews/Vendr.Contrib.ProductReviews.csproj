@@ -288,6 +288,7 @@
     <Compile Include="Events\ReviewNotificationEventhandler.cs" />
     <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />
     <Compile Include="Migrations\CreateTable.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
     <Compile Include="Factories\IProductReviewRepositoryFactory.cs" />
