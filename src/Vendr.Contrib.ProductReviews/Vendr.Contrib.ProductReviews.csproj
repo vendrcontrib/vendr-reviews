@@ -284,6 +284,9 @@
     <Compile Include="Composing\VendrProductReviewsComponent.cs" />
     <Compile Include="Composing\VendrProductReviewsComposer.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Events\ReviewActivityLogger.cs" />
+    <Compile Include="Events\ReviewAddedNotification.cs" />
+    <Compile Include="Events\ReviewNotificationEventhandler.cs" />
     <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />
     <Compile Include="Migrations\CreateTable.cs" />
     <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
