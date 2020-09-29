@@ -20,8 +20,9 @@ namespace Vendr.Contrib.ProductReviews.Composing
             // Register services
             composition.Register<IProductReviewService, ProductReviewService>();
 
-            composition.WithNotificationEvent<ReviewAddedNotification>()
-                .RegisterHandler<ReviewAddedHandler>();
+            // Register events
+            composition.WithNotificationEvent<ProductReviewAddedNotification>()
+                .RegisterHandler<ProductReviewAddedHandler>();
 
             // Register component
             composition.Components()

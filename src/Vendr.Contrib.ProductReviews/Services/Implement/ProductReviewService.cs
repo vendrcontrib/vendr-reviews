@@ -5,8 +5,10 @@ using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
+using Vendr.Core.Events;
 using Vendr.Core.Models;
 using Vendr.Core.Persistence;
+using Vendr.Contrib.ProductReviews.Events;
 
 namespace Vendr.Contrib.ProductReviews.Services.Implement
 {
@@ -60,7 +62,11 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
                 review.CreateDate = now;
                 review.UpdateDate = now;
 
+                EventBus.Dispatch(new ProductReviewAddingNotification(review));
+
                 repo.Insert(review);
+
+                uow.ScheduleNotification(new ProductReviewAddedNotification(review));
 
                 uow.Complete();
             }
