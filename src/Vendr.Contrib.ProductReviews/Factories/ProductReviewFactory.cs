@@ -63,6 +63,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
             var review = new Comment(dto.Id)
             {
                 StoreId = dto.StoreId,
+                ReviewId = dto.ReviewId,
                 CreateDate = dto.CreateDate,
                 Description = dto.Description
             };
@@ -78,6 +79,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
             {
                 Id = comment.Id,
                 StoreId = comment.StoreId,
+                ReviewId = comment.ReviewId,
                 CreateDate = comment.CreateDate,       
                 Description = comment.Description
             };
