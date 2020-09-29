@@ -13,7 +13,7 @@
 
             public static class Tables
             {
-                public const string ProductReviews = TableNamePrefix + "ProductReviews";
+                public const string ProductReview = TableNamePrefix + "ProductReview";
             }
         }
 

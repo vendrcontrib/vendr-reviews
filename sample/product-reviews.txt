@@ -1,4 +1,4 @@
-CREATE TABLE vendrProductReviews (
+CREATE TABLE vendrProductReview (
    [id] UNIQUEIDENTIFIER NOT NULL DEFAULT (NEWID()),
    [storeId] UNIQUEIDENTIFIER NOT NULL,
    [createDate] DATETIME NOT NULL DEFAULT (GETDATE()),
@@ -19,7 +19,7 @@ CREATE TABLE vendrProductReviews (
 
 
 
-INSERT INTO vendrProductReviews ([storeId], [status], [rating], [productReference], [title], [name], [description], [verifiedBuyer]) VALUES 
+INSERT INTO vendrProductReview ([storeId], [status], [rating], [productReference], [title], [name], [description], [verifiedBuyer]) VALUES 
 ('b1e61994-b83b-420a-903e-63a7a15942dc', 0, 5.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'Awesome product', 'Claire Bennett', 'Worth all the money!', 1),
 ('b1e61994-b83b-420a-903e-63a7a15942dc', 0, 3.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'It was okay', 'Danial Forrest', 'It was okay, but not my cup of tea.', null),
 ('b1e61994-b83b-420a-903e-63a7a15942dc', 1, 4.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'Love it', 'Emma Huff', 'Definitely my favorite tea.', 1),

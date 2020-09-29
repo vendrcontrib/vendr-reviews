@@ -11,7 +11,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
     [ExplicitColumns]
     public class ProductReviewDto
     {
-        public const string TableName = Constants.DatabaseSchema.Tables.ProductReviews;
+        public const string TableName = Constants.DatabaseSchema.Tables.ProductReview;
 
         [Column("id")]
         [PrimaryKeyColumn]
