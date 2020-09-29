@@ -34,6 +34,7 @@
 
         vm.options = {};
         vm.content = {};
+        vm.comment = null;
         vm.product = null;
         vm.customer = null;
 
@@ -186,7 +187,7 @@
 
                 vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
 
-                    if (vm.comment !== null && vm.comment.trim().lenght > 0) {
+                    if (vm.comment !== null && vm.comment.trim().length > 0) {
                         console.log("save comment");
                         vendrProductReviewsResource.saveComment(storeId, id, vm.comment).then(function (data) {
                             console.log("data", data);
