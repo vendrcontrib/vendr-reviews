@@ -1,5 +1,6 @@
 ﻿using NPoco;
 using System;
+using System.Collections.Generic;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 using Umbraco.Core.Persistence.DatabaseModelDefinitions;
 using Vendr.Contrib.ProductReviews.Enums;
@@ -60,5 +61,8 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         [Column("recommendProduct")]
         [NullSetting(NullSetting = NullSettings.Null)]
         public bool? RecommendProduct { get; set; }
+
+        [ResultColumn]
+        public List<CommentDto> Comments { get; set; }
     }
 }

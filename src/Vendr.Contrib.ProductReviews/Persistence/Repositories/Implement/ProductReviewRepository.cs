@@ -29,7 +29,20 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public ProductReview Get(Guid id)
         {
-            return DoFetchInternal(_uow, "WHERE id = @0", id).SingleOrDefault();
+            var sql = Sql()
+                .Select("*")
+                .From<ProductReviewDto>()
+                .InnerJoin<CommentDto>().On<CommentDto, ProductReviewDto>((comment, review) => comment.ReviewId == review.Id)
+                .Where<ProductReviewDto>(x => x.Id == id);
+
+            //var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments,
+            //    $"select r.*, c.* from {ProductReviewDto.TableName} r inner join {CommentDto.TableName} c on r.Id = c.ReviewId order by r.Id");
+            var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments, sql);
+
+            var result = data.Select(ProductReviewFactory.BuildProductReview).SingleOrDefault();
+
+            return result;
+            //return DoFetchInternal(_uow, "WHERE id = @0", id).SingleOrDefault();
         }
 
         public IEnumerable<ProductReview> Get(Guid[] ids)
@@ -120,6 +133,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         {
             var dto = ProductReviewFactory.BuildComment(comment);
             dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
+            dto.CreateDate = dto.CreateDate == DateTime.MinValue ? DateTime.UtcNow : dto.CreateDate;
 
             _uow.Database.Save(dto);
 

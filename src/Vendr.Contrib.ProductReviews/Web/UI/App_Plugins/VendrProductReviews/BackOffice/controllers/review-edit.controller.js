@@ -143,6 +143,11 @@
             vm.page.loading = false;
             vm.content = model;
 
+            // currently we only use a single comment
+            if (vm.content.comments && vm.content.comments.length > 0) {
+                vm.comment = vm.content.comments[0].description;
+            }
+
             // sync state
             editorState.set(vm.content);
 

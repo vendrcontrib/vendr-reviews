@@ -2,6 +2,7 @@
 using Vendr.Core;
 using Vendr.Contrib.ProductReviews.Models;
 using System;
+using System.Linq;
 
 namespace Vendr.Contrib.ProductReviews.Factories
 {
@@ -10,6 +11,15 @@ namespace Vendr.Contrib.ProductReviews.Factories
         public static ProductReview BuildProductReview(ProductReviewDto dto)
         {
             dto.MustNotBeNull(nameof(dto));
+
+            var comments = dto.Comments?.Select(x => new Comment
+            {
+                Id = x.Id,
+                ReviewId = x.ReviewId,
+                StoreId = x.StoreId,
+                CreateDate = x.CreateDate,
+                Description = x.Description
+            }).ToList();
 
             var review = new ProductReview(dto.Id)
             {
@@ -25,7 +35,8 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 CustomerReference = dto.CustomerReference,
                 ProductReference = dto.ProductReference,
                 VerifiedBuyer = dto.VerifiedBuyer,
-                RecommendProduct = dto.RecommendProduct
+                RecommendProduct = dto.RecommendProduct,
+                Comments = comments
             };
 
             return review;

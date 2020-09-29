@@ -67,6 +67,9 @@ namespace Vendr.Contrib.ProductReviews.Models
         [DataMember(Name = "recommendProduct")]
         public bool? RecommendProduct { get; set; }
 
+        [DataMember(Name = "comments")]
+        public List<Comment> Comments { get; internal set; }
+
         [DataMember(Name = "notifications")]
         [ReadOnly(true)]
         public List<Notification> Notifications { get; private set; }
