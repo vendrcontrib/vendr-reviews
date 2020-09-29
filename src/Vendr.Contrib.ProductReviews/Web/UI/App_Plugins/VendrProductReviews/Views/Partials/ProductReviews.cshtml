@@ -157,6 +157,17 @@
         border-top: 1px solid #efefef;
         padding: 15px 0;
     }
+    .review-form input,
+    .review-form textarea {
+        border: 1px solid transparent;
+    }
+    .review-form .has-danger input,
+    .review-form .has-danger textarea {
+        border-color: #f56565;
+    }
+    .review-form .has-danger .text-help {
+        color: #f56565;
+    }
 </style>
 
 <section class="product-reviews">
@@ -207,7 +218,7 @@
             <input type="hidden" name="storeId" value="@storeId" />
             <input type="hidden" name="productReference" value="@productReference" />
 
-            <div class="flex flex-col flex-wrap mb-4">
+            <div class="form-group flex flex-col flex-wrap mb-4">
 
                 <label class="font-bold mb-1">How would you rate this product?</label>
 
@@ -224,20 +235,20 @@
 
                 <input type="hidden" name="rating" id="hdnRating" />
             </div>
-            <div class="flex flex-col flex-wrap mb-4">
+            <div class="form-group flex flex-col flex-wrap mb-4">
                 <label class="font-bold mb-1">Name</label>
                 <input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" required />
             </div>
-            <div class="flex flex-col flex-wrap mb-4">
+            <div class="form-group flex flex-col flex-wrap mb-4">
                 <label class="font-bold mb-1">Email</label>
                 <small>Your email will not be published.</small>
                 <input type="text" name="email" placeholder="Enter your email" class="flex-1 bg-gray-200 px-4 py-2" required />
             </div>
-            <div class="flex flex-col flex-wrap mb-4">
+            <div class="form-group flex flex-col flex-wrap mb-4">
                 <label class="font-bold mb-1">Title</label>
                 <input type="text" name="title" placeholder="Enter a title" class="flex-1 bg-gray-200 px-4 py-2" required />
             </div>
-            <div class="flex flex-col flex-wrap mb-4">
+            <div class="form-group flex flex-col flex-wrap mb-4">
                 <label class="font-bold mb-1">Your review</label>
                 <textarea rows="5" maxlength="255" name="description" placeholder="Enter a description" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
             </div>
@@ -275,6 +286,7 @@
     </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/pristinejs@0.1.9/dist/pristine.min.js" type="text/javascript"></script>
 <script>
     var btnToggleReview = document.getElementById('btnToggleReview');
     var reviewFormContainer = document.getElementById('reviewForm');
@@ -299,4 +311,34 @@
         e.target.classList.add('is-selected');
         rated.textContent = 'You have rated ' + count + ' stars';
     });
+
+
+    window.onload = function () {
+
+        let defaultConfig = {
+            // class of the parent element where the error/success class is added
+            classTo: 'form-group',
+            errorClass: 'has-danger',
+            successClass: 'has-success',
+            // class of the parent element where error text element is appended
+            errorTextParent: 'form-group',
+            // type of element to create for the error text
+            errorTextTag: 'div',
+            // class of the error text element
+            errorTextClass: 'text-help' 
+        };
+
+        var form = document.getElementById("reviewForm");
+
+        // create the pristine instance
+        var pristine = new Pristine(form, defaultConfig);
+
+        form.addEventListener('submit', function (e) {
+           e.preventDefault();
+       
+           // check if the form is valid
+           var valid = pristine.validate(); // returns true or false
+
+        });
+    };
 </script>
