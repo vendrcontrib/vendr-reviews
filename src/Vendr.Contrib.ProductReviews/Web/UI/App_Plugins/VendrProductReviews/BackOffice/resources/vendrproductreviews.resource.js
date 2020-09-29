@@ -91,9 +91,10 @@
                     }), "Failed to get statuses");
             },
 
-            saveComment: function (storeId, reviewId, description) {
+            saveComment: function (id, storeId, reviewId, description) {
                 return umbRequestHelper.resourcePromise(
                     $http.post("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SaveComment", {
+                        id: id,
                         storeId: storeId,
                         reviewId: reviewId,
                         description: description

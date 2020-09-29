@@ -32,7 +32,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             var sql = Sql()
                 .Select("*")
                 .From<ProductReviewDto>()
-                .InnerJoin<CommentDto>().On<CommentDto, ProductReviewDto>((comment, review) => comment.ReviewId == review.Id)
+                .LeftJoin<CommentDto>().On<CommentDto, ProductReviewDto>((comment, review) => comment.ReviewId == review.Id)
                 .Where<ProductReviewDto>(x => x.Id == id);
 
             //var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments,
@@ -133,7 +133,16 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         {
             var dto = ProductReviewFactory.BuildComment(comment);
             dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
-            dto.CreateDate = dto.CreateDate == DateTime.MinValue ? DateTime.UtcNow : dto.CreateDate;
+
+            var entry = _uow.Database.SingleOrDefaultById<CommentDto>(dto.Id);
+            if (entry == null)
+            {
+                dto.CreateDate = dto.CreateDate == DateTime.MinValue ? DateTime.UtcNow : dto.CreateDate;
+            }
+            else
+            {
+                dto.CreateDate = entry.CreateDate;
+            }
 
             _uow.Database.Save(dto);
 

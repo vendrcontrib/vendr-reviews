@@ -193,8 +193,10 @@
                 vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
 
                     if (vm.comment !== null && vm.comment.trim().length > 0) {
-                        console.log("save comment");
-                        vendrProductReviewsResource.saveComment(storeId, id, vm.comment).then(function (data) {
+
+                        var commentId = vm.content.comments && vm.content.comments[0].id;
+
+                        vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
                             console.log("data", data);
                         });
                     }
