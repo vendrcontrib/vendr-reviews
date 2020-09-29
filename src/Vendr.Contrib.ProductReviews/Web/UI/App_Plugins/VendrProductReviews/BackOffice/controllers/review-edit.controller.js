@@ -82,8 +82,7 @@
                     if (resp2 !== null) {
                         vm.product = {
                             name: resp2.name,
-                            sku: resp2.sku,
-                            image: null
+                            sku: resp2.sku
                         };
                     }
 
