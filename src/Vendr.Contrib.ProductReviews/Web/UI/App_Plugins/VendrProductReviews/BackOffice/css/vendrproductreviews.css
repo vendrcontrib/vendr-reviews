@@ -33,6 +33,16 @@
     color: #ffbb3f;
 }
 
+.vendr-product-review .card-review .verified-buyer {
+    color: #24ac24;
+    margin-left: 5px;
+}
+
+.vendr-product-review .card-review .card-review-footer {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
 .vendr-header--review .umb-panel-header-name {
     display: flex;
     align-items: center;

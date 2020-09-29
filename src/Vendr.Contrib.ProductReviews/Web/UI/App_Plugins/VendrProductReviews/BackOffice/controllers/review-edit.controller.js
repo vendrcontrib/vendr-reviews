@@ -101,7 +101,13 @@
                 review: vm.content,
                 config: {},
                 submit: function (model) {
-                    
+                    console.log("model", model);
+
+                    console.log("vm.content 1", vm.content);
+                    vm.content = model.review;
+                    console.log("vm.content 2", vm.content);
+
+                    editorService.close();
                 },
                 close: function () {
                     editorService.close();

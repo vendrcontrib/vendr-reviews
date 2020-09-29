@@ -35,7 +35,7 @@
                 <div class="vendr-layout vendr-layout--layout1">
                     <div class="vendr-layout__left">
 
-                        <umb-box>
+                        <umb-box class="card-review">
                             <umb-box-header title="Review">
                                 <button type="button" class="btn btn-small btn-default" ng-click="vm.editReview()">Edit</button>
                             </umb-box-header>
@@ -49,10 +49,10 @@
                                 <div>
                                     <strong>{{vm.content.title}}</strong>
                                     <p class="mt2">{{vm.content.description}}</p>
-                                    <div style="border-top: 1px solid #ccc; padding-top: 10px;">
+                                    <div class="card-review-footer">
                                         <span><em>{{vm.content.name}}</em>&nbsp;<span ng-if="vm.content.email">({{vm.content.email}})</span></span>
-                                        <span style="margin-left: 5px;">
-                                            <i ng-if="vm.content.verifiedBuyer" style="color: #24ac24;" class="icon icon-shield" aria-hidden="true"></i> Verified Buyer
+                                        <span ng-if="vm.content.verifiedBuyer" class="verified-buyer">
+                                            <i class="icon icon-shield" aria-hidden="true"></i> Verified Buyer
                                         </span>
                                     </div>
                                 </div>

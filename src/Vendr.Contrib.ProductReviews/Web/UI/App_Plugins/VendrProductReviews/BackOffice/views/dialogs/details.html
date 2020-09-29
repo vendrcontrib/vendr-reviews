@@ -15,25 +15,19 @@
                 <umb-box>
                     <umb-box-content>
 
-                        <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+                        <umb-control-group label="Title" description="The title of the review">
+                            <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
+                        </umb-control-group>
 
-                        <div ng-if="!vm.loading">
+                        <umb-control-group label="Description" description="The comments from the reviewer about this product">
+                            <textarea class="umb-property-editor" rows="10" maxlength="255" ng-model="vm.content.description" required></textarea>
+                        </umb-control-group>
 
-                            <umb-control-group label="Title" description="The title of the review">
-                                <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
-                            </umb-control-group>
-
-                            <umb-control-group label="Description" description="The comments from the reviewer about this product">
-                                <textarea class="umb-property-editor" rows="10" maxlength="255" ng-model="vm.content.description" required></textarea>
-                            </umb-control-group>
-
-                            <umb-control-group label="Verified Buyer" description="It is verified that the reviewer has bought this product">
-                                <umb-toggle checked="vm.content.verifiedBuyer"
-                                            on-click="vm.content.verifiedBuyer = !vm.content.verifiedBuyer">
-                                </umb-toggle>
-                            </umb-control-group>
-
-                        </div>
+                        <umb-control-group label="Verified Buyer" description="It is verified that the reviewer has bought this product">
+                            <umb-toggle checked="vm.content.verifiedBuyer"
+                                        on-click="vm.content.verifiedBuyer = !vm.content.verifiedBuyer">
+                            </umb-toggle>
+                        </umb-control-group>
 
                     </umb-box-content>
                 </umb-box>

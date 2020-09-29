@@ -21,10 +21,11 @@
             }
         }
 
-        vm.submit = function (item) {
-            //$scope.model.value = item;
+        vm.submit = function () {
+            $scope.model.review = vm.content;
+
             if ($scope.model.submit) {
-                $scope.model.submit($scope.model.value);
+                $scope.model.submit($scope.model);
             }
         };
 
