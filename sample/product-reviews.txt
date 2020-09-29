@@ -12,17 +12,17 @@ CREATE TABLE vendrProductReviews (
    [name] NVARCHAR(255) NOT NULL,
    [description] NVARCHAR(255) NOT NULL,
    [verifiedBuyer] BIT NOT NULL DEFAULT 0,
-   [recommendedProduct] INT,
+   [recommendProduct] INT,
    PRIMARY KEY ([id])
 );
 
 
 
 
-INSERT INTO vendrProductReviews ([storeId], [status], [rating], [productReference], [title], [name], [description]) VALUES 
-('b1e61994-b83b-420a-903e-63a7a15942dc', 0, 5.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'Awesome product', 'Claire Bennett', 'Worth all the money!'),
-('b1e61994-b83b-420a-903e-63a7a15942dc', 0, 3.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'It was okay', 'Danial Forrest', 'It was okay, but not my cup of tea.'),
-('b1e61994-b83b-420a-903e-63a7a15942dc', 1, 4.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'Love it', 'Emma Huff', 'Definitely my favorite tea.'),
-('b1e61994-b83b-420a-903e-63a7a15942dc', 2, 1.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'No thanks', 'Oskar Ortega', 'It did not meet my expectations.');
+INSERT INTO vendrProductReviews ([storeId], [status], [rating], [productReference], [title], [name], [description], [verifiedBuyer]) VALUES 
+('b1e61994-b83b-420a-903e-63a7a15942dc', 0, 5.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'Awesome product', 'Claire Bennett', 'Worth all the money!', 1),
+('b1e61994-b83b-420a-903e-63a7a15942dc', 0, 3.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'It was okay', 'Danial Forrest', 'It was okay, but not my cup of tea.', null),
+('b1e61994-b83b-420a-903e-63a7a15942dc', 1, 4.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'Love it', 'Emma Huff', 'Definitely my favorite tea.', 1),
+('b1e61994-b83b-420a-903e-63a7a15942dc', 2, 1.0, '2fa949e4-2acb-4aef-bb7c-4d3a5f7bbe52', 'No thanks', 'Oskar Ortega', 'It did not meet my expectations.', null);
 
 
