@@ -20,6 +20,6 @@ namespace Vendr.Contrib.ProductReviews.Web.Dtos
 
         public string Description { get; set; }
 
-        public bool? RecommendedProduct { get; set; }
+        public bool? RecommendProduct { get; set; }
     }
 }

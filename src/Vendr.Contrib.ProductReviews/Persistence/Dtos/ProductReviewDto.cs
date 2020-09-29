@@ -57,8 +57,8 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         [Column("verifiedBuyer")]
         public bool VerifiedBuyer { get; set; }
 
-        [Column("recommendedProduct")]
+        [Column("recommendProduct")]
         [NullSetting(NullSetting = NullSettings.Null)]
-        public bool? RecommendedProduct { get; set; }
+        public bool? RecommendProduct { get; set; }
     }
 }

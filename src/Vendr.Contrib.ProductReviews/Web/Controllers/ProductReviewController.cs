@@ -37,7 +37,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
                         Email = model.Email,
                         Name = model.Name,
                         Description = model.Description,
-                        RecommendedProduct = model.RecommendedProduct
+                        RecommendProduct = model.RecommendProduct
                     };
 
                     _productReviewService.AddProductReview(review);

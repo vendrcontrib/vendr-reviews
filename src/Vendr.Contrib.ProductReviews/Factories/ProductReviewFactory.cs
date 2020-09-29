@@ -24,7 +24,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 CustomerReference = dto.CustomerReference,
                 ProductReference = dto.ProductReference,
                 VerifiedBuyer = dto.VerifiedBuyer,
-                RecommendedProduct = dto.RecommendedProduct
+                RecommendProduct = dto.RecommendProduct
             };
 
             return review;
@@ -49,7 +49,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 CustomerReference = review.CustomerReference,
                 ProductReference = review.ProductReference,
                 VerifiedBuyer = review.VerifiedBuyer,
-                RecommendedProduct = review.RecommendedProduct
+                RecommendProduct = review.RecommendProduct
             };
 
             return dto;

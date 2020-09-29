@@ -66,7 +66,7 @@ namespace Vendr.Contrib.ProductReviews.Models
         [DataMember(Name = "verifiedBuyer")]
         public bool VerifiedBuyer { get; set; }
 
-        [DataMember(Name = "recommendedProduct")]
-        public bool? RecommendedProduct { get; set; }
+        [DataMember(Name = "recommendProduct")]
+        public bool? RecommendProduct { get; set; }
     }
 }
