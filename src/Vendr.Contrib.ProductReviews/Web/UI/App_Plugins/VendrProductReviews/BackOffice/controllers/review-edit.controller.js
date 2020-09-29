@@ -97,10 +97,9 @@
             var dialog = {
                 view: '/app_plugins/vendrproductreviews/backoffice/views/dialogs/details.html',
                 size: 'small',
-                config: {
-                    storeId: storeId,
-                    reviewId: id
-                },
+                title: 'Edit review',
+                review: vm.content,
+                config: {},
                 submit: function (model) {
                     
                 },

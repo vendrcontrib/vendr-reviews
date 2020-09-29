@@ -4,15 +4,13 @@
 
     function ReviewDetailsEditController($scope, localizationService, vendrProductReviewsResource) {
 
-        var defaultConfig = {
-            title: "Edit product review"
-        };
+        var defaultConfig = {};
 
         var vm = this;
 
         vm.config = angular.extend({}, defaultConfig, $scope.model.config);
 
-        vm.content = {};
+        vm.content = angular.copy($scope.model.review) || {};
 
         function onInit() {
             
@@ -21,13 +19,9 @@
                     $scope.model.title = value;
                 });
             }
-
-            vendrProductReviewsResource.getProductReview(vm.config.reviewId).then(function (review) {
-                vm.content = review;
-            });
         }
 
-        vm.select = function (item) {
+        vm.submit = function (item) {
             //$scope.model.value = item;
             if ($scope.model.submit) {
                 $scope.model.submit($scope.model.value);
