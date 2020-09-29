@@ -53,36 +53,5 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             return menu;
         }
 
-        //protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
-        //{
-        //    // create a Menu Item Collection to return so people can interact with the nodes in your tree
-        //    var menu = new MenuItemCollection();
-
-        //    if (id == Constants.System.Root.ToInvariantString())
-        //    {
-        //        // root actions, perhaps users can create new items in this tree, or perhaps it's not a content tree, it might be a read only tree, or each node item might represent something entirely different...
-        //        // add your menu item actions or custom ActionMenuItems
-        //        menu.Items.Add(new CreateChildEntity(Services.TextService));
-        //        // add refresh menu item (note no dialog)
-        //        menu.Items.Add(new RefreshNode(Services.TextService, true));
-        //        return menu;
-        //    }
-
-        //    // add a delete action to each individual item
-        //    //menu.Items.Add<ActionDelete>(Services.TextService, true, opensDialog: true);
-
-        //    return menu;
-        //}
-
-        //protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
-        //{
-        //    var root = base.CreateRootNode(queryStrings);
-
-        //    root.Icon = "icon-rate";
-        //    root.HasChildren = false;
-        //    root.MenuUrl = null;
-
-        //    return null;
-        //}
     }
 }

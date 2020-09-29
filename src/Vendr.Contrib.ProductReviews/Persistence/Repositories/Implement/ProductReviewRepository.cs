@@ -121,22 +121,13 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();
         }
 
-        public IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords) //, Ordering ordering)
+        public IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords)
         {
             var sql = Sql()
                 .Select("*")
                 .From<ProductReviewDto>()
                 .Where<ProductReviewDto>(x => x.StoreId == storeId)
                 .OrderByDescending<ProductReviewDto>(x => x.CreateDate);
-
-            //if (ordering == null || ordering.IsEmpty)
-            //    ordering = Ordering.By(_sqlSyntax.GetQuotedColumnName(ProductReviews.TableName, "id"));
-
-            //var translator = new SqlTranslator<IRelation>(sql, query);
-            //sql = translator.Translate();
-
-            // apply ordering
-            //ApplyOrdering(ref sql, ordering);
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;

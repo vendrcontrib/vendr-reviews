@@ -83,7 +83,6 @@ namespace Vendr.Contrib.ProductReviews.Composing
                 reviewsNode.Path = $"-1,{storeId},{id}";
                 reviewsNode.NodeType = Constants.Trees.Reviews.NodeType;
 
-                //reviewsNode.AdditionalData.Add("uniqueId", id);
                 reviewsNode.AdditionalData.Add("storeId", storeId);
                 reviewsNode.AdditionalData.Add("tree", Vendr.Web.Constants.Trees.Stores.Alias);
                 reviewsNode.AdditionalData.Add("application", Vendr.Web.Constants.Sections.Commerce);

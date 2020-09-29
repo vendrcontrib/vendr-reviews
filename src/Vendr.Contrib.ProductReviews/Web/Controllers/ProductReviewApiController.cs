@@ -1,28 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
-using Vendr.Core.Web.Api;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Services;
 using Umbraco.Core.Services;
-using Umbraco.Web.Models;
 using Umbraco.Web.Models.ContentEditing;
-using Notification = Umbraco.Web.Models.ContentEditing.Notification;
-using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Web.Dtos;
 using Vendr.Core.Adapters;
+using Notification = Umbraco.Web.Models.ContentEditing.Notification;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
     [PluginController("VendrProductReviews")]
     public class ProductReviewApiController : UmbracoAuthorizedApiController
     {
-        //private readonly IVendrApi _vendrApi;
         private readonly IProductReviewService _productReviewService;
         private readonly ILocalizedTextService _textService;
         private readonly IProductAdapter _productAdapter;

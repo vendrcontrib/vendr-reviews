@@ -114,8 +114,6 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                //var query = Query<ProductReview>().Where(x => x.Id == id);
-
                 var items = repo.GetPagedReviewsByQuery(storeId, null, currentPage - 1, itemsPerPage, out total);
                 results.AddRange(items);
                 totalRecords = total;
@@ -134,8 +132,6 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                //var query = Query<ProductReview>().Where(x => x.Id == id);
-
                 var items = repo.SearchReviews(storeId, currentPage - 1, itemsPerPage, out total, statuses: statuses, ratings: ratings, searchTerm: searchTerm);
                 results.AddRange(items);
                 totalRecords = total;
