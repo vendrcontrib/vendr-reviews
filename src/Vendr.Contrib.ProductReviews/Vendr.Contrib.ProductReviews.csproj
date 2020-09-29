@@ -288,7 +288,9 @@
     <Compile Include="Events\ReviewNotificationEventhandler.cs" />
     <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />
     <Compile Include="Migrations\CreateTable.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Status.cs" />
+    <Compile Include="Persistence\Dtos\CommentDto.cs" />
     <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
     <Compile Include="Enums\ReviewStatus.cs" />
     <Compile Include="Factories\IProductReviewRepositoryFactory.cs" />
@@ -315,6 +317,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\dialogs\delete.controller.js" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\dialogs\details.controller.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\dialogs\statuspicker.controller.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\review-edit.controller.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\controllers\review-list.controller.js" />
@@ -323,6 +326,7 @@
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\interceptors\routeRewrite.interceptor.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\resources\vendrproductreviews.resource.js" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\dialogs\delete.html" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\dialogs\details.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\dialogs\statuspicker.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\review\edit.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\review\list.html" />

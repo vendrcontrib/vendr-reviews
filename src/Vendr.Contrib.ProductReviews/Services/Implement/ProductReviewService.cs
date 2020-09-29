@@ -6,8 +6,6 @@ using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
 using Vendr.Core.Events;
-using Vendr.Core.Models;
-using Vendr.Core.Persistence;
 using Vendr.Contrib.ProductReviews.Events;
 
 namespace Vendr.Contrib.ProductReviews.Services.Implement
@@ -176,6 +174,20 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
                 result = repo.ChangeStatus(id, status);
+                uow.Complete();
+            }
+
+            return result;
+        }
+
+        public Comment SaveComment(Comment comment)
+        {
+            Comment result;
+
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                result = repo.SaveComment(comment);
                 uow.Complete();
             }
 

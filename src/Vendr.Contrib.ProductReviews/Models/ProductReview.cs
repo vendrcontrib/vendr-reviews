@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using Umbraco.Web.Models.ContentEditing;
 using Vendr.Contrib.ProductReviews.Enums;
@@ -20,9 +21,6 @@ namespace Vendr.Contrib.ProductReviews.Models
 
         [DataMember(Name = "path")]
         public string[] Path => new string[] { "-1", StoreId.ToString(), Constants.Trees.Reviews.Id, Id.ToString() };
-
-        [DataMember(Name = "notifications")]
-        public List<Notification> Notifications { get; private set; }
 
         [DataMember(Name = "id")]
         public Guid Id { get; internal set; }
@@ -68,5 +66,9 @@ namespace Vendr.Contrib.ProductReviews.Models
 
         [DataMember(Name = "recommendProduct")]
         public bool? RecommendProduct { get; set; }
+
+        [DataMember(Name = "notifications")]
+        [ReadOnly(true)]
+        public List<Notification> Notifications { get; private set; }
     }
 }

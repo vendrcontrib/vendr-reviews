@@ -56,5 +56,10 @@ namespace Vendr.Contrib.ProductReviews.Services
         /// Change status of product review.
         /// </summary>
         ProductReview ChangeStatus(Guid id, ReviewStatus status);
+
+        /// <summary>
+        /// Save comment to product review.
+        /// </summary>
+        Comment SaveComment(Comment comment);
     }
 }

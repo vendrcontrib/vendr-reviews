@@ -1,4 +1,4 @@
-CREATE TABLE vendrProductReview (
+CREATE TABLE [vendrProductReview] (
    [id] UNIQUEIDENTIFIER NOT NULL DEFAULT (NEWID()),
    [storeId] UNIQUEIDENTIFIER NOT NULL,
    [createDate] DATETIME NOT NULL DEFAULT (GETDATE()),
@@ -16,6 +16,15 @@ CREATE TABLE vendrProductReview (
    PRIMARY KEY ([id])
 );
 
+
+CREATE TABLE [vendrProductReviewComment] (
+   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT (NEWID()),
+   [storeId] UNIQUEIDENTIFIER NOT NULL,
+   [reviewId] UNIQUEIDENTIFIER NOT NULL,
+   [createDate] DATETIME NOT NULL DEFAULT (GETDATE()),
+   [description] NVARCHAR(255) NOT NULL,
+   PRIMARY KEY ([id])
+);
 
 
 

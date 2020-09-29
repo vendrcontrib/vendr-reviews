@@ -40,7 +40,7 @@
                                 <button type="button" class="btn btn-small btn-default" ng-click="vm.editReview()">Edit</button>
                             </umb-box-header>
                             <umb-box-content>
-                                <span class="rating mb1" aria-hidden="true">
+                                <span class="dib rating mb2" aria-hidden="true">
                                     <i class="icon-rate"
                                        ng-repeat="n in [].constructor(5) track by $index"
                                        ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
@@ -49,6 +49,7 @@
                                 <div>
                                     <strong>{{vm.content.title}}</strong>
                                     <p class="mt2">{{vm.content.description}}</p>
+                                    <p class="mt2">Recommend product: {{vm.content.recommendProduct !== null ? (vm.content.recommendProduct === true ? 'Yes' : 'No') : 'Not specified'}}</p>
                                     <div class="card-review-footer">
                                         <span><em>{{vm.content.name}}</em>&nbsp;<span ng-if="vm.content.email">({{vm.content.email}})</span></span>
                                         <span ng-if="vm.content.verifiedBuyer" class="verified-buyer">
@@ -62,50 +63,9 @@
                         <umb-box>
                             <umb-box-header title="Reply to review"></umb-box-header>
                             <umb-box-content>
-                                <textarea class="umb-property-editor" rows="10" maxlength="255" placeholder="Enter a reply to this review..." ng-model="vm.content.reply" required></textarea>
+                                <textarea class="umb-property-editor" rows="10" maxlength="255" placeholder="Enter a reply to this review..." ng-model="vm.comment"></textarea>
                             </umb-box-content>
                         </umb-box>
-
-                        <!--<umb-box>
-                            <umb-box-content>
-
-                                <umb-control-group label="Rating" description="The rating of the product">
-                                    <span class="rating" aria-hidden="true">
-                                        <i class="icon-rate"
-                                           ng-repeat="n in [].constructor(5) track by $index"
-                                           ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
-                                        </i>
-                                    </span>
-                                </umb-control-group>
-
-                                <umb-control-group label="Name" description="The name of the reviewer">
-                                    <span>{{vm.content.name}}</span>
-                                </umb-control-group>
-
-                                <umb-control-group label="Email" description="The email of the reviewer">
-                                    <span>{{vm.content.email}}</span>
-                                </umb-control-group>
-
-                                <umb-control-group label="Title" description="The title of the review">
-                                    <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
-                                </umb-control-group>
-
-                                <umb-control-group label="Description" description="The comments from the reviewer about this product">
-                                    <textarea class="umb-property-editor" rows="10" maxlength="255" ng-model="vm.content.description" required></textarea>
-                                </umb-control-group>
-
-                                <umb-control-group label="Verified Buyer" description="It is verified that the reviewer has bought this product">
-                                    <umb-toggle checked="vm.content.verifiedBuyer"
-                                                on-click="vm.content.verifiedBuyer = !vm.content.verifiedBuyer">
-                                    </umb-toggle>
-                                </umb-control-group>
-
-                                <umb-control-group label="Recommend Product" description="The customer recommend this product">
-                                    <span>{{vm.content.recommendProduct !== null ? (vm.content.recommendProduct === true ? 'Yes' : 'No') : 'Not specified'}}</span>
-                                </umb-control-group>
-
-                            </umb-box-content>
-                        </umb-box>-->
 
                     </div>
                     <div class="vendr-layout__right">

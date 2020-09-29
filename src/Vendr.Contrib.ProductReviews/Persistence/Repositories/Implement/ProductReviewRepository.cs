@@ -116,6 +116,16 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return ProductReviewFactory.BuildProductReview(review);
         }
 
+        public Comment SaveComment(Comment comment)
+        {
+            var dto = ProductReviewFactory.BuildComment(comment);
+            dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
+
+            _uow.Database.Save(dto);
+
+            return ProductReviewFactory.BuildComment(dto);
+        }
+
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
         {
             return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();

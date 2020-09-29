@@ -14,6 +14,8 @@
             public static class Tables
             {
                 public const string ProductReview = TableNamePrefix + "ProductReview";
+
+                public const string Comment = TableNamePrefix + "ProductReviewComment";
             }
         }
 

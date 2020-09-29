@@ -1,6 +1,7 @@
 ﻿using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
 using Vendr.Contrib.ProductReviews.Models;
+using System;
 
 namespace Vendr.Contrib.ProductReviews.Factories
 {
@@ -50,6 +51,35 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 ProductReference = review.ProductReference,
                 VerifiedBuyer = review.VerifiedBuyer,
                 RecommendProduct = review.RecommendProduct
+            };
+
+            return dto;
+        }
+
+        public static Comment BuildComment(CommentDto dto)
+        {
+            dto.MustNotBeNull(nameof(dto));
+
+            var review = new Comment(dto.Id)
+            {
+                StoreId = dto.StoreId,
+                CreateDate = dto.CreateDate,
+                Description = dto.Description
+            };
+
+            return review;
+        }
+
+        public static CommentDto BuildComment(Comment comment)
+        {
+            comment.MustNotBeNull(nameof(comment));
+
+            var dto = new CommentDto
+            {
+                Id = comment.Id,
+                StoreId = comment.StoreId,
+                CreateDate = comment.CreateDate,       
+                Description = comment.Description
             };
 
             return dto;

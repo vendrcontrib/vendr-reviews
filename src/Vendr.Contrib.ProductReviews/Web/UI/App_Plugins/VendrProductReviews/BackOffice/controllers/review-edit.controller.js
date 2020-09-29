@@ -101,11 +101,7 @@
                 review: vm.content,
                 config: {},
                 submit: function (model) {
-                    console.log("model", model);
-
-                    console.log("vm.content 1", vm.content);
                     vm.content = model.review;
-                    console.log("vm.content 2", vm.content);
 
                     editorService.close();
                 },
@@ -183,12 +179,19 @@
         };
 
         vm.save = function (suppressNotification) {
-
+            
             if (formHelper.submitForm({ scope: $scope, statusMessage: "Saving..." })) {
-
+                
                 vm.page.saveButtonState = "busy";
 
                 vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
+
+                    if (vm.comment !== null && vm.comment.trim().lenght > 0) {
+                        console.log("save comment");
+                        vendrProductReviewsResource.saveComment(storeId, id, vm.comment).then(function (data) {
+                            console.log("data", data);
+                        });
+                    }
 
                     formHelper.resetForm({ scope: $scope, notifications: saved.notifications });
 

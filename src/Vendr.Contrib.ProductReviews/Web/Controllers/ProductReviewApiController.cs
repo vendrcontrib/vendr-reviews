@@ -171,5 +171,11 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         {
             return _productReviewService.ChangeStatus(model.ReviewId, model.Status);
         }
+
+        [HttpPost]
+        public Comment SaveComment(Comment comment)
+        {
+            return _productReviewService.SaveComment(comment);
+        }
     }
 }

@@ -89,6 +89,15 @@
                             storeId: storeId
                         }
                     }), "Failed to get statuses");
+            },
+
+            saveComment: function (storeId, reviewId, description) {
+                return umbRequestHelper.resourcePromise(
+                    $http.post("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SaveComment", {
+                        storeId: storeId,
+                        reviewId: reviewId,
+                        description: description
+                    }), "Failed to add comment");
             }
 
         };

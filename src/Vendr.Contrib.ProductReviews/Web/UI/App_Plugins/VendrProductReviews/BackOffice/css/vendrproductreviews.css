@@ -39,7 +39,7 @@
 }
 
 .vendr-product-review .card-review .card-review-footer {
-    border-top: 1px solid #ccc;
+    border-top: 1px dashed #dedede;
     padding-top: 10px;
 }
 
