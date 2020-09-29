@@ -92,6 +92,26 @@
             });
         };
 
+        vm.editReview = function () {
+
+            var dialog = {
+                view: '/app_plugins/vendrproductreviews/backoffice/views/dialogs/details.html',
+                size: 'small',
+                config: {
+                    storeId: storeId,
+                    reviewId: id
+                },
+                submit: function (model) {
+                    
+                },
+                close: function () {
+                    editorService.close();
+                }
+            };
+
+            editorService.open(dialog);
+        };
+
         vm.changeStatus = function () {
 
             var dialog = {

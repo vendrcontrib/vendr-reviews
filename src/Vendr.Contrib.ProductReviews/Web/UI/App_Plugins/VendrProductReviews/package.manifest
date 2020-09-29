@@ -5,6 +5,7 @@
     "~/App_Plugins/VendrProductReviews/backoffice/interceptors/config.interceptors.js",
     "~/App_Plugins/VendrProductReviews/backoffice/controllers/dialogs/delete.controller.js",
     "~/App_Plugins/VendrProductReviews/backoffice/controllers/dialogs/statuspicker.controller.js",
+    "~/App_Plugins/VendrProductReviews/backoffice/controllers/dialogs/details.controller.js",
     "~/App_Plugins/VendrProductReviews/backoffice/controllers/review-list.controller.js",
     "~/App_Plugins/VendrProductReviews/backoffice/controllers/review-edit.controller.js"
   ],
