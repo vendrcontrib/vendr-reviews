@@ -38,5 +38,16 @@
             }
         }
 
+        public static class Entities
+        {
+            public static class EntityTypes
+            {
+                /// <summary>
+                /// Review entity type
+                /// </summary>
+                public const string Review = "Review";
+            }
+        }
+
     }
 }
