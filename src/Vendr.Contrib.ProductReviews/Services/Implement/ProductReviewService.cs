@@ -7,6 +7,7 @@ using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
 using Vendr.Core.Events;
 using Vendr.Contrib.ProductReviews.Events;
+using System.Linq;
 
 namespace Vendr.Contrib.ProductReviews.Services.Implement
 {
@@ -79,6 +80,12 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
                 var items = repo.GetMany(storeId, productReference, currentPage - 1, itemsPerPage, out total);
+
+                foreach (var item in items)
+                {
+                    item.Comments = repo.GetComments(item.StoreId, item.Id).ToList();
+                }
+
                 results.AddRange(items);
                 totalRecords = total;
                 uow.Complete();
