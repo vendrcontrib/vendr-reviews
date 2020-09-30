@@ -220,5 +220,16 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
             return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
         }
+
+        public IEnumerable<Comment> GetComments(Guid storeId, Guid[] reviewIds)
+        {
+            var sql = Sql()
+                .Select("*")
+                .From<CommentDto>()
+                .Where<CommentDto>(x => x.StoreId == storeId)
+                .WhereIn<CommentDto>(x => x.ReviewId, reviewIds);
+
+            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
+        }
     }
 }

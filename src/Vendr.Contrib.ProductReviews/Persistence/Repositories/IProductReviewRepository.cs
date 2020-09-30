@@ -31,5 +31,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
         Comment SaveComment(Comment comment);
         
         IEnumerable<Comment> GetComments(Guid storeId, Guid reviewId);
+
+        IEnumerable<Comment> GetComments(Guid storeId, Guid[] reviewIds);
     }
 }

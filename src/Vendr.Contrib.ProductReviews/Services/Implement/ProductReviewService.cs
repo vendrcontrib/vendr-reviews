@@ -80,10 +80,13 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
                 var items = repo.GetMany(storeId, productReference, currentPage - 1, itemsPerPage, out total);
+                var reviewIds = items.Select(x => x.Id).ToArray();
+
+                var comments = repo.GetComments(storeId, reviewIds);
 
                 foreach (var item in items)
                 {
-                    item.Comments = repo.GetComments(item.StoreId, item.Id).ToList();
+                    item.Comments = comments.Where(x => x.Id == item.Id).ToList();
                 }
 
                 results.AddRange(items);
