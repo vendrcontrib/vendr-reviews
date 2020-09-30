@@ -287,6 +287,19 @@
                     <h4>@review.Title</h4>
                     <p style="color: #999;">by <em>@review.Name</em> (@review.CreateDate.ToString("MM/dd/yyyy"))</p>
                     <p>@review.Description</p>
+
+                    @if (review.Comments != null && review.Comments.Count > 0)
+                    {
+                        var comment = review.Comments.FirstOrDefault();
+                        if (comment != null)
+                        {
+                            <div class="comment" style="margin: 5px 0px 5px 25px; padding: 0 10px; border-left: 3px solid #ccc;">
+                                <strong>Shop owner</strong><br />
+                                <small>@comment.CreateDate.ToString("MM/dd/yyyy")</small>
+                                <p>@comment.Description</p>
+                            </div>
+                        }
+                    }
                 </div>
             }
         </div>
