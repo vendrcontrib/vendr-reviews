@@ -86,7 +86,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
 
                 foreach (var item in items)
                 {
-                    item.Comments = comments.Where(x => x.Id == item.Id).ToList();
+                    item.Comments = comments.Where(x => x.ReviewId == item.Id).ToList();
                 }
 
                 results.AddRange(items);
