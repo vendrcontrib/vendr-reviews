@@ -29,5 +29,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
         ProductReview ChangeStatus(Guid id, ReviewStatus status);
 
         Comment SaveComment(Comment comment);
+        
+        IEnumerable<Comment> GetComments(Guid storeId, Guid reviewId);
     }
 }
