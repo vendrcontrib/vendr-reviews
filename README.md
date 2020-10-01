@@ -25,9 +25,9 @@ Insert the following partial on the product page:
 - [x] Change review UpdateDate on save.
 - [x] Add email field to review.
 - [x] Show product details like sku and product name on edit page.
-- [ ] Recommend this product (yes/no).
+- [x] Recommend this product (yes/no).
 - [x] Verified buyer (yes/no).
 - [ ] Votes positive
 - [ ] Votes negative
-- [ ] Reply/comment on review.
+- [x] Reply/comment on review.
 - [ ] Add basic configuration (e.g. as config file).
