@@ -8,8 +8,13 @@ namespace Vendr.Contrib.ProductReviews.Enums
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ReviewStatus
     {
-        Pending,
-        Approved,
-        Declined
+        [EnumMember(Value = "pending")]
+        Pending = 0,
+
+        [EnumMember(Value = "approved")]
+        Approved = 1,
+
+        [EnumMember(Value = "declined")]
+        Declined = 2
     }
 }
