@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Umbraco.Core.Models;
+using System.Linq;
 using Vendr.Contrib.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Events;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
 using Vendr.Core.Events;
-using Vendr.Contrib.ProductReviews.Events;
-using System.Linq;
+using Vendr.Web.Events.Notification;
+using Vendr.Web.Models;
 
 namespace Vendr.Contrib.ProductReviews.Services.Implement
 {
@@ -61,11 +62,27 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
                 review.CreateDate = now;
                 review.UpdateDate = now;
 
+                var actions = new StoreActionsDto
+                {
+                    new StoreActionDto
+                    {
+                        Icon = review.Icon,
+                        Description = "A review is waiting for approval",
+                        RoutePath = $"commerce/vendrproductreviews/review-list/{review.StoreId}"
+                    }
+                };
+
+                EventBus.Dispatch(new StoreActionsRenderingNotification(review.StoreId, actions));
                 EventBus.Dispatch(new ProductReviewAddingNotification(review));
 
                 repo.Insert(review);
 
                 uow.ScheduleNotification(new ProductReviewAddedNotification(review));
+
+                if (review.Status == ReviewStatus.Pending)
+                {
+                    uow.ScheduleNotification(new StoreActionsRenderingNotification(review.StoreId, actions));
+                }
 
                 uow.Complete();
             }
