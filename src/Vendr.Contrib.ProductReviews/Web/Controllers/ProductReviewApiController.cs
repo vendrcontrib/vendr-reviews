@@ -38,6 +38,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             var values = Enum.GetValues(typeof(ReviewStatus));
 
             var statuses = new List<Status>();
+            int sortOrder = 1;
 
             foreach (ReviewStatus val in values)
             {
@@ -64,9 +65,11 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
                     Icon = "icon-light-up",
                     Id = (int)val,
                     Name = name,
-                    SortOrder = 1,
+                    SortOrder = sortOrder,
                     StoreId = storeId
                 });
+
+                sortOrder++;
             }
 
             return statuses;
