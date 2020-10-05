@@ -28,6 +28,9 @@ namespace Vendr.Contrib.ProductReviews.Composing
             composition.WithNotificationEvent<StoreActionsRenderingNotification>()
                 .RegisterHandler<StoreActionsRenderingEventHandler>();
 
+            composition.WithNotificationEvent<ActivityLogEntriesRenderingNotification>()
+                .RegisterHandler<ActivityLogEntriesRenderingNotificationEventHandler>();
+
             // Register component
             composition.Components()
                 .Append<VendrProductReviewsComponent>();
