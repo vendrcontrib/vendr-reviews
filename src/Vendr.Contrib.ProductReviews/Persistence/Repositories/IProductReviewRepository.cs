@@ -29,7 +29,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
         ProductReview ChangeStatus(Guid id, ReviewStatus status);
 
         Comment SaveComment(Comment comment);
-        
+
+        void DeleteComment(Guid id);
+
         IEnumerable<Comment> GetComments(Guid storeId, Guid reviewId);
 
         IEnumerable<Comment> GetComments(Guid storeId, Guid[] reviewIds);

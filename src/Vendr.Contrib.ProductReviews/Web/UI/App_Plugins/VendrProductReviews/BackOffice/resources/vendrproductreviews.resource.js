@@ -99,7 +99,13 @@
                         reviewId: reviewId,
                         description: description
                     }), "Failed to add comment");
-            }
+            },
+
+            deleteComment: function (id) {
+                return umbRequestHelper.resourcePromise(
+                    $http.delete("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/DeleteComment", { params: { id: id } }),
+                    "Failed to delete comment");
+            },
 
         };
 

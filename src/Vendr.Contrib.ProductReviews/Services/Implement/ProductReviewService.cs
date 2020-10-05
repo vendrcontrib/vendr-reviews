@@ -202,5 +202,15 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
 
             return result;
         }
+
+        public void DeleteComment(Guid id)
+        {
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                repo.DeleteComment(id);
+                uow.Complete();
+            }
+        }
     }
 }

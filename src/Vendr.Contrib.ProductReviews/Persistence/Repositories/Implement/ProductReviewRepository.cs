@@ -159,6 +159,33 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return ProductReviewFactory.BuildComment(dto);
         }
 
+        public IEnumerable<Comment> GetComments(Guid storeId, Guid reviewId)
+        {
+            var sql = Sql()
+                .Select("*")
+                .From<CommentDto>()
+                .Where<CommentDto>(x => x.StoreId == storeId)
+                .Where<CommentDto>(x => x.ReviewId == reviewId);
+
+            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
+        }
+
+        public IEnumerable<Comment> GetComments(Guid storeId, Guid[] reviewIds)
+        {
+            var sql = Sql()
+                .Select("*")
+                .From<CommentDto>()
+                .Where<CommentDto>(x => x.StoreId == storeId)
+                .WhereIn<CommentDto>(x => x.ReviewId, reviewIds);
+
+            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
+        }
+
+        public void DeleteComment(Guid id)
+        {
+            _uow.Database.Delete<CommentDto>("WHERE id = @0", id);
+        }
+
         protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
         {
             return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();
@@ -228,28 +255,6 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
 
             return result;
-        }
-
-        public IEnumerable<Comment> GetComments(Guid storeId, Guid reviewId)
-        {
-            var sql = Sql()
-                .Select("*")
-                .From<CommentDto>()
-                .Where<CommentDto>(x => x.StoreId == storeId)
-                .Where<CommentDto>(x => x.ReviewId == reviewId);
-
-            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
-        }
-
-        public IEnumerable<Comment> GetComments(Guid storeId, Guid[] reviewIds)
-        {
-            var sql = Sql()
-                .Select("*")
-                .From<CommentDto>()
-                .Where<CommentDto>(x => x.StoreId == storeId)
-                .WhereIn<CommentDto>(x => x.ReviewId, reviewIds);
-
-            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
         }
     }
 }

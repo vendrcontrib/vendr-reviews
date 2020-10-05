@@ -192,13 +192,21 @@
 
                 vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
 
-                    if (vm.comment !== null && vm.comment.trim().length > 0) {
-
+                    if (vm.comment !== null)
+                    {
                         var commentId = vm.content.comments && vm.content.comments[0].id;
-
-                        vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
-                            console.log("data", data);
-                        });
+                        if (commentId !== null && commentId !== undefined) {
+                            if (vm.comment.trim().length > 0) {
+                                vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
+                                    
+                                });
+                            }
+                            else {
+                                vendrProductReviewsResource.deleteComment(commentId).then(function (data) {
+                                    
+                                });
+                            }
+                        }
                     }
 
                     formHelper.resetForm({ scope: $scope, notifications: saved.notifications });

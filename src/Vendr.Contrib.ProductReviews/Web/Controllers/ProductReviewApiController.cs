@@ -180,5 +180,12 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         {
             return _productReviewService.SaveComment(comment);
         }
+
+        [HttpDelete]
+        [HttpPost]
+        public void DeleteComment(Guid id)
+        {
+            _productReviewService.DeleteComment(id);
+        }
     }
 }

@@ -61,5 +61,10 @@ namespace Vendr.Contrib.ProductReviews.Services
         /// Save comment to product review.
         /// </summary>
         Comment SaveComment(Comment comment);
+
+        /// <summary>
+        /// Delete comment for product review.
+        /// </summary>
+        void DeleteComment(Guid comment);
     }
 }
