@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using Vendr.Contrib.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Services;
 using Vendr.Core.Events.Notification;
 using Vendr.Web.Events.Notification;
 using Vendr.Web.Models;
@@ -7,18 +10,28 @@ namespace Vendr.Contrib.ProductReviews.Events
 {
     public class StoreActionsRenderingEventHandler : NotificationEventHandlerBase<StoreActionsRenderingNotification>
     {
+        private readonly IProductReviewService _productReviewService;
+
+        public StoreActionsRenderingEventHandler(IProductReviewService productReviewService)
+        {
+            _productReviewService = productReviewService;
+        }
+
         public override void Handle(StoreActionsRenderingNotification evt)
         {
-            //if (review.Status == ReviewStatus.Pending)
-            //{
-            //    uow.ScheduleNotification(new StoreActionsRenderingNotification(review.StoreId, actions));
-            //}
+            var statuses = new Enum[] { ReviewStatus.Pending }.Cast<int>().Select(x => x.ToString()).ToArray();
+
+            long total = 0;
+            _productReviewService.SearchProductReviews(evt.StoreId, 1, 50, out total, statuses, null, null);
+
+            if (total == 0)
+                return;
 
             evt.Actions.Add(new StoreActionDto
             {
-                Icon = "icon-rate",
-                Description = "A review is waiting for approval",
-                RoutePath = $"commerce/vendrproductreviews/review-list/{evt.StoreId}"
+                Icon = Constants.Trees.Reviews.Icon,
+                Description = $"{total + " " + (total == 1 ? "review is" : "reviews are")} waiting for approval",
+                RoutePath = $"#/commerce/vendrproductreviews/review-list/{evt.StoreId}"
             });
         }
     }
