@@ -24,6 +24,7 @@ Insert the following partial on the product page:
 - [x] Add page to view and edit some properties on review.
 - [x] Allow to delete review(s).
 - [x] Allow to change status of review(s).
+- [x] Reply/comment on review.
 - [x] Change review UpdateDate on save.
 - [x] Add email field to review.
 - [x] Show product details like sku and product name on edit page.
@@ -31,5 +32,4 @@ Insert the following partial on the product page:
 - [x] Verified buyer (yes/no).
 - [ ] Votes positive
 - [ ] Votes negative
-- [x] Reply/comment on review.
 - [ ] Add basic configuration (e.g. as config file).
