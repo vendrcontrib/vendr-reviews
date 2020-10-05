@@ -1,8 +1,7 @@
-﻿using Vendr.Contrib.ProductReviews.Persistence.Dtos;
-using Vendr.Core;
+﻿using System.Linq;
 using Vendr.Contrib.ProductReviews.Models;
-using System;
-using System.Linq;
+using Vendr.Contrib.ProductReviews.Persistence.Dtos;
+using Vendr.Core;
 
 namespace Vendr.Contrib.ProductReviews.Factories
 {

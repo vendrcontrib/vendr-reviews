@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Formatting;
-using System.Web.Http.ModelBinding;
+﻿using System.Net.Http.Formatting;
 using Umbraco.Core;
 using Umbraco.Web.Actions;
 using Umbraco.Web.Models.Trees;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.Trees;
-using Vendr.Core.Services;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -28,8 +23,6 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             }
 
             return nodes;
-            //this tree doesn't suport rendering more than 1 level
-            //throw new NotSupportedException();
         }
 
         protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
