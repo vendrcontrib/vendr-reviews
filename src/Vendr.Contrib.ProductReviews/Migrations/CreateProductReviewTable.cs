@@ -3,9 +3,9 @@ using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 
 namespace Vendr.Contrib.ProductReviews.Migrations
 {
-    public class CreateTable : MigrationBase
+    public class CreateProductReviewTable : MigrationBase
     {
-        public CreateTable(IMigrationContext context) : base(context) { }
+        public CreateProductReviewTable(IMigrationContext context) : base(context) { }
 
         public override void Migrate()
         {
