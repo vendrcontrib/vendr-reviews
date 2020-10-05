@@ -4,9 +4,11 @@
     var storeId = Guid.TryParse(ViewData["storeId"]?.ToString(), out Guid result) ? result : Guid.Empty;
     var productReference = ViewData["productReference"]?.ToString();
 
+    // These dependencies would typical be injected in constructor in a SurfaceController
     var uowProvicer = Current.Factory.GetInstance<Vendr.Core.IUnitOfWorkProvider>();
     var repository = Current.Factory.GetInstance<Vendr.Contrib.ProductReviews.Factories.IProductReviewRepositoryFactory>();
     var service = new Vendr.Contrib.ProductReviews.Services.Implement.ProductReviewService(uowProvicer, repository);
+    
     long total = 0;
     var reviews = service.GetProductReviews(storeId, productReference, 1, 10, out total);
 
