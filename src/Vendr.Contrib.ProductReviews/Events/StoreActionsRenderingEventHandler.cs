@@ -30,8 +30,8 @@ namespace Vendr.Contrib.ProductReviews.Events
             evt.Actions.Add(new StoreActionDto
             {
                 Icon = Constants.Trees.Reviews.Icon,
-                Description = $"{total + " " + (total == 1 ? "review is" : "reviews are")} waiting for approval",
-                RoutePath = $"#/commerce/vendrproductreviews/review-list/{evt.StoreId}"
+                Description = $"<strong>{total + " " + (total == 1 ? "review" : "reviews")}</strong> {(total == 1 ? "is" : "are")} waiting for approval",
+                RoutePath = $"#/commerce/vendrproductreviews/review-list/{evt.StoreId}?statuses={string.Join(",", statuses)}"
             });
         }
     }
