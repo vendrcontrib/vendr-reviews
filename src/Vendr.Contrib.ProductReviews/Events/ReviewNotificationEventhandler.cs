@@ -1,4 +1,5 @@
-﻿using Vendr.Core.Adapters;
+﻿using Umbraco.Core.Models.PublishedContent;
+using Vendr.Core.Adapters;
 using Vendr.Core.Events.Notification;
 using Vendr.Core.Logging;
 
@@ -8,16 +9,20 @@ namespace Vendr.Contrib.ProductReviews.Events
     {
         private readonly IActivityLogger _activityLogger;
         private readonly IProductAdapter _productAdapter;
+        private readonly IVariationContextAccessor _variationContextAccessor;
 
-        public ProductReviewAddedHandler(IActivityLogger activityLogger, IProductAdapter productAdapter)
+        public ProductReviewAddedHandler(IActivityLogger activityLogger, IProductAdapter productAdapter, IVariationContextAccessor variationContextAccessor)
         {
             _activityLogger = activityLogger;
             _productAdapter = productAdapter;
+            _variationContextAccessor = variationContextAccessor;
         }
 
         public override void Handle(ProductReviewAddedNotification evt)
         {
-            var snapshot = _productAdapter.GetProductSnapshot(evt.Review.ProductReference, "GB");
+            var culture = _variationContextAccessor.VariationContext.Culture;
+
+            var snapshot = _productAdapter.GetProductSnapshot(evt.Review.ProductReference, culture);
             if (snapshot == null)
                 return;
 
