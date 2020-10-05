@@ -5,11 +5,11 @@ using System.Linq;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.Querying;
 using Umbraco.Core.Persistence.SqlSyntax;
+using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Factories;
+using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
-using Vendr.Contrib.ProductReviews.Models;
-using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 {
@@ -35,19 +35,29 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
                 .LeftJoin<CommentDto>().On<CommentDto, ProductReviewDto>((comment, review) => comment.ReviewId == review.Id)
                 .Where<ProductReviewDto>(x => x.Id == id);
 
-            //var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments,
-            //    $"select r.*, c.* from {ProductReviewDto.TableName} r inner join {CommentDto.TableName} c on r.Id = c.ReviewId order by r.Id");
+            // Fetch and map comments for review
             var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments, sql);
 
             var result = data.Select(ProductReviewFactory.BuildProductReview).SingleOrDefault();
 
             return result;
-            //return DoFetchInternal(_uow, "WHERE id = @0", id).SingleOrDefault();
         }
 
         public IEnumerable<ProductReview> Get(Guid[] ids)
         {
-            return DoFetchInternal(_uow, "WHERE id IN(@0)", ids);
+            var sql = Sql()
+                .Select("*")
+                .From<ProductReviewDto>()
+                .LeftJoin<CommentDto>().On<CommentDto, ProductReviewDto>((comment, review) => comment.ReviewId == review.Id)
+                .WhereIn<ProductReviewDto>(x => x.Id, ids);
+
+            // Fetch and map comments for review
+            var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments, sql);
+
+            var results = data.Select(ProductReviewFactory.BuildProductReview).ToList();
+
+            return results;
+            //return DoFetchInternal(_uow, "WHERE id IN(@0)", ids);
         }
 
         public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords)
