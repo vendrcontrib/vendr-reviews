@@ -1,5 +1,4 @@
 ﻿using Umbraco.Core.Composing;
-using Umbraco.Web;
 using Umbraco.Web.Trees;
 
 namespace Vendr.Contrib.ProductReviews.Composing
