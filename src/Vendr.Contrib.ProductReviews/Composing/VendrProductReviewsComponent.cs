@@ -6,11 +6,8 @@ namespace Vendr.Contrib.ProductReviews.Composing
 {
     public class VendrProductReviewsComponent : IComponent
     {
-        private readonly IUmbracoContextFactory _umbracoContextFactory;
-
-        public VendrProductReviewsComponent(IUmbracoContextFactory umbracoContextFactory)
+        public VendrProductReviewsComponent()
         {
-            _umbracoContextFactory = umbracoContextFactory;
         }
 
         public void Initialize()
