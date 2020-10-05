@@ -195,17 +195,18 @@
                     if (vm.comment !== null)
                     {
                         var commentId = vm.content.comments && vm.content.comments[0].id;
-                        if (commentId !== null && commentId !== undefined) {
-                            if (vm.comment.trim().length > 0) {
-                                vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
-                                    
-                                });
-                            }
-                            else {
-                                vendrProductReviewsResource.deleteComment(commentId).then(function (data) {
-                                    
-                                });
-                            }
+
+                        if (vm.comment.trim().length > 0) {
+                            // Insert or update comment
+                            vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
+                                vm.comment = data.description;
+                            });
+                        }
+                        else if (commentId !== null && commentId !== undefined) {
+                            // Delete comment
+                            vendrProductReviewsResource.deleteComment(commentId).then(function (data) {
+                                vm.comment = null; 
+                            });
                         }
                     }
 
