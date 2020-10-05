@@ -29,6 +29,10 @@
                             </umb-toggle>
                         </umb-control-group>
 
+                        <umb-control-group label="Customer" description="Customer reference" ng-if="vm.content.customerReference">
+                            <span>{{vm.content.customerReference}}</span>
+                        </umb-control-group>
+
                     </umb-box-content>
                 </umb-box>
             </umb-editor-container>
