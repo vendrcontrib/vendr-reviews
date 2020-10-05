@@ -7,7 +7,6 @@
         vendrProductReviewsResource) {
 
         var currentNode = $scope.currentNode;
-        console.log("delete dialog", currentNode);
 
         var tree = currentNode.metaData['tree'];
         var nodeType = currentNode.nodeType;
