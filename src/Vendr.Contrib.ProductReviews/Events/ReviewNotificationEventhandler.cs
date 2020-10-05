@@ -26,7 +26,7 @@ namespace Vendr.Contrib.ProductReviews.Events
                 Constants.Entities.EntityTypes.Review,
                 "New review added",
                 $"vendrproductreviews/review-edit/{evt.Review.StoreId}_{evt.Review.Id}",
-                $"Review submitted from {evt.Review.Name} with a rating {evt.Review.Rating} for product {snapshot.Sku}",
+                $"Review submitted from {evt.Review.Name} with a rating of {evt.Review.Rating} for product {snapshot.Sku}",
                 evt.Review.CreateDate);
         }
     }
