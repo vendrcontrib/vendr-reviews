@@ -22,7 +22,7 @@ namespace Vendr.Contrib.ProductReviews.Events
             var statuses = new Enum[] { ReviewStatus.Pending }.Cast<int>().Select(x => x.ToString()).ToArray();
 
             long total = 0;
-            _productReviewService.SearchProductReviews(evt.StoreId, 1, 50, out total, statuses: statuses, startDate: DateTime.UtcNow);
+            _productReviewService.SearchProductReviews(evt.StoreId, 1, 50, out total, statuses: statuses, startDate: DateTime.UtcNow.Date);
 
             if (total == 0)
                 return;
