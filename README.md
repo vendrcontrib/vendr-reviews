@@ -2,6 +2,8 @@
 
 Product Reviews for Vendr, the eCommerce package for Umbrao v8+
 
+<img src="assets/screenshots/product-reviews-list.png" alt="" />
+
 Basic functionality to view and manage reviews in Vendr.
 
 Insert the following partial on the product page:
