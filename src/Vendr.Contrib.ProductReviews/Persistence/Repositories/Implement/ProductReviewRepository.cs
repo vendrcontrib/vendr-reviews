@@ -171,7 +171,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return result;
         }
 
-        public IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses = null, decimal[] ratings = null, string searchTerm = null)
+        public IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses = null, decimal[] ratings = null, string searchTerm = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             statuses = statuses ?? new string[0];
             ratings = ratings ?? new decimal[0];
@@ -187,6 +187,16 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
             if (ratings.Length > 0) {
                 sql.WhereIn<ProductReviewDto>(x => x.Rating, ratings);
+            }
+
+            if (startDate != null && startDate >= DateTime.MinValue)
+            {
+                sql.Where<ProductReviewDto>(x => x.CreateDate >= startDate.Value);
+            }
+
+            if (endDate != null && endDate <= DateTime.MaxValue)
+            {
+                sql.Where<ProductReviewDto>(x => x.CreateDate <= endDate.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))

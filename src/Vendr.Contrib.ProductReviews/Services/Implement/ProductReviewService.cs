@@ -7,8 +7,6 @@ using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
 using Vendr.Core.Events;
-using Vendr.Web.Events.Notification;
-using Vendr.Web.Models;
 
 namespace Vendr.Contrib.ProductReviews.Services.Implement
 {
@@ -133,7 +131,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             return results;
         }
 
-        public IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, decimal[] ratings, string searchTerm = "")
+        public IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, decimal[] ratings, string searchTerm = "", DateTime? startDate = null, DateTime? endDate = null)
         {
             long total;
             var results = new List<ProductReview>();
@@ -141,7 +139,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var items = repo.SearchReviews(storeId, currentPage - 1, itemsPerPage, out total, statuses: statuses, ratings: ratings, searchTerm: searchTerm);
+                var items = repo.SearchReviews(storeId, currentPage - 1, itemsPerPage, out total, statuses: statuses, ratings: ratings, searchTerm: searchTerm, startDate: startDate, endDate: endDate);
                 results.AddRange(items);
                 totalRecords = total;
 

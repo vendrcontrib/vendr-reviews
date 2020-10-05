@@ -35,7 +35,7 @@ namespace Vendr.Contrib.ProductReviews.Services
         /// <summary>
         /// Search product reviews.
         /// </summary>
-        IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, decimal[] ratings, string searchTerm = "");
+        IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses = null, decimal[] ratings = null, string searchTerm = "", DateTime? startDate = null, DateTime? endDate = null);
 
         /// <summary>
         /// Add product review.
