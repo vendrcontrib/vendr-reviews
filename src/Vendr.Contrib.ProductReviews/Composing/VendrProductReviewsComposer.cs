@@ -6,6 +6,7 @@ using Vendr.Contrib.ProductReviews.Services;
 using Vendr.Contrib.ProductReviews.Services.Implement;
 using Vendr.Core.Composing;
 using Vendr.Web.Composing;
+using Vendr.Web.Events.Notification;
 
 namespace Vendr.Contrib.ProductReviews.Composing
 {
@@ -23,6 +24,9 @@ namespace Vendr.Contrib.ProductReviews.Composing
             // Register events
             composition.WithNotificationEvent<ProductReviewAddedNotification>()
                 .RegisterHandler<ProductReviewAddedHandler>();
+
+            composition.WithNotificationEvent<StoreActionsRenderingNotification>()
+                .RegisterHandler<StoreActionsRenderingEventHandler>();
 
             // Register component
             composition.Components()

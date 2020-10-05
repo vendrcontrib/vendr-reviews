@@ -62,27 +62,11 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
                 review.CreateDate = now;
                 review.UpdateDate = now;
 
-                var actions = new StoreActionsDto
-                {
-                    new StoreActionDto
-                    {
-                        Icon = review.Icon,
-                        Description = "A review is waiting for approval",
-                        RoutePath = $"commerce/vendrproductreviews/review-list/{review.StoreId}"
-                    }
-                };
-
-                EventBus.Dispatch(new StoreActionsRenderingNotification(review.StoreId, actions));
                 EventBus.Dispatch(new ProductReviewAddingNotification(review));
 
                 repo.Insert(review);
 
                 uow.ScheduleNotification(new ProductReviewAddedNotification(review));
-
-                if (review.Status == ReviewStatus.Pending)
-                {
-                    uow.ScheduleNotification(new StoreActionsRenderingNotification(review.StoreId, actions));
-                }
 
                 uow.Complete();
             }
