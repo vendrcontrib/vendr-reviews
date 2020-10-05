@@ -12,8 +12,8 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
 {
     public class ProductReviewService : IProductReviewService
     {
-        private IUnitOfWorkProvider _uowProvider;
-        private IProductReviewRepositoryFactory _repositoryFactory;
+        private readonly IUnitOfWorkProvider _uowProvider;
+        private readonly IProductReviewRepositoryFactory _repositoryFactory;
 
         public ProductReviewService(IUnitOfWorkProvider uowProvider, IProductReviewRepositoryFactory repositoryFactory)
         {
