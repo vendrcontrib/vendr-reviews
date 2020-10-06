@@ -1,7 +1,7 @@
 ﻿using Umbraco.Core.Composing;
 using Umbraco.Web.Trees;
 
-namespace Vendr.Contrib.ProductReviews.Composing
+namespace Vendr.Contrib.ProductReviews.Components
 {
     public class VendrProductReviewsComponent : IComponent
     {

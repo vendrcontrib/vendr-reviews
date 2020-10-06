@@ -1,5 +1,6 @@
 ﻿using Umbraco.Core;
 using Umbraco.Core.Composing;
+using Vendr.Contrib.ProductReviews.Components;
 using Vendr.Contrib.ProductReviews.Events;
 using Vendr.Contrib.ProductReviews.Factories;
 using Vendr.Contrib.ProductReviews.Services;
@@ -8,7 +9,7 @@ using Vendr.Core.Composing;
 using Vendr.Web.Composing;
 using Vendr.Web.Events.Notification;
 
-namespace Vendr.Contrib.ProductReviews.Composing
+namespace Vendr.Contrib.ProductReviews.Composers
 {
     //[RuntimeLevel(MinLevel = RuntimeLevel.Run)]
     [ComposeAfter(typeof(VendrWebComposer))]
