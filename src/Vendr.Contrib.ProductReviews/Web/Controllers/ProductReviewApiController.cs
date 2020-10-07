@@ -145,8 +145,8 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
 
             try
             {
-                var result = _productReviewService.SaveProductReview(review);
-                result.Notifications.Add(new Notification(
+                review = _productReviewService.SaveProductReview(review);
+                review.Notifications.Add(new Notification(
                         _textService.Localize("speechBubbles/operationSavedHeader"),
                         string.Empty,
                         NotificationStyle.Success));
