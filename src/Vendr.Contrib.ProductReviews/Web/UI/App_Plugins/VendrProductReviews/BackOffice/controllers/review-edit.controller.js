@@ -194,19 +194,28 @@
 
                     if (vm.comment !== null)
                     {
-                        var commentId = vm.content.comments && vm.content.comments[0].id;
+                        var commentId = null;
+                        var commentDescription = null;
 
-                        if (vm.comment.trim().length > 0) {
-                            // Insert or update comment
-                            vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
-                                vm.comment = data.description;
-                            });
+                        if (vm.content.comments && vm.content.comments[0]) {
+                            commentId = vm.content.comments[0].id;
+                            commentDescription = vm.content.comments[0].description;
                         }
-                        else if (commentId !== null && commentId !== undefined) {
-                            // Delete comment
-                            vendrProductReviewsResource.deleteComment(commentId).then(function (data) {
-                                vm.comment = null; 
-                            });
+
+                        if (vm.comment !== commentDescription)
+                        {
+                            if (vm.comment.trim().length > 0) {
+                                // Insert or update comment
+                                vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
+                                    vm.comment = data.description;
+                                });
+                            }
+                            else if (commentId !== null && commentId !== undefined) {
+                                // Delete comment
+                                vendrProductReviewsResource.deleteComment(commentId).then(function (data) {
+                                    vm.comment = null; 
+                                });
+                            }
                         }
                     }
 
