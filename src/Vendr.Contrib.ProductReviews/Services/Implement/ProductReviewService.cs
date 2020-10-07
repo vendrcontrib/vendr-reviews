@@ -62,7 +62,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
 
                 EventBus.Dispatch(new ProductReviewAddingNotification(review));
 
-                repo.Insert(review);
+                review = repo.Insert(review);
 
                 uow.ScheduleNotification(new ProductReviewAddedNotification(review));
 
