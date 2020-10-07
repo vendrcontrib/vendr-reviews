@@ -4,7 +4,7 @@ using Umbraco.Core.Migrations;
 using Umbraco.Core.Migrations.Upgrade;
 using Umbraco.Core.Scoping;
 using Umbraco.Core.Services;
-using Vendr.Contrib.ProductReviews.Migrations;
+using Vendr.Contrib.ProductReviews.Migrations.TargetOneZeroZero;
 
 namespace Vendr.Contrib.ProductReviews.Components
 {
@@ -26,9 +26,9 @@ namespace Vendr.Contrib.ProductReviews.Components
         public void Initialize()
         {
             var plan = new MigrationPlan("Vendr.Contrib.ProductReviews");
+
             plan.From(string.Empty)
-                .To<CreateProductReviewTable>("1.0.0")
-                .To<CreateCommentTable>("1.0.0");
+                .To<CreateProductReviewTables>("1.0.0");
 
             var upgrader = new Upgrader(plan);
             upgrader.Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);

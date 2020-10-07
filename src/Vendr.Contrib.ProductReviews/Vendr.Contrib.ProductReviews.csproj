@@ -288,8 +288,7 @@
     <Compile Include="Events\ReviewNotificationEventhandler.cs" />
     <Compile Include="Events\StoreActionsRenderingEventHandler.cs" />
     <Compile Include="Factories\ProductReviewRepositoryFactory.cs" />
-    <Compile Include="Migrations\CreateCommentTable.cs" />
-    <Compile Include="Migrations\CreateProductReviewTable.cs" />
+    <Compile Include="Migrations\TargetOneZeroZero\CreateProductReviewTables.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Persistence\Dtos\CommentDto.cs" />
