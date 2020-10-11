@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Web.Http;
 using Umbraco.Core.Models;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.WebApi;
-using Vendr.Contrib.ProductReviews.Models;
-using Vendr.Contrib.ProductReviews.Services;
 using Umbraco.Core.Services;
 using Umbraco.Web.Models.ContentEditing;
+using Umbraco.Web.Mvc;
+using Umbraco.Web.WebApi;
+using Vendr.Contrib.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Models;
+using Vendr.Contrib.ProductReviews.Services;
 using Vendr.Contrib.ProductReviews.Web.Dtos;
 using Vendr.Core.Adapters;
 using Notification = Umbraco.Web.Models.ContentEditing.Notification;
-using Vendr.Contrib.ProductReviews.Enums;
 
 namespace Vendr.Contrib.ProductReviews.Web.Controllers
 {
@@ -76,8 +77,11 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpGet]
-        public Dictionary<string, string> GetProductData(string productReference, string languageIsoCode)
+        public Dictionary<string, string> GetProductData(string productReference, string languageIsoCode = null)
         {
+            if (string.IsNullOrEmpty(languageIsoCode))
+                languageIsoCode = Thread.CurrentThread.CurrentUICulture.Name;
+
             var snapshot = _productAdapter.GetProductSnapshot(productReference, languageIsoCode);
             if (snapshot == null)
                 return null;

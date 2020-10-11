@@ -63,7 +63,7 @@
 
                 // Check to see if we have a product ref, and if so, try and fetch a product
                 if (review.productReference) {
-                    promises.push(vendrProductReviewsResource.getProductData(review.productReference, "GB"));
+                    promises.push(vendrProductReviewsResource.getProductData(review.productReference, null));
                 }
                 else {
                     promises.push($q.resolve(null));
