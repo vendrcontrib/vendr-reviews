@@ -3,7 +3,7 @@
     <umb-load-indicator ng-if="vm.page.loading"></umb-load-indicator>
 
     <style>
-      .vendr-header--review-status .umb-panel-header-name:after { content: '{{ vm.content.status.replace("'","\\'") }}'; }
+      .vendr-header--review-status .umb-panel-header-name:after { content: '{{ vm.content.status.name.replace("'","\\'") }}'; }
     </style>
 
     <form name="contentForm"
@@ -25,7 +25,7 @@
                 on-back="vm.back()"
                 menu="vm.page.menu"
                 hide-menu="vm.page.isInfiniteMode"
-                class="vendr-header vendr-header--review vendr-header--review-status vendr-header--review-status-{{ vm.content.status.toLowerCase() }}">
+                class="vendr-header vendr-header--review vendr-header--review-status vendr-header--review-status-{{vm.content.status.color}}">
             </umb-editor-header>
 
             <umb-editor-container class="form-horizontal">

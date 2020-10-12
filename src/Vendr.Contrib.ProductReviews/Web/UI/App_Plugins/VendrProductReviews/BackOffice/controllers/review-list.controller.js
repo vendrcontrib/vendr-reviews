@@ -83,7 +83,7 @@
                         </span><span class="sr-only">{{rating}} stars</span></span>` },
                 { alias: 'review', header: 'Review', template: '<span class="db bold">{{title}}</span><span class="vendr-table-cell-label">{{description}}</span>' },
                 { alias: 'createDate', header: 'Date', template: "{{ createDate | date : 'MMMM d, yyyy h:mm a' }}" },
-                { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-badge-{{ status.toLowerCase() }}" title="Status: {{status}}">{{status}}</span>' }
+                { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-bg--{{status.color}}" title="Status: {{status.name}}">{{status.name}}</span>' }
             ],
             itemClick: function (itm) {
                 $location.path(itm.routePath);

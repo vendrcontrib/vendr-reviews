@@ -8,6 +8,7 @@ using Umbraco.Web.Models.ContentEditing;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 using Vendr.Contrib.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Helpers;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Services;
 using Vendr.Contrib.ProductReviews.Web.Dtos;
@@ -44,20 +45,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
             foreach (ReviewStatus val in values)
             {
                 var name = val.ToString();
-                var color = "black";
-
-                switch (val)
-                {
-                    case ReviewStatus.Pending:
-                        color = "light-blue";
-                        break;
-                    case ReviewStatus.Approved:
-                        color = "green";
-                        break;
-                    case ReviewStatus.Declined:
-                        color = "grey";
-                        break;
-                }
+                var color = ReviewHelper.GetStatusColor(val);
 
                 statuses.Add(new Status
                 {

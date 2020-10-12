@@ -38,7 +38,7 @@ namespace Vendr.Contrib.ProductReviews.Models
         public DateTime UpdateDate { get; set; }
 
         [DataMember(Name = "status")]
-        public ReviewStatus Status { get; set; }
+        public Status Status { get; set; }
 
         [DataMember(Name = "rating")]
         public decimal Rating { get; set; }

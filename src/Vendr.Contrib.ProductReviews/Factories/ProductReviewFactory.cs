@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Vendr.Contrib.ProductReviews.Enums;
+using Vendr.Contrib.ProductReviews.Helpers;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
@@ -20,12 +23,14 @@ namespace Vendr.Contrib.ProductReviews.Factories
                 Description = x.Description
             }).ToList();
 
+            var status = BuildStatus(dto);
+
             var review = new ProductReview(dto.Id)
             {
                 StoreId = dto.StoreId,
                 CreateDate = dto.CreateDate,
                 UpdateDate = dto.UpdateDate,
-                Status = dto.Status,
+                Status = status,
                 Rating = dto.Rating,
                 Title = dto.Title,
                 Email = dto.Email,
@@ -45,13 +50,15 @@ namespace Vendr.Contrib.ProductReviews.Factories
         {
             review.MustNotBeNull(nameof(review));
 
+            var status = Enum.TryParse(review.Status.Id.ToString(), out ReviewStatus s) ? s : default;
+
             var dto = new ProductReviewDto
             {
                 Id = review.Id,
                 StoreId = review.StoreId,
                 CreateDate = review.CreateDate,
                 UpdateDate = review.UpdateDate,
-                Status = review.Status,
+                Status = status,
                 Rating = review.Rating,
                 Title = review.Title,
                 Email = review.Email,
@@ -95,6 +102,22 @@ namespace Vendr.Contrib.ProductReviews.Factories
             };
 
             return dto;
+        }
+
+        private static Status BuildStatus(ProductReviewDto dto)
+        {
+            var name = dto.Status.ToString();
+            var color = ReviewHelper.GetStatusColor(dto.Status);
+
+            return new Status
+            {
+                Alias = name.ToLower(),
+                Id = (int)dto.Status,
+                Color = color,
+                Name = name,
+                SortOrder = 0,
+                StoreId = dto.StoreId
+            };
         }
     }
 }

@@ -69,18 +69,15 @@
     vertical-align: bottom;
 }
 
-.vendr-product-review .vendr-table .vendr-table-cell .vendr-badge-pending,
-.vendr-header--review-status-pending .umb-panel-header-name:after {
+.vendr-header--review-status-light-blue .umb-panel-header-name:after {
     color: white;
     background-color: #03a9f4;
 }
-.vendr-product-review .vendr-table .vendr-table-cell .vendr-badge-declined,
-.vendr-header--review-status-declined .umb-panel-header-name:after {
+.vendr-header--review-status-grey .umb-panel-header-name:after {
     color: #68676b;
     background-color: #d8d7d9;
 }
-.vendr-product-review .vendr-table .vendr-table-cell .vendr-badge-approved,
-.vendr-header--review-status-approved .umb-panel-header-name:after {
+.vendr-header--review-status-green .umb-panel-header-name:after {
     color: white;
     background-color: #4caf50;
 }
