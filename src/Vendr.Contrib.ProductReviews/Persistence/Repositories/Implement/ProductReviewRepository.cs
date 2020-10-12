@@ -60,13 +60,20 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             //return DoFetchInternal(_uow, "WHERE id IN(@0)", ids);
         }
 
-        public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords)
+        public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ReviewStatus? status = null)
         {
             var sql = Sql()
                 .Select("*")
                 .From<ProductReviewDto>()
-                .Where<ProductReviewDto>(x => x.ProductReference == productReference)
-                .OrderByDescending<ProductReviewDto>(x => x.CreateDate);
+                .Where<ProductReviewDto>(x => x.ProductReference == productReference);
+
+
+            if (status != null)
+            {
+                sql.Where<ProductReviewDto>(x => x.Status == status);
+            }
+
+            sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
 
             var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
             var dtos = page.Items;
@@ -77,7 +84,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return result;
         }
 
-        public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null)
+        public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ReviewStatus? status = null)
         {
             var sql = Sql()
                 .Select("*")
@@ -87,6 +94,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
             if (!string.IsNullOrWhiteSpace(productReference))
                 sql.Where<ProductReviewDto>(x => x.ProductReference == productReference);
+
+            if (status != null)
+                sql.Where<ProductReviewDto>(x => x.Status == status);
 
             sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
 

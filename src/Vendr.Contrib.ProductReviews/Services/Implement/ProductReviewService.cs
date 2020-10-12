@@ -78,7 +78,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var items = repo.GetMany(storeId, productReference, currentPage - 1, itemsPerPage, out total);
+                var items = repo.GetMany(storeId, productReference, currentPage - 1, itemsPerPage, out total, ReviewStatus.Approved);
                 var reviewIds = items.Select(x => x.Id).ToArray();
 
                 var comments = repo.GetComments(storeId, reviewIds);
@@ -104,7 +104,7 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var items = repo.GetForCustomer(storeId, customerReference, currentPage - 1, itemsPerPage, out total, productReference: productReference);
+                var items = repo.GetForCustomer(storeId, customerReference, currentPage - 1, itemsPerPage, out total, productReference: productReference, status: ReviewStatus.Approved);
                 results.AddRange(items);
                 totalRecords = total;
                 uow.Complete();

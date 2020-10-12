@@ -12,9 +12,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 
         IEnumerable<ProductReview> Get(Guid[] ids);
 
-        IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords);
+        IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ReviewStatus? status = null);
 
-        IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null);
+        IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ReviewStatus? status = null);
 
         IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords);
 
