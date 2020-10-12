@@ -50,7 +50,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
         {
             review.MustNotBeNull(nameof(review));
 
-            var status = Enum.TryParse(review.Status.Id.ToString(), out ReviewStatus s) ? s : default;
+            var status = Enum.TryParse(review.Status?.Id.ToString(), out ReviewStatus s) ? s : default;
 
             var dto = new ProductReviewDto
             {
