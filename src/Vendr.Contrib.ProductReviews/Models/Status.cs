@@ -13,7 +13,7 @@ namespace Vendr.Contrib.ProductReviews.Models
         public string Color { get; set; }
 
         [DataMember(Name = "icon")]
-        public string Icon { get; set; }
+        public string Icon => "icon-light-up";
 
         [DataMember(Name = "id")]
         public int Id { get; set; }

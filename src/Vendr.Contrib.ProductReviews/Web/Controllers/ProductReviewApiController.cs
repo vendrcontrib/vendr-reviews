@@ -51,7 +51,6 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
                 {
                     Alias = name.ToLower(),
                     Color = color,
-                    Icon = "icon-light-up",
                     Id = (int)val,
                     Name = name,
                     SortOrder = sortOrder,
