@@ -362,17 +362,21 @@
             errorTextClass: 'text-help' 
         };
 
-        //var form = document.getElementById("reviewForm");
+        var form = document.getElementById("reviewForm");
 
-        //// create the pristine instance
-        //var pristine = new Pristine(form, defaultConfig);
+        // create the pristine instance
+        var pristine = new Pristine(form, defaultConfig);
 
-        //form.addEventListener('submit', function (e) {
-        //   e.preventDefault();
+        form.addEventListener('submit', function (e) {
+           e.preventDefault();
        
-        //   // check if the form is valid
-        //   var valid = pristine.validate(); // returns true or false
+           // check if the form is valid
+           var valid = pristine.validate(); // returns true or false
+           if (valid) {
+               this.submit();
+           }
 
-        //});
+           return false;
+        });
     };
 </script>
