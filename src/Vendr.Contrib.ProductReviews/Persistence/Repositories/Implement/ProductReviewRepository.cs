@@ -67,7 +67,6 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
                 .From<ProductReviewDto>()
                 .Where<ProductReviewDto>(x => x.ProductReference == productReference);
 
-
             if (status != null)
             {
                 sql.Where<ProductReviewDto>(x => x.Status == status);
