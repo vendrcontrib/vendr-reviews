@@ -1,5 +1,6 @@
 ﻿using Umbraco.Core;
 using Umbraco.Core.Composing;
+using Vendr.Contrib.ProductReviews.Api;
 using Vendr.Contrib.ProductReviews.Components;
 using Vendr.Contrib.ProductReviews.Events;
 using Vendr.Contrib.ProductReviews.Events.Handlers;
@@ -18,6 +19,8 @@ namespace Vendr.Contrib.ProductReviews.Composers
     {
         public void Compose(Composition composition)
         {
+            composition.Register<ProductReviewsApi>(Lifetime.Singleton);
+
             composition.RegisterUnique<IProductReviewRepositoryFactory, ProductReviewRepositoryFactory>();
 
             // Register services

@@ -21,26 +21,23 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddProductReview(ProductReviewDto model)
+        public ActionResult AddReview(AddReviewDto dto)
         {
             try
             {
                 using (var uow = _vendrApi.Uow.Create())
                 {
-                    var review = new ProductReview()
+                    var review = new Review(dto.StoreId, dto.ProductReference, dto.CustomerReference)
                     {
-                        StoreId = model.StoreId,
-                        ProductReference = model.ProductReference,
-                        CustomerReference = model.CustomerReference,
-                        Rating = model.Rating,
-                        Title = model.Title,
-                        Email = model.Email,
-                        Name = model.Name,
-                        Description = model.Description,
-                        RecommendProduct = model.RecommendProduct
+                        Rating = dto.Rating,
+                        Title = dto.Title,
+                        Email = dto.Email,
+                        Name = dto.Name,
+                        Body = dto.Body,
+                        RecommendProduct = dto.RecommendProduct
                     };
 
-                    _productReviewService.AddProductReview(review);
+                    _productReviewService.SaveReview(review);
 
                     uow.Complete();
                 }

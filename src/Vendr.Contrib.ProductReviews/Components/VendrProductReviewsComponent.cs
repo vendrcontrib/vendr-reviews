@@ -1,16 +1,22 @@
 ﻿using Umbraco.Core.Composing;
 using Umbraco.Web.Trees;
+using Vendr.Contrib.ProductReviews.Api;
 
 namespace Vendr.Contrib.ProductReviews.Components
 {
     public class VendrProductReviewsComponent : IComponent
     {
-        public VendrProductReviewsComponent()
+        private readonly ProductReviewsApi _api;
+
+        public VendrProductReviewsComponent(ProductReviewsApi api)
         {
+            _api = api;
         }
 
         public void Initialize()
         {
+            ProductReviewsApi.Instance = _api;
+
             TreeControllerBase.TreeNodesRendering += TreeControllerBase_TreeNodesRendering;
         }
 

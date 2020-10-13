@@ -5,9 +5,9 @@ namespace Vendr.Contrib.ProductReviews.Events
 {
     public class ProductReviewNotificationBase : NotificationEventBase
     {
-        public ProductReview Review { get; }
+        public Review Review { get; }
 
-        public ProductReviewNotificationBase(ProductReview review)
+        public ProductReviewNotificationBase(Review review)
         {
             Review = review;
         }
@@ -15,14 +15,14 @@ namespace Vendr.Contrib.ProductReviews.Events
 
     public class ProductReviewAddingNotification : ProductReviewNotificationBase
     {
-        public ProductReviewAddingNotification(ProductReview review)
+        public ProductReviewAddingNotification(Review review)
           : base(review)
         { }
     }
 
     public class ProductReviewAddedNotification : ProductReviewNotificationBase
     {
-        public ProductReviewAddedNotification(ProductReview review)
+        public ProductReviewAddedNotification(Review review)
           : base(review)
         { }
     }

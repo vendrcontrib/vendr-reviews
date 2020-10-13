@@ -6,64 +6,64 @@
 
         return {
 
-            getProductReview: function (id) {
+            getReview: function (id) {
                 return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductReview", { params: { id: id } }),
-                    "Failed to get product reviews");
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetReview", { params: { id: id } }),
+                    "Failed to get reviews");
             },
 
-            getProductReviews: function (ids) {
+            getReviews: function (ids) {
                 return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductReview", { params: { ids: ids } }),
-                    "Failed to get product reviews");
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetReviews", { params: { ids: ids } }),
+                    "Failed to get reviews");
             },
 
-            getProductReviewsForProduct: function (storeId, productReference) {
+            getReviewsForProduct: function (storeId, productReference) {
                 return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductReviews", {
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetReviewsForProduct", {
                         params: {
                             storeId: storeId,
                             productReference: productReference
                         }
                     }),
-                    "Failed to get product reviews for product");
+                    "Failed to get reviews for product");
             },
 
-            getProductReviewsForCustomer: function (storeId, customerReference) {
+            getReviewsForCustomer: function (storeId, customerReference) {
                 return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetProductReviewsForCustomer", {
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetReviewsForCustomer", {
                         params: {
                             storeId: storeId,
                             customerReference: customerReference
                         }
                     }),
-                    "Failed to get product reviews for customer");
+                    "Failed to get reviews for customer");
             },
 
-            searchProductReviews: function (storeId, opts) {
+            searchReviews: function (storeId, opts) {
 
                 var params = angular.extend({}, {
                     storeId: storeId
                 }, opts);
 
                 return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SearchProductReviews", { params: params }),
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SearchReviews", { params: params }),
                     "Failed to search reviews");
             },
 
-            saveProductReview: function (review) {
+            saveReview: function (review) {
                 return umbRequestHelper.resourcePromise(
                     $http.post("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SaveReview", review),
                     "Failed to save review");
             },
 
-            deleteProductReview: function (id) {
+            deleteReview: function (id) {
                 return umbRequestHelper.resourcePromise(
                     $http.delete("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/DeleteReview", { params: { id: id } } ),
                     "Failed to delete review");
             },
 
-            changeProductReviewStatus: function (reviewId, status) {
+            changeReviewStatus: function (reviewId, status) {
                 return umbRequestHelper.resourcePromise(
                     $http.post("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/ChangeReviewStatus", {
                         reviewId: reviewId,
@@ -82,22 +82,22 @@
                     }), "Failed to get product data");
             },
 
-            getStatuses: function (storeId) {
+            getReviewStatuses: function (storeId) {
                 return umbRequestHelper.resourcePromise(
-                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetStatuses", {
+                    $http.get("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/GetReviewStatuses", {
                         params: {
                             storeId: storeId
                         }
-                    }), "Failed to get statuses");
+                    }), "Failed to get review statuses");
             },
 
-            saveComment: function (id, storeId, reviewId, description) {
+            saveComment: function (id, storeId, reviewId, body) {
                 return umbRequestHelper.resourcePromise(
                     $http.post("/umbraco/backoffice/VendrProductReviews/ProductReviewApi/SaveComment", {
                         id: id,
                         storeId: storeId,
                         reviewId: reviewId,
-                        description: description
+                        body: body
                     }), "Failed to add comment");
             },
 

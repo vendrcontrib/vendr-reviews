@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Persistence;
-using Umbraco.Core.Persistence.Querying;
 using Umbraco.Core.Persistence.SqlSyntax;
-using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Persistence.Factories;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
+using Vendr.Core.Models;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 {
@@ -27,120 +26,120 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
         protected Sql<ISqlContext> Sql() => _sqlSyntax.Sql();
         protected ISqlSyntaxProvider SqlSyntax => _sqlSyntax.SqlSyntax;
 
-        public ProductReview Get(Guid id)
+        public Review GetReview(Guid id)
+            => GetReviews(new[] { id }).FirstOrDefault();
+
+        public IEnumerable<Review> GetReviews(Guid[] ids)
         {
             var sql = Sql()
                 .Select("*")
-                .From<ProductReviewDto>()
-                .LeftJoin<CommentDto>().On<CommentDto, ProductReviewDto>((comment, review) => comment.ReviewId == review.Id)
-                .Where<ProductReviewDto>(x => x.Id == id);
+                .From<ReviewDto>()
+                .LeftJoin<CommentDto>().On<CommentDto, ReviewDto>((comment, review) => comment.ReviewId == review.Id)
+                .WhereIn<ReviewDto>(x => x.Id, ids);
 
-            // Fetch and map comments for review
-            var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments, sql);
+            var data = _uow.Database.FetchOneToMany<ReviewDto>(x => x.Comments, sql);
 
-            var result = data.Select(ProductReviewFactory.BuildProductReview).SingleOrDefault();
-
-            return result;
+            return data.Select(ProductReviewFactory.BuildEntity).ToList();
         }
 
-        public IEnumerable<ProductReview> Get(Guid[] ids)
+        public PagedResult<Review> SearchReviews(Guid storeId, string searchTerm = null, string[] productReferences = null, string[] customerReferences = null, ReviewStatus[] statuses = null, decimal[] ratings = null, DateTime? startDate = null, DateTime? endDate = null, long pageNumber = 1, long pageSize = 50)
         {
+            productReferences = productReferences ?? new string[0];
+            customerReferences = customerReferences ?? new string[0];
+            statuses = statuses ?? new ReviewStatus[0];
+            ratings = ratings ?? new decimal[0];
+
             var sql = Sql()
                 .Select("*")
-                .From<ProductReviewDto>()
-                .LeftJoin<CommentDto>().On<CommentDto, ProductReviewDto>((comment, review) => comment.ReviewId == review.Id)
-                .WhereIn<ProductReviewDto>(x => x.Id, ids);
+                .From<ReviewDto>()
+                .Where<ReviewDto>(x => x.StoreId == storeId);
 
-            // Fetch and map comments for review
-            var data = _uow.Database.FetchOneToMany<ProductReviewDto>(x => x.Comments, sql);
-
-            var results = data.Select(ProductReviewFactory.BuildProductReview).ToList();
-
-            return results;
-            //return DoFetchInternal(_uow, "WHERE id IN(@0)", ids);
-        }
-
-        public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ProductReviewStatus? status = null)
-        {
-            var sql = Sql()
-                .Select("*")
-                .From<ProductReviewDto>()
-                .Where<ProductReviewDto>(x => x.ProductReference == productReference);
-
-            if (status != null)
+            if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                sql.Where<ProductReviewDto>(x => x.Status == status);
+                sql.Where<ReviewDto>(x =>
+                    x.Title.Contains(searchTerm) ||
+                    x.Name.Contains(searchTerm) ||
+                    x.Email.Contains(searchTerm) ||
+                    x.Body.Contains(searchTerm)
+                );
             }
 
-            sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
+            if (productReferences.Length > 0)
+            {
+                sql.WhereIn<ReviewDto>(x => x.ProductReference, productReferences);
+            }
 
-            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
-            var dtos = page.Items;
-            totalRecords = page.TotalItems;
+            if (customerReferences.Length > 0)
+            {
+                sql.WhereIn<ReviewDto>(x => x.CustomerReference, customerReferences);
+            }
 
-            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
+            if (statuses.Length > 0)
+            {
+                sql.WhereIn<ReviewDto>(x => x.Status, statuses.Select(x => (int)x));
+            }
 
-            return result;
+            if (ratings.Length > 0)
+            {
+                sql.WhereIn<ReviewDto>(x => x.Rating, ratings);
+            }
+
+            if (startDate != null && startDate >= DateTime.MinValue)
+            {
+                sql.Where<ReviewDto>(x => x.CreateDate >= startDate.Value);
+            }
+
+            if (endDate != null && endDate <= DateTime.MaxValue)
+            {
+                sql.Where<ReviewDto>(x => x.CreateDate <= endDate.Value);
+            }
+
+            sql.OrderByDescending<ReviewDto>(x => x.CreateDate);
+
+            var page = _uow.Database.Page<ReviewDto>(pageNumber, pageSize, sql);
+   
+            return new PagedResult<Review>(page.TotalItems, page.CurrentPage, page.ItemsPerPage)
+            {
+                Items = page.Items.Select(ProductReviewFactory.BuildEntity).ToList()
+            };
         }
 
-        public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ProductReviewStatus? status = null)
+        public decimal GetAverageStarRatingForProduct(Guid storeId, string productReference)
         {
-            var sql = Sql()
-                .Select("*")
-                .From<ProductReviewDto>()
-                .Where<ProductReviewDto>(x => x.StoreId == storeId)
-                .Where<ProductReviewDto>(x => x.CustomerReference == customerReference);
-
-            if (!string.IsNullOrWhiteSpace(productReference))
-                sql.Where<ProductReviewDto>(x => x.ProductReference == productReference);
-
-            if (status != null)
-                sql.Where<ProductReviewDto>(x => x.Status == status);
-
-            sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
-
-            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
-            var dtos = page.Items;
-            totalRecords = page.TotalItems;
-
-            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
-
-            return result;
+            return _uow.Database.ExecuteScalar<decimal>($"SELECT AVG(rating) FROM {ReviewDto.TableName} WHERE storeId = @0 AND productReference = @1", storeId, productReference);
         }
 
-        public ProductReview Save(ProductReview review)
+        public Review SaveReview(Review review)
         {
-            var dto = ProductReviewFactory.BuildProductReview(review);
+            var dto = ProductReviewFactory.BuildDto(review);
+
             dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
 
             _uow.Database.Save(dto);
 
-            return ProductReviewFactory.BuildProductReview(dto);
+            return ProductReviewFactory.BuildEntity(dto);
         }
 
-        public void Delete(Guid id)
+        public void DeleteReview(Guid id)
         {
-            _uow.Database.Delete<ProductReviewDto>("WHERE id = @0", id);
+            _uow.Database.Delete<ReviewDto>("WHERE id = @0", id);
         }
 
-        public ProductReview ChangeStatus(Guid id, ProductReviewStatus status)
+        public Review ChangeReviewStatus(Guid id, ReviewStatus status)
         {
-            //var sql = Sql().Update<ProductReviewDto>(r => r.Set(x => x.Status, status))
-            //     .Where<ProductReviewDto>(x => x.Id == id);
+            var review = _uow.Database.SingleById<ReviewDto>(id);
 
-            //_uow.Database.Execute(sql);
-
-            var review = _uow.Database.SingleById<ProductReviewDto>(id);
-            review.Status = status;
+            review.Status = (int)status;
 
             _uow.Database.Update(review);
 
-            return ProductReviewFactory.BuildProductReview(review);
+            return ProductReviewFactory.BuildEntity(review);
         }
 
         public Comment SaveComment(Comment comment)
         {
-            var dto = ProductReviewFactory.BuildComment(comment);
+            var dto = ProductReviewFactory.BuildDto(comment);
+
             dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
 
             var entry = _uow.Database.SingleOrDefaultById<CommentDto>(dto.Id);
@@ -155,19 +154,11 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
             _uow.Database.Save(dto);
 
-            return ProductReviewFactory.BuildComment(dto);
+            return ProductReviewFactory.BuildEntity(dto);
         }
 
         public IEnumerable<Comment> GetComments(Guid storeId, Guid reviewId)
-        {
-            var sql = Sql()
-                .Select("*")
-                .From<CommentDto>()
-                .Where<CommentDto>(x => x.StoreId == storeId)
-                .Where<CommentDto>(x => x.ReviewId == reviewId);
-
-            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
-        }
+            => GetComments(storeId, new[] { reviewId });
 
         public IEnumerable<Comment> GetComments(Guid storeId, Guid[] reviewIds)
         {
@@ -177,83 +168,12 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
                 .Where<CommentDto>(x => x.StoreId == storeId)
                 .WhereIn<CommentDto>(x => x.ReviewId, reviewIds);
 
-            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildComment).ToList();
+            return _uow.Database.Fetch<CommentDto>(sql).Select(ProductReviewFactory.BuildEntity).ToList();
         }
 
         public void DeleteComment(Guid id)
         {
             _uow.Database.Delete<CommentDto>("WHERE id = @0", id);
-        }
-
-        protected IEnumerable<ProductReview> DoFetchInternal(IDatabaseUnitOfWork uow, string sql, params object[] args)
-        {
-            return uow.Database.Fetch<ProductReviewDto>(sql, args).Select(ProductReviewFactory.BuildProductReview).ToList();
-        }
-
-        public IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords)
-        {
-            var sql = Sql()
-                .Select("*")
-                .From<ProductReviewDto>()
-                .Where<ProductReviewDto>(x => x.StoreId == storeId)
-                .OrderByDescending<ProductReviewDto>(x => x.CreateDate);
-
-            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
-            var dtos = page.Items;
-            totalRecords = page.TotalItems;
-
-            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
-
-            return result;
-        }
-
-        public IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses = null, decimal[] ratings = null, string searchTerm = null, DateTime? startDate = null, DateTime? endDate = null)
-        {
-            statuses = statuses ?? new string[0];
-            ratings = ratings ?? new decimal[0];
-
-            var sql = Sql()
-                .Select("*")
-                .From<ProductReviewDto>()
-                .Where<ProductReviewDto>(x => x.StoreId == storeId);
-
-            if (statuses.Length > 0) {
-                sql.WhereIn<ProductReviewDto>(x => x.Status, statuses);
-            }
-
-            if (ratings.Length > 0) {
-                sql.WhereIn<ProductReviewDto>(x => x.Rating, ratings);
-            }
-
-            if (startDate != null && startDate >= DateTime.MinValue)
-            {
-                sql.Where<ProductReviewDto>(x => x.CreateDate >= startDate.Value);
-            }
-
-            if (endDate != null && endDate <= DateTime.MaxValue)
-            {
-                sql.Where<ProductReviewDto>(x => x.CreateDate <= endDate.Value);
-            }
-
-            if (!string.IsNullOrWhiteSpace(searchTerm))
-            {
-                sql.Where<ProductReviewDto>(x => 
-                    x.Title.Contains(searchTerm) ||
-                    x.Name.Contains(searchTerm) ||
-                    x.Email.Contains(searchTerm) ||
-                    x.Description.Contains(searchTerm)
-                );
-            }
-
-            sql.OrderByDescending<ProductReviewDto>(x => x.CreateDate);
-
-            var page = _uow.Database.Page<ProductReviewDto>(pageIndex + 1, pageSize, sql);
-            var dtos = page.Items;
-            totalRecords = page.TotalItems;
-
-            var result = dtos.Select(ProductReviewFactory.BuildProductReview).ToList();
-
-            return result;
         }
     }
 }

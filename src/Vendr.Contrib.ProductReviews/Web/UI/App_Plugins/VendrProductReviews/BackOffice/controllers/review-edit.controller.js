@@ -49,7 +49,7 @@
         };
 
         vm.init = function () {
-            vendrProductReviewsResource.getProductReview(id).then(function (review) {
+            vendrProductReviewsResource.getReview(id).then(function (review) {
 
                 var promises = [];
 
@@ -123,7 +123,7 @@
                     storeId: storeId
                 },
                 submit: function (model) {
-                    vendrProductReviewsResource.changeProductReviewStatus(id, model.id).then(function (review) {
+                    vendrProductReviewsResource.changeReviewStatus(id, model.id).then(function (review) {
                         vm.content.status = review.status;
                         notificationsService.success("Status Changed", "Status successfully changed to " + model.name + ".");
                         editorService.close();
@@ -145,7 +145,7 @@
 
             // currently we only use a single comment
             if (vm.content.comments && vm.content.comments.length > 0) {
-                vm.comment = vm.content.comments[0].description;
+                vm.comment = vm.content.comments[0].body;
             }
 
             // sync state
@@ -169,7 +169,7 @@
                     id: id,
                     name: name,
                     nodeType: "Review",
-                    menuUrl: "/umbraco/backoffice/VendrProductReviews/ReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
+                    menuUrl: "/umbraco/backoffice/VendrProductReviews/ProductReviewTree/GetMenu?application=" + application + "&tree=" + tree + "&nodeType=Review&storeId=" + storeId + "&id=" + id,
                     metaData: {
                         treeAlias: tree,
                         storeId: storeId
@@ -190,24 +190,24 @@
                 
                 vm.page.saveButtonState = "busy";
 
-                vendrProductReviewsResource.saveProductReview(vm.content).then(function (saved) {
+                vendrProductReviewsResource.saveReview(vm.content).then(function (saved) {
 
                     if (vm.comment !== null)
                     {
                         var commentId = null;
-                        var commentDescription = null;
+                        var commentBody = null;
 
                         if (vm.content.comments && vm.content.comments[0]) {
                             commentId = vm.content.comments[0].id;
-                            commentDescription = vm.content.comments[0].description;
+                            commentBody = vm.content.comments[0].body;
                         }
 
-                        if (vm.comment !== commentDescription)
+                        if (vm.comment !== commentBody)
                         {
                             if (vm.comment.trim().length > 0) {
                                 // Insert or update comment
                                 vendrProductReviewsResource.saveComment(commentId, storeId, id, vm.comment).then(function (data) {
-                                    vm.comment = data.description;
+                                    vm.comment = data.body;
                                 });
                             }
                             else if (commentId !== null && commentId !== undefined) {

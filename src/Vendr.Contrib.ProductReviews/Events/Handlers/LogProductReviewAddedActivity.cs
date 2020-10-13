@@ -28,7 +28,7 @@ namespace Vendr.Contrib.ProductReviews.Events.Handlers
 
             _activityLogger.LogActivity(evt.Review.StoreId,
                 evt.Review.Id, 
-                Constants.Entities.EntityTypes.ProductReview,
+                Constants.Entities.EntityTypes.Review,
                 "New review added",
                 $"vendrproductreviews/review-edit/{evt.Review.StoreId}_{evt.Review.Id}",
                 $"Review submitted from {evt.Review.Name} with a rating of {evt.Review.Rating} for product {snapshot.Sku}",

@@ -29,19 +29,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         {
             var menu = new MenuItemCollection();
 
-            //MenuItem deleteAction = new MenuItem("delete", Services.TextService)
-            //{
-            //    Icon = "delete",
-            //    OpensDialog = true,
-            //};
-
-            //deleteAction.AdditionalData.Add("parentId", id);
-            //deleteAction.AdditionalData.Add("actionView", "/app_plugins/vendr/views/entity/delete.html");
-            //deleteAction.NavigateToRoute("/path/to/view/delete/0");
-            //menu.Items.Add(deleteAction);
-
             menu.Items.Add<ActionDelete>(Services.TextService).LaunchDialogView("/app_plugins/vendrproductreviews/backoffice/views/dialogs/delete.html", "Delete");
-            //menu.Items.Add<ActionDelete>(Services.TextService, true, opensDialog: true);
 
             return menu;
         }

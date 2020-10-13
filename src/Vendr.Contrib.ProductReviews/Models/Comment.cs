@@ -1,31 +1,28 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace Vendr.Contrib.ProductReviews.Models
 {
-    [DataContract(Name = "comment", Namespace = "")]
     public class Comment
     {
-        public Comment() { }
-
-        public Comment(Guid id)
-        {
-            Id = id;
-        }
-
-        [DataMember(Name = "id")]
         public Guid Id { get; internal set; }
 
-        [DataMember(Name = "storeId")]
-        public Guid StoreId { get; set; }
+        public Guid StoreId { get; internal set; }
 
-        [DataMember(Name = "reviewId")]
-        public Guid ReviewId { get; set; }
+        public Guid ReviewId { get; internal set; }
 
-        [DataMember(Name = "createDate")]
+        public string Body { get; set; }
+
         public DateTime CreateDate { get; set; }
 
-        [DataMember(Name = "description")]
-        public string Description { get; set; }
+        public Comment(Guid storeId, Guid reviewId)
+            : this(Guid.Empty, storeId, reviewId)
+        { }
+
+        public Comment(Guid id, Guid storeId, Guid reviewId)
+        {
+            Id = id;
+            StoreId = storeId;
+            ReviewId = reviewId;
+        }
     }
 }

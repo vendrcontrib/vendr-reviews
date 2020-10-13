@@ -1,69 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Models;
+using Vendr.Core.Models;
 
 namespace Vendr.Contrib.ProductReviews.Services
 {
     public interface IProductReviewService
     {
         /// <summary>
-        /// Gets a product review.
+        /// Gets a review.
         /// </summary>
-        ProductReview GetProductReview(Guid id);
+        Review GetReview(Guid id);
 
         /// <summary>
-        /// Gets product reviews.
+        /// Gets reviews.
         /// </summary>
-        IEnumerable<ProductReview> GetProductReviews(Guid[] ids);
+        IEnumerable<Review> GetReviews(Guid[] ids);
 
         /// <summary>
-        /// Gets product reviews.
+        /// Gets reviews for product.
         /// </summary>
-        IEnumerable<ProductReview> GetProductReviews(Guid storeId, string productReference, long currentPage, long itemsPerPage, out long totalRecords);
+        PagedResult<Review> GetReviewsForProduct(Guid storeId, string productReference, long pageNumber = 1, long pageSize = 50);
 
         /// <summary>
-        /// Gets product reviews for customer.
+        /// Gets reviews for customer.
         /// </summary>
-        IEnumerable<ProductReview> GetProductReviewsForCustomer(Guid storeId, string customerReference, long currentPage, long itemsPerPage, out long totalRecords, string productReference = null);
+        PagedResult<Review> GetReviewsForCustomer(Guid storeId, string customerReference, string productReference = null, long pageNumber = 1, long pageSize = 50);
 
         /// <summary>
-        /// Gets paged result of product reviews.
+        /// Search reviews.
         /// </summary>
-        IEnumerable<ProductReview> GetPagedResults(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords);
+        PagedResult<Review> SearchReviews(Guid storeId, string searchTerm = "", ReviewStatus[] statuses = null, decimal[] ratings = null, DateTime? startDate = null, DateTime? endDate = null, long pageNumber = 1, long pageSize = 50);
 
         /// <summary>
-        /// Search product reviews.
+        /// Get the average star rating for a product
         /// </summary>
-        IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses = null, decimal[] ratings = null, string searchTerm = "", DateTime? startDate = null, DateTime? endDate = null);
+        /// <returns></returns>
+        decimal GetAverageStarRatingForProduct(Guid storeId, string productReference);
 
         /// <summary>
-        /// Add product review.
+        /// Save review.
         /// </summary>
-        void AddProductReview(ProductReview review);
+        Review SaveReview(Review review);
 
         /// <summary>
-        /// Save product review.
+        /// Delete review.
         /// </summary>
-        ProductReview SaveProductReview(ProductReview review);
+        void DeleteReview(Guid id);
 
         /// <summary>
-        /// Delete product review.
+        /// Change status of review.
         /// </summary>
-        void DeleteProductReview(Guid id);
+        Review ChangeReviewStatus(Guid id, ReviewStatus status);
 
         /// <summary>
-        /// Change status of product review.
-        /// </summary>
-        ProductReview ChangeStatus(Guid id, ProductReviewStatus status);
-
-        /// <summary>
-        /// Save comment to product review.
+        /// Save comment to review.
         /// </summary>
         Comment SaveComment(Comment comment);
 
         /// <summary>
-        /// Delete comment for product review.
+        /// Delete comment for review.
         /// </summary>
         void DeleteComment(Guid comment);
     }

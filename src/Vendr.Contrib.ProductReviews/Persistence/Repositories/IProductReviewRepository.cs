@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using Umbraco.Core.Persistence.Querying;
-using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Models;
+using Vendr.Core.Models;
 
 namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 {
     public interface IProductReviewRepository : IDisposable
     {
-        ProductReview Get(Guid id);
+        // Reviews 
 
-        IEnumerable<ProductReview> Get(Guid[] ids);
+        Review GetReview(Guid id);
 
-        IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ProductReviewStatus? status = null);
+        IEnumerable<Review> GetReviews(Guid[] ids);
 
-        IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ProductReviewStatus? status = null);
+        PagedResult<Review> SearchReviews(Guid storeId, string searchTerm = null, string[] productReferences = null, string[] customerReferences = null, ReviewStatus[] statuses = null, decimal[] ratings = null, DateTime? startDate = null, DateTime? endDate = null, long pageNumber = 1, long pageSize = 50);
 
-        IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords);
+        decimal GetAverageStarRatingForProduct(Guid storeId, string productReference);
 
-        IEnumerable<ProductReview> SearchReviews(Guid storeId, long pageIndex, long pageSize, out long totalRecords, string[] statuses, decimal[] ratings, string searchTerm = "", DateTime? startDate = null, DateTime? endDate = null);
+        Review SaveReview(Review review);
 
-        ProductReview Save(ProductReview review);
+        void DeleteReview(Guid id);
 
-        void Delete(Guid id);
+        Review ChangeReviewStatus(Guid id, ReviewStatus status);
 
-        ProductReview ChangeStatus(Guid id, ProductReviewStatus status);
+        // Comments
 
         Comment SaveComment(Comment comment);
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using Vendr.Contrib.ProductReviews.Enums;
-using Vendr.Contrib.ProductReviews.Helpers;
+﻿using System.Linq;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
@@ -10,60 +7,46 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Factories
 {
     internal static class ProductReviewFactory
     {
-        public static ProductReview BuildProductReview(ProductReviewDto dto)
+        public static Review BuildEntity(ReviewDto dto)
         {
             dto.MustNotBeNull(nameof(dto));
 
-            var comments = dto.Comments?.Select(x => new Comment
-            {
-                Id = x.Id,
-                ReviewId = x.ReviewId,
-                StoreId = x.StoreId,
-                CreateDate = x.CreateDate,
-                Description = x.Description
-            }).ToList();
+            var comments = dto.Comments?.Select(BuildEntity).ToList();
 
-            var status = BuildStatus(dto);
-
-            var review = new ProductReview(dto.Id)
+            var review = new Review(dto.Id, dto.StoreId, dto.ProductReference, dto.CustomerReference)
             {
-                StoreId = dto.StoreId,
-                CreateDate = dto.CreateDate,
-                UpdateDate = dto.UpdateDate,
-                Status = status,
                 Rating = dto.Rating,
                 Title = dto.Title,
                 Email = dto.Email,
                 Name = dto.Name,
-                Description = dto.Description,
-                CustomerReference = dto.CustomerReference,
-                ProductReference = dto.ProductReference,
+                Body = dto.Body,
                 VerifiedBuyer = dto.VerifiedBuyer,
                 RecommendProduct = dto.RecommendProduct,
-                Comments = comments
+                Status = (ReviewStatus)dto.Status,
+                CreateDate = dto.CreateDate,
+                UpdateDate = dto.UpdateDate,
+                Comments = comments,
             };
 
             return review;
         }
 
-        public static ProductReviewDto BuildProductReview(ProductReview review)
+        public static ReviewDto BuildDto(Review review)
         {
             review.MustNotBeNull(nameof(review));
 
-            var status = Enum.TryParse(review.Status?.Id.ToString(), out ProductReviewStatus s) ? s : default(ProductReviewStatus);
-
-            var dto = new ProductReviewDto
+            var dto = new ReviewDto
             {
                 Id = review.Id,
                 StoreId = review.StoreId,
                 CreateDate = review.CreateDate,
                 UpdateDate = review.UpdateDate,
-                Status = status,
+                Status = (int)review.Status,
                 Rating = review.Rating,
                 Title = review.Title,
                 Email = review.Email,
                 Name = review.Name,
-                Description = review.Description,
+                Body = review.Body,
                 CustomerReference = review.CustomerReference,
                 ProductReference = review.ProductReference,
                 VerifiedBuyer = review.VerifiedBuyer,
@@ -73,22 +56,20 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Factories
             return dto;
         }
 
-        public static Comment BuildComment(CommentDto dto)
+        public static Comment BuildEntity(CommentDto dto)
         {
             dto.MustNotBeNull(nameof(dto));
 
-            var review = new Comment(dto.Id)
+            var review = new Comment(dto.Id, dto.StoreId, dto.ReviewId)
             {
-                StoreId = dto.StoreId,
-                ReviewId = dto.ReviewId,
-                CreateDate = dto.CreateDate,
-                Description = dto.Description
+                Body = dto.Body,
+                CreateDate = dto.CreateDate
             };
 
             return review;
         }
 
-        public static CommentDto BuildComment(Comment comment)
+        public static CommentDto BuildDto(Comment comment)
         {
             comment.MustNotBeNull(nameof(comment));
 
@@ -97,27 +78,11 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Factories
                 Id = comment.Id,
                 StoreId = comment.StoreId,
                 ReviewId = comment.ReviewId,
-                CreateDate = comment.CreateDate,       
-                Description = comment.Description
+                Body = comment.Body,
+                CreateDate = comment.CreateDate
             };
 
             return dto;
-        }
-
-        private static Status BuildStatus(ProductReviewDto dto)
-        {
-            var name = dto.Status.ToString();
-            var color = ProductReviewHelper.GetStatusColor(dto.Status);
-
-            return new Status
-            {
-                Alias = name.ToLower(),
-                Id = (int)dto.Status,
-                Color = color,
-                Name = name,
-                SortOrder = 0,
-                StoreId = dto.StoreId
-            };
         }
     }
 }

@@ -30,7 +30,7 @@
             vm.error = null;
 
             // Perform the delete
-            vendrProductReviewsResource.deleteProductReview(id)
+            vendrProductReviewsResource.deleteReview(id)
                 .then(function () {
 
                     // Stop tree node animation

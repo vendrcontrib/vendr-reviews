@@ -278,6 +278,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ProductReviewsApi.cs" />
     <Compile Include="Components\MigrationComponent.cs" />
     <Compile Include="Composers\MigrationComposer.cs" />
     <Compile Include="Components\VendrProductReviewsComponent.cs" />
@@ -287,17 +288,17 @@
     <Compile Include="Events\ProductReviewAddedNotification.cs" />
     <Compile Include="Events\Handlers\LogProductReviewAddedActivity.cs" />
     <Compile Include="Events\Handlers\UpdateProductReviewStoreActions.cs" />
+    <Compile Include="Migrations\V_1_0_0\CreateProductReviewCommentTable.cs" />
     <Compile Include="Persistence\ProductReviewRepositoryFactory.cs" />
     <Compile Include="Helpers\ProductReviewHelper.cs" />
-    <Compile Include="Migrations\V_1_0_0\CreateProductReviewTables.cs" />
+    <Compile Include="Migrations\V_1_0_0\CreateProductReviewTable.cs" />
     <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Status.cs" />
     <Compile Include="Persistence\Dtos\CommentDto.cs" />
-    <Compile Include="Persistence\Dtos\ProductReviewDto.cs" />
-    <Compile Include="Enums\ProductReviewStatus.cs" />
+    <Compile Include="Persistence\Dtos\ReviewDto.cs" />
+    <Compile Include="Models\ReviewStatus.cs" />
     <Compile Include="Persistence\IProductReviewRepositoryFactory.cs" />
     <Compile Include="Persistence\Factories\ProductReviewFactory.cs" />
-    <Compile Include="Models\ProductReview.cs" />
+    <Compile Include="Models\Review.cs" />
     <Compile Include="Persistence\Repositories\IProductReviewRepository.cs" />
     <Compile Include="Persistence\Repositories\Implement\ProductReviewRepository.cs" />
     <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
@@ -308,8 +309,14 @@
     <Compile Include="Web\Controllers\ProductReviewApiController.cs" />
     <Compile Include="Web\Controllers\ProductReviewController.cs" />
     <Compile Include="Web\Controllers\ProductReviewTreeController.cs" />
-    <Compile Include="Web\Dtos\StatusDto.cs" />
-    <Compile Include="Web\Dtos\ProductReviewDto.cs" />
+    <Compile Include="Web\Dtos\ChangeReviewStatusDto.cs" />
+    <Compile Include="Web\Dtos\AddReviewDto.cs" />
+    <Compile Include="Web\Dtos\CommentDto.cs" />
+    <Compile Include="Web\Dtos\Mappers\ProductReviewMapper.cs" />
+    <Compile Include="Web\Dtos\ReviewDto.cs" />
+    <Compile Include="Web\Dtos\ReviewEditDto.cs" />
+    <Compile Include="Web\Dtos\ReviewSaveDto.cs" />
+    <Compile Include="Web\Dtos\ReviewStatusDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -335,6 +342,7 @@
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\BackOffice\views\review\list.html" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\package.manifest" />
     <Content Include="Web\UI\App_Plugins\VendrProductReviews\Views\Partials\ProductReviews.cshtml" />
+    <Content Include="Web\UI\App_Plugins\VendrProductReviews\Views\Web.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

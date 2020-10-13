@@ -2,11 +2,11 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace Vendr.Contrib.ProductReviews.Enums
+namespace Vendr.Contrib.ProductReviews.Models
 {
     [DataContract]
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProductReviewStatus
+    public enum ReviewStatus
     {
         [EnumMember(Value = "pending")]
         Pending = 0,

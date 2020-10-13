@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Events;
 using Vendr.Contrib.ProductReviews.Persistence;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Core;
 using Vendr.Core.Events;
+using Vendr.Core.Models;
 
 namespace Vendr.Contrib.ProductReviews.Services.Implement
 {
@@ -21,106 +21,72 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             _repositoryFactory = repositoryFactory;
         }
 
-        public ProductReview GetProductReview(Guid id)
+        public Review GetReview(Guid id)
         {
-            ProductReview productReview;
+            Review productReview;
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                productReview = repo.Get(id);
+                productReview = repo.GetReview(id);
                 uow.Complete();
             }
 
             return productReview;
         }
 
-        public IEnumerable<ProductReview> GetProductReviews(Guid[] ids)
+        public IEnumerable<Review> GetReviews(Guid[] ids)
         {
-            List<ProductReview> productReviews = new List<ProductReview>();
+            List<Review> productReviews = new List<Review>();
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var reviews = repo.Get(ids);
-                productReviews.AddRange(reviews);
+                productReviews = repo.GetReviews(ids).ToList();
                 uow.Complete();
             }
 
             return productReviews;
         }
 
-        public void AddProductReview(ProductReview review)
+        public PagedResult<Review> GetReviewsForProduct(Guid storeId, string productReference, long pageNumber = 1, long pageSize = 50)
         {
-            using (var uow = _uowProvider.Create())
-            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
-            {
-                var now = DateTime.UtcNow;
-
-                review.CreateDate = now;
-                review.UpdateDate = now;
-
-                EventBus.Dispatch(new ProductReviewAddingNotification(review));
-
-                review = repo.Save(review);
-
-                uow.ScheduleNotification(new ProductReviewAddedNotification(review));
-
-                uow.Complete();
-            }
-        }
-
-        public IEnumerable<ProductReview> GetProductReviews(Guid storeId, string productReference, long currentPage, long itemsPerPage, out long totalRecords)
-        {
-            List<ProductReview> results = new List<ProductReview>();
+            PagedResult<Review> results;
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var items = repo.GetMany(storeId, productReference, currentPage - 1, itemsPerPage, out long total, ProductReviewStatus.Approved);
-                var reviewIds = items.Select(x => x.Id).ToArray();
+                results = repo.SearchReviews(storeId, productReferences:new[] { productReference }, 
+                    statuses:new[] { ReviewStatus.Approved },
+                    pageNumber: pageNumber,
+                    pageSize: pageSize);
 
+                var reviewIds = results.Items.Select(x => x.Id).ToArray();
                 var comments = repo.GetComments(storeId, reviewIds);
 
-                foreach (var item in items)
+                foreach (var item in results.Items)
                 {
                     item.Comments = comments.Where(x => x.ReviewId == item.Id).ToList();
                 }
 
-                results.AddRange(items);
-                totalRecords = total;
                 uow.Complete();
             }
 
             return results;
         }
 
-        public IEnumerable<ProductReview> GetProductReviewsForCustomer(Guid storeId, string customerReference, long currentPage, long itemsPerPage, out long totalRecords, string productReference = null)
+        public PagedResult<Review> GetReviewsForCustomer(Guid storeId, string customerReference, string productReference = null, long pageNumber = 1, long pageSize = 50)
         {
-            List<ProductReview> results = new List<ProductReview>();
+            PagedResult<Review> results;
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var items = repo.GetForCustomer(storeId, customerReference, currentPage - 1, itemsPerPage, out long total, productReference: productReference, status: ProductReviewStatus.Approved);
-                results.AddRange(items);
-                totalRecords = total;
-                uow.Complete();
-            }
-
-            return results;
-        }
-
-        public IEnumerable<ProductReview> GetPagedResults(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords)
-        {
-            var results = new List<ProductReview>();
-
-            using (var uow = _uowProvider.Create())
-            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
-            {
-                var items = repo.GetPagedReviewsByQuery(storeId, null, currentPage - 1, itemsPerPage, out long total);
-                results.AddRange(items);
-                totalRecords = total;
+                results = repo.SearchReviews(storeId, customerReferences: new[] { customerReference }, 
+                    productReferences: productReference != null ? new[] { productReference } : null,
+                    statuses: new[] { ReviewStatus.Approved },
+                    pageNumber: pageNumber,
+                    pageSize: pageSize);
 
                 uow.Complete();
             }
@@ -128,16 +94,21 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             return results;
         }
 
-        public IEnumerable<ProductReview> SearchProductReviews(Guid storeId, long currentPage, long itemsPerPage, out long totalRecords, string[] statuses, decimal[] ratings, string searchTerm = "", DateTime? startDate = null, DateTime? endDate = null)
+        public PagedResult<Review> SearchReviews(Guid storeId, string searchTerm = null, ReviewStatus[] statuses = null, decimal[] ratings = null, DateTime? startDate = null, DateTime? endDate = null, long pageNumber = 1, long pageSize = 50)
         {
-            var results = new List<ProductReview>();
+            PagedResult<Review> results;
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                var items = repo.SearchReviews(storeId, currentPage - 1, itemsPerPage, out long total, statuses: statuses, ratings: ratings, searchTerm: searchTerm, startDate: startDate, endDate: endDate);
-                results.AddRange(items);
-                totalRecords = total;
+                results = repo.SearchReviews(storeId,
+                    searchTerm: searchTerm,
+                    statuses: statuses,
+                    ratings: ratings,
+                    startDate: startDate,
+                    endDate: endDate,
+                    pageNumber: pageNumber,
+                    pageSize: pageSize);
 
                 uow.Complete();
             }
@@ -145,40 +116,63 @@ namespace Vendr.Contrib.ProductReviews.Services.Implement
             return results;
         }
 
-        public ProductReview SaveProductReview(ProductReview review)
+        public decimal GetAverageStarRatingForProduct(Guid storeId, string productReference)
         {
-            ProductReview result;
+            decimal rating;
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
+                rating = repo.GetAverageStarRatingForProduct(storeId, productReference);
+                uow.Complete();
+            }
+
+            return rating;
+        }
+
+        public Review SaveReview(Review review)
+        {
+            Review result;
+
+            using (var uow = _uowProvider.Create())
+            using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
+            {
+                if (review.Id == Guid.Empty)
+                {
+                    review.Id = Guid.NewGuid();
+                    review.CreateDate = DateTime.UtcNow;
+
+                    EventBus.Dispatch(new ProductReviewAddingNotification(review));
+                    uow.ScheduleNotification(new ProductReviewAddedNotification(review));
+                }
+
                 review.UpdateDate = DateTime.UtcNow;
 
-                result = repo.Save(review);
+                result = repo.SaveReview(review);
                 uow.Complete();
             }
 
             return result;
         }
 
-        public void DeleteProductReview(Guid id)
+        public void DeleteReview(Guid id)
         {
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                repo.Delete(id);
+                repo.DeleteReview(id);
                 uow.Complete();
             }
         }
 
-        public ProductReview ChangeStatus(Guid id, ProductReviewStatus status)
+        public Review ChangeReviewStatus(Guid id, ReviewStatus status)
         {
-            ProductReview result;
+            Review result;
 
             using (var uow = _uowProvider.Create())
             using (var repo = _repositoryFactory.CreateProductReviewRepository(uow))
             {
-                result = repo.ChangeStatus(id, status);
+                result = repo.ChangeReviewStatus(id, status);
                 uow.Complete();
             }
 

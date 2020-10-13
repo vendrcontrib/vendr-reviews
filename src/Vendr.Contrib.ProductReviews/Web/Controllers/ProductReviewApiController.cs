@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
 using Umbraco.Core.Models;
@@ -7,11 +10,11 @@ using Umbraco.Core.Services;
 using Umbraco.Web.Models.ContentEditing;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
-using Vendr.Contrib.ProductReviews.Enums;
 using Vendr.Contrib.ProductReviews.Helpers;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Services;
 using Vendr.Contrib.ProductReviews.Web.Dtos;
+using Vendr.Contrib.ProductReviews.Web.Dtos.Mappers;
 using Vendr.Core.Adapters;
 using Notification = Umbraco.Web.Models.ContentEditing.Notification;
 
@@ -35,26 +38,25 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Status> GetStatuses(Guid storeId)
+        public IEnumerable<ReviewStatusDto> GetReviewStatuses()
         {
-            var values = Enum.GetValues(typeof(ProductReviewStatus));
+            var values = Enum.GetValues(typeof(ReviewStatus));
 
-            var statuses = new List<Status>();
+            var statuses = new List<ReviewStatusDto>();
             int sortOrder = 1;
 
-            foreach (ProductReviewStatus val in values)
+            foreach (ReviewStatus val in values)
             {
                 var name = val.ToString();
                 var color = ProductReviewHelper.GetStatusColor(val);
 
-                statuses.Add(new Status
+                statuses.Add(new ReviewStatusDto
                 {
                     Alias = name.ToLower(),
                     Color = color,
                     Id = (int)val,
                     Name = name,
-                    SortOrder = sortOrder,
-                    StoreId = storeId
+                    SortOrder = sortOrder
                 });
 
                 sortOrder++;
@@ -82,94 +84,108 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         }
 
         [HttpGet]
-        public ProductReview GetProductReview(Guid id)
+        public ReviewEditDto GetReview(Guid id)
         {
-            return _productReviewService.GetProductReview(id);
+            var entity = _productReviewService.GetReview(id);
+
+            return ProductReviewMapper.ProductReviewEntityToEditDto(entity);
         }
 
         [HttpGet]
-        public IEnumerable<ProductReview> GetProductReview(Guid[] ids)
+        public IEnumerable<ReviewDto> GetReviews(Guid[] ids)
         {
-            return _productReviewService.GetProductReviews(ids);
+            return _productReviewService.GetReviews(ids)
+                .Select(x => ProductReviewMapper.ProductReviewEntityToDto(x));
         }
 
         [HttpGet]
-        public PagedResult<ProductReview> GetProductReviews(Guid storeId, string productReference, long pageNumber = 1, int pageSize = 50)
+        public PagedResult<ReviewDto> GetReviewsForProduct(Guid storeId, string productReference, long pageNumber = 1, int pageSize = 50)
         {
-            long total;
-            var items = _productReviewService.GetProductReviews(storeId, productReference, pageNumber, pageSize, out total);
+            var result = _productReviewService.GetReviewsForProduct(storeId, productReference, pageNumber, pageSize);
 
-            return new PagedResult<ProductReview>(total, pageNumber, pageSize)
+            return new PagedResult<ReviewDto>(result.TotalItems, result.PageNumber, result.PageSize)
             {
-                Items = items
+                Items = result.Items.Select(x => ProductReviewMapper.ProductReviewEntityToDto(x))
             };
         }
 
         [HttpGet]
-        public PagedResult<ProductReview> GetProductReviewsForCustomer(Guid storeId, string customerReference, long pageNumber = 1, int pageSize = 50)
+        public PagedResult<ReviewDto> GetReviewsForCustomer(Guid storeId, string customerReference, long pageNumber = 1, int pageSize = 50)
         {
-            long total;
-            var items = _productReviewService.GetProductReviewsForCustomer(storeId, customerReference, pageNumber, pageSize, out total);
+            var result = _productReviewService.GetReviewsForCustomer(storeId, customerReference, pageNumber: pageNumber, pageSize: pageSize);
 
-            return new PagedResult<ProductReview>(total, pageNumber, pageSize)
+            return new PagedResult<ReviewDto>(result.TotalItems, result.PageNumber, result.PageSize)
             {
-                Items = items
+                Items = result.Items.Select(x => ProductReviewMapper.ProductReviewEntityToDto(x))
             };
         }
 
         [HttpGet]
-        public PagedResult<ProductReview> SearchProductReviews(Guid storeId, long pageNumber = 1, int pageSize = 50, [FromUri] string[] statuses = null, [FromUri] decimal[] ratings = null, string searchTerm = null)
+        public PagedResult<ReviewDto> SearchReviews(Guid storeId, [FromUri] ReviewStatus[] statuses = null, [FromUri] decimal[] ratings = null, string searchTerm = null, long pageNumber = 1, int pageSize = 50)
         {
-            long total;
-            var items = _productReviewService.SearchProductReviews(storeId, pageNumber, pageSize, out total, statuses: statuses, ratings: ratings, searchTerm: searchTerm);
+            var result = _productReviewService.SearchReviews(storeId, statuses: statuses, ratings: ratings, searchTerm: searchTerm, pageNumber: pageNumber, pageSize: pageSize);
 
-            return new PagedResult<ProductReview>(total, pageNumber, pageSize)
+            return new PagedResult<ReviewDto>(result.TotalItems, result.PageNumber, result.PageSize)
             {
-                Items = items
+                Items = result.Items.Select(x => ProductReviewMapper.ProductReviewEntityToDto(x))
             };
         }
 
         [HttpPost]
-        public ProductReview SaveReview(ProductReview review)
+        public ReviewEditDto SaveReview(ReviewSaveDto review)
         {
-            review.Notifications.Clear();
+            Review entity;
 
             try
             {
-                review = _productReviewService.SaveProductReview(review);
-                review.Notifications.Add(new Notification(
-                        _textService.Localize("speechBubbles/operationSavedHeader"),
-                        string.Empty,
-                        NotificationStyle.Success));
+                entity = review.Id != Guid.Empty
+                    ? _productReviewService.GetReview(review.Id)
+                    : new Review(review.StoreId, review.ProductReference, review.CustomerReference);
+
+                ProductReviewMapper.ProductReviewSaveDtoToEntity(review, entity);
+
+                entity = _productReviewService.SaveReview(entity);
             }
-            catch
+            catch (Exception ex)
             {
-                review.Notifications.Add(new Notification(
-                        _textService.Localize("speechBubbles/operationFailedHeader"),
-                        string.Empty,
-                        NotificationStyle.Error));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex));
             }
 
-            return review;
+            var model = ProductReviewMapper.ProductReviewEntityToEditDto(entity);
+
+            model.Notifications.Add(new Notification(_textService.Localize("speechBubbles/operationSavedHeader"), 
+                string.Empty, NotificationStyle.Success));
+
+            return model;
         }
 
         [HttpDelete]
         [HttpPost]
         public void DeleteReview(Guid id)
         {
-            _productReviewService.DeleteProductReview(id);
+            _productReviewService.DeleteReview(id);
         }
 
         [HttpPost]
-        public ProductReview ChangeReviewStatus(StatusDto model)
+        public ReviewEditDto ChangeReviewStatus(ChangeReviewStatusDto model)
         {
-            return _productReviewService.ChangeStatus(model.ReviewId, model.Status);
+            var entity = _productReviewService.ChangeReviewStatus(model.ReviewId, model.Status);
+
+            return ProductReviewMapper.ProductReviewEntityToEditDto(entity);
         }
 
         [HttpPost]
-        public Comment SaveComment(Comment comment)
+        public CommentDto SaveComment(CommentDto comment)
         {
-            return _productReviewService.SaveComment(comment);
+            var entity = comment.Id != Guid.Empty
+                ? _productReviewService.GetReview(comment.ReviewId).Comments.First(x => x.Id == comment.Id)
+                : new Comment(comment.StoreId, comment.ReviewId);
+
+            entity = ProductReviewMapper.CommentDtoToEntity(comment, entity);
+
+            _productReviewService.SaveComment(entity);
+
+            return ProductReviewMapper.CommentEntityToDto(entity);
         }
 
         [HttpDelete]

@@ -13,9 +13,9 @@
 
             public static class Tables
             {
-                public const string ProductReview = TableNamePrefix + "ProductReview";
+                public const string Review = TableNamePrefix + "ProductReview";
 
-                public const string ProductReviewComment = TableNamePrefix + "ProductReviewComment";
+                public const string Comment = TableNamePrefix + "ProductReviewComment";
             }
         }
 
@@ -36,7 +36,7 @@
                 /// <summary>
                 /// System reviews node type
                 /// </summary>
-                public const string NodeType = "ProductReview";
+                public const string NodeType = "Review";
             }
         }
 
@@ -45,9 +45,9 @@
             public static class EntityTypes
             {
                 /// <summary>
-                /// Product Review entity type
+                /// Review entity type
                 /// </summary>
-                public const string ProductReview = "ProductReview";
+                public const string Review = "Review";
             }
         }
 

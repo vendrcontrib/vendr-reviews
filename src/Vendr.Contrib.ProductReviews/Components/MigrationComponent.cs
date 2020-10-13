@@ -28,7 +28,9 @@ namespace Vendr.Contrib.ProductReviews.Components
             var plan = new MigrationPlan("Vendr.Contrib.ProductReviews");
 
             plan.From(string.Empty)
-                .To<CreateProductReviewTables>("1.0.0");
+                // 1.0.0
+                .To<CreateProductReviewTable>("c0e73d2a-bdae-4b3b-9742-ff27fb8233c2")
+                .To<CreateProductReviewCommentTable>("9d777d60-2e2c-4c67-a49a-e725170abbdf");
 
             new Upgrader(plan)
                 .Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);

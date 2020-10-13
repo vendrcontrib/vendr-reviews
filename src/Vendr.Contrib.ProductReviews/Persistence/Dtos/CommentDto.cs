@@ -10,10 +10,10 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
     [ExplicitColumns]
     public class CommentDto
     {
-        public const string TableName = Constants.DatabaseSchema.Tables.ProductReviewComment;
+        public const string TableName = Constants.DatabaseSchema.Tables.Comment;
 
         [Column("id")]
-        [PrimaryKeyColumn]
+        [PrimaryKeyColumn(AutoIncrement = false)]
         [Constraint(Default = SystemMethods.NewGuid)]
         public Guid Id { get; set; }
 
@@ -23,11 +23,10 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         [Column("reviewId")]
         public Guid ReviewId { get; set; }
 
-        [Column("createDate")]
-        [Constraint(Default = SystemMethods.CurrentDateTime)]
-        public DateTime CreateDate { get; set; }
+        [Column("body")]
+        public string Body { get; set; }
 
-        [Column("description")]
-        public string Description { get; set; }
+        [Column("createDate")]
+        public DateTime CreateDate { get; set; }
     }
 }

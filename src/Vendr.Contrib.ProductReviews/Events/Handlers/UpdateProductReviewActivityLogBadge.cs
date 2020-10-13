@@ -10,7 +10,7 @@ namespace Vendr.Contrib.ProductReviews.Events.Handlers
         {
             foreach (var entry in evt.LogEntries.Where(x => 
                 x.StoreId == evt.StoreId && 
-                x.EntityType == Constants.Entities.EntityTypes.ProductReview))
+                x.EntityType == Constants.Entities.EntityTypes.Review))
             {
                 entry.BadgeLabel = "Review";
                 entry.BadgeColorClass = "vendr-bg--orange";

@@ -1,19 +1,12 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
-@using Current = Umbraco.Web.Composing.Current;
+﻿@using Vendr.Contrib.ProductReviews.Api;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @{
     var storeId = Guid.TryParse(ViewData["storeId"]?.ToString(), out Guid result) ? result : Guid.Empty;
     var productReference = ViewData["productReference"]?.ToString();
 
-    // These dependencies would typical be injected in constructor in a SurfaceController
-    var uowProvicer = Current.Factory.GetInstance<Vendr.Core.IUnitOfWorkProvider>();
-    var repository = Current.Factory.GetInstance<Vendr.Contrib.ProductReviews.Factories.IProductReviewRepositoryFactory>();
-    var service = new Vendr.Contrib.ProductReviews.Services.Implement.ProductReviewService(uowProvicer, repository);
-    
-    long total = 0;
-    var reviews = service.GetProductReviews(storeId, productReference, 1, 10, out total);
-
-    decimal totalScore = 5;
-    decimal avgScore = reviews?.Average(x => x.Rating) ?? 0;
+    var reviews = ProductReviewsApi.Instance.ReviewService.GetReviewsForProduct(storeId, productReference, 1, 10);
+    var avgRating = ProductReviewsApi.Instance.ReviewService.GetAverageStarRatingForProduct(storeId, productReference);
+    var maxRating = 5;
 }
 
 <script type="application/ld+json">
@@ -22,9 +15,9 @@
         "@@type": "Product",
         "aggregateRating": {
             "@@type": "AggregateRating",
-            "bestRating": "@totalScore",
-            "ratingValue": "@avgScore"
-            "reviewCount": "@total"
+            "bestRating": "@maxRating",
+            "ratingValue": "@avgRating"
+            "reviewCount": "@reviews.TotalItems"
         }
     }
 </script>
@@ -197,7 +190,7 @@
 
         <div class="review-summary">
             <div class="aggregated-rating-absolute">
-                <span>@String.Format("{0:0.0}", avgScore)</span>
+                <span>@String.Format("{0:0.0}", avgRating)</span>
             </div>
             <div class="aggregated-rating-view">
                 <div class="rating">
@@ -208,7 +201,7 @@
                         <svg><use xlink:href="#star"></use></svg>
                         <svg><use xlink:href="#star"></use></svg>
                     </div>
-                    <div class="stars-fill" style="width: @Math.Round(avgScore / totalScore * 100)%">
+                    <div class="stars-fill" style="width: @Math.Round(avgRating / maxRating * 100)%">
                         <svg><use xlink:href="#star"></use></svg>
                         <svg><use xlink:href="#star"></use></svg>
                         <svg><use xlink:href="#star"></use></svg>
@@ -216,7 +209,7 @@
                         <svg><use xlink:href="#star"></use></svg>
                     </div>
                 </div>
-                <div class="reviews-count">@total Reviews</div>
+                <div class="reviews-count">@reviews.TotalItems Reviews</div>
             </div>
 
             <div>
@@ -224,7 +217,7 @@
             </div>
         </div>
 
-        @using (Html.BeginUmbracoForm("AddProductReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg hidden" }))
+        @using (Html.BeginUmbracoForm("AddReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg hidden" }))
         {
             @Html.AntiForgeryToken();
 
@@ -259,11 +252,11 @@
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4 required">
                 <label class="font-bold mb-1">Title</label>
-                <input type="text" name="title" placeholder="Enter a title" class="flex-1 bg-gray-200 px-4 py-2" required />
+                <input type="text" name="title" placeholder="Enter a title for your review" class="flex-1 bg-gray-200 px-4 py-2" required />
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4 required">
                 <label class="font-bold mb-1">Your review</label>
-                <textarea rows="5" maxlength="255" name="description" placeholder="Enter a description" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
+                <textarea rows="5" maxlength="255" name="body" placeholder="Enter you review" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4">
                 <label class="font-bold mb-1">Do you recommend this product?</label>
@@ -279,7 +272,7 @@
         }
 
         <div class="review-list">
-            @foreach (var review in reviews)
+            @foreach (var review in reviews.Items)
             {
                 <div class="review-item">
                     <div class="stars-small">
@@ -300,7 +293,7 @@
                     }
                     <h4>@review.Title</h4>
                     <p style="color: #999;">by <em>@review.Name</em> (@review.CreateDate.ToString("MM/dd/yyyy"))</p>
-                    <p>@review.Description</p>
+                    <p>@review.Body</p>
 
                     @if (review.Comments != null && review.Comments.Count > 0)
                     {
@@ -310,7 +303,7 @@
                             <div class="comment" style="margin: 5px 0px 5px 25px; padding: 0 10px; border-left: 3px solid #ccc;">
                                 <strong>Shop owner</strong><br />
                                 <small>@comment.CreateDate.ToString("MM/dd/yyyy")</small>
-                                <p>@comment.Description</p>
+                                <p>@comment.Body</p>
                             </div>
                         }
                     }

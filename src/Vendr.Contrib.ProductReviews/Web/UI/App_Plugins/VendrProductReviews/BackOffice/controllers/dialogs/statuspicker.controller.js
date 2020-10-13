@@ -15,7 +15,7 @@
         vm.config = angular.extend({}, defaultConfig, $scope.model.config);
 
         vm.loadItems = function () {
-            return vendrProductReviewsResource.getStatuses(vm.config.storeId);
+            return vendrProductReviewsResource.getReviewStatuses(vm.config.storeId);
         };
 
         vm.select = function (item) {

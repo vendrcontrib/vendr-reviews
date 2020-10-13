@@ -30,8 +30,8 @@
                     alias: 'statuses',
                     localStorageKey: 'store_' + storeId + '_reviewStatusFilter',
                     getFilterOptions: function () {
-                        return vendrRouteCache.getOrFetch("store_" + storeId + "_statuses", function () {
-                            return vendrProductReviewsResource.getStatuses(storeId);
+                        return vendrRouteCache.getOrFetch("store_" + storeId + "_reviewStatuses", function () {
+                            return vendrProductReviewsResource.getReviewStatuses(storeId);
                         })
                         .then(function (items) {
                             return items.map(function (itm) {
@@ -64,7 +64,7 @@
                     name: 'Delete',
                     icon: 'icon-trash',
                     doAction: function (bulkItem) {
-                        return vendrProductReviewsResource.deleteProductReview(bulkItem.id);
+                        return vendrProductReviewsResource.deleteReview(bulkItem.id);
                     },
                     getConfirmMessage: function (total) {
                         return $q.resolve("Are you sure you want to delete " + total + " " + (total > 1 ? "items" : "item") + "?");
@@ -81,7 +81,7 @@
                             <i class="icon-rate {{rating >= 4 ? 'active' : ''}}"></i>
                             <i class="icon-rate {{rating >= 5 ? 'active' : ''}}"></i>
                         </span><span class="sr-only">{{rating}} stars</span></span>` },
-                { alias: 'review', header: 'Review', template: '<span class="db bold">{{title}}</span><span class="vendr-table-cell-label">{{description}}</span>' },
+                { alias: 'review', header: 'Review', template: '<span class="db bold">{{title}}</span><span class="vendr-table-cell-label">{{body}}</span>' },
                 { alias: 'createDate', header: 'Date', template: "{{ createDate | date : 'MMMM d, yyyy h:mm a' }}" },
                 { alias: 'status', header: 'Status', align: 'right', template: '<span class="umb-badge umb-badge--xs vendr-bg--{{status.color}}" title="Status: {{status.name}}">{{status.name}}</span>' }
             ],
@@ -147,7 +147,7 @@
             });
 
             // Perform search
-            vendrProductReviewsResource.searchProductReviews(storeId, opts).then(function (entities) {
+            vendrProductReviewsResource.searchReviews(storeId, opts).then(function (entities) {
                 entities.items.forEach(function (itm) {
                     itm.routePath = '/commerce/vendrproductreviews/review-edit/' + vendrUtils.createCompositeId([storeId, itm.id]);
                 });

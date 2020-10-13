@@ -1,22 +1,22 @@
-﻿using Vendr.Contrib.ProductReviews.Enums;
+﻿using Vendr.Contrib.ProductReviews.Models;
 
 namespace Vendr.Contrib.ProductReviews.Helpers
 {
     internal static class ProductReviewHelper
     {
-        public static string GetStatusColor(ProductReviewStatus status)
+        public static string GetStatusColor(ReviewStatus status)
         {
             var color = "black";
 
             switch (status)
             {
-                case ProductReviewStatus.Pending:
+                case ReviewStatus.Pending:
                     color = "light-blue";
                     break;
-                case ProductReviewStatus.Approved:
+                case ReviewStatus.Approved:
                     color = "green";
                     break;
-                case ProductReviewStatus.Declined:
+                case ReviewStatus.Declined:
                     color = "grey";
                     break;
             }
