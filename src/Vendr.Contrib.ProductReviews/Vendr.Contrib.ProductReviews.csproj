@@ -301,6 +301,7 @@
     <Compile Include="Persistence\Repositories\IProductReviewRepository.cs" />
     <Compile Include="Persistence\Repositories\Implement\ProductReviewRepository.cs" />
     <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
+    <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Services\Implement\ProductReviewService.cs" />
     <Compile Include="Services\IProductReviewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

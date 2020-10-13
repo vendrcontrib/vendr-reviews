@@ -2,7 +2,7 @@
  
     <!-- PROPERTIES -->    
     <ItemGroup>
-        <NuSpecFiles Include="$(BuildDir)\NuSpecs\$(ProjectName).nuspec">
+        <NuSpecFiles Include="$(BuildDir)\NuSpecs\$(ProjectId).nuspec">
             <WithSymbols>true</WithSymbols>
         </NuSpecFiles>
     </ItemGroup>

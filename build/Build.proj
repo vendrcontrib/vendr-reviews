@@ -15,15 +15,16 @@
         <ArtifactFilesDir>$(ArtifactsDir)\files</ArtifactFilesDir>
         <ArtifactPackagesDir>$(ArtifactsDir)\packages</ArtifactPackagesDir>
         
-        <ProjectName>Vendr.Contrib.ProductReviews</ProjectName>
+        <ProjectName>ProductReviews</ProjectName>
+        <ProjectId>Vendr.Contrib.$(ProjectName)</ProjectId>
         <MinUmbracoVersion>8.2.0</MinUmbracoVersion>
 
         <GitVersionConfig>$(BuildToolsDir)\GitVersion\GitVersion.yml</GitVersionConfig>
 	  </PropertyGroup>
 
     <ItemGroup>
-        <SolutionFile Include="$(RootDir)\$(ProjectName).sln" />
-        <ProjectFiles Include="$(SourceDir)\$(ProjectName)\$(ProjectName).csproj" />
+        <SolutionFile Include="$(RootDir)\$(ProjectId).sln" />
+        <ProjectFiles Include="$(SourceDir)\$(ProjectId)\$(ProjectId).csproj" />
     </ItemGroup>
 
 	  <!-- IMPORT SUB TASKS -->
