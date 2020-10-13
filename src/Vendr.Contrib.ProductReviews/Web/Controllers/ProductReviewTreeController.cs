@@ -11,7 +11,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
 
     [Tree("commerce", "reviews", TreeTitle = "Reviews", SortOrder = 10, TreeUse = TreeUse.None)]
     [PluginController("VendrProductReviews")]
-    public class ReviewTreeController : TreeController
+    public class ProductReviewTreeController : TreeController
     {
         protected override TreeNodeCollection GetTreeNodes(string id, FormDataCollection queryStrings)
         {

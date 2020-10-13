@@ -7,6 +7,6 @@ namespace Vendr.Contrib.ProductReviews.Web.Dtos
     {
         public Guid ReviewId { get; set; }
 
-        public ReviewStatus Status { get; set; }
+        public ProductReviewStatus Status { get; set; }
     }
 }

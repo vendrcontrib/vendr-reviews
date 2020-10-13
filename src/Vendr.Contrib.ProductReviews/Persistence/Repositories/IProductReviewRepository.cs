@@ -12,9 +12,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 
         IEnumerable<ProductReview> Get(Guid[] ids);
 
-        IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ReviewStatus? status = null);
+        IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ProductReviewStatus? status = null);
 
-        IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ReviewStatus? status = null);
+        IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ProductReviewStatus? status = null);
 
         IEnumerable<ProductReview> GetPagedReviewsByQuery(Guid storeId, IQuery<ProductReview> query, long pageIndex, long pageSize, out long totalRecords);
 
@@ -22,11 +22,9 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories
 
         ProductReview Save(ProductReview review);
 
-        ProductReview Insert(ProductReview review);
-
         void Delete(Guid id);
 
-        ProductReview ChangeStatus(Guid id, ReviewStatus status);
+        ProductReview ChangeStatus(Guid id, ProductReviewStatus status);
 
         Comment SaveComment(Comment comment);
 

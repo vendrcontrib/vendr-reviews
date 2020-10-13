@@ -4,7 +4,7 @@ using Umbraco.Core.Migrations;
 using Umbraco.Core.Migrations.Upgrade;
 using Umbraco.Core.Scoping;
 using Umbraco.Core.Services;
-using Vendr.Contrib.ProductReviews.Migrations.TargetOneZeroZero;
+using Vendr.Contrib.ProductReviews.Migrations.V_1_0_0;
 
 namespace Vendr.Contrib.ProductReviews.Components
 {
@@ -30,13 +30,11 @@ namespace Vendr.Contrib.ProductReviews.Components
             plan.From(string.Empty)
                 .To<CreateProductReviewTables>("1.0.0");
 
-            var upgrader = new Upgrader(plan);
-            upgrader.Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);
+            new Upgrader(plan)
+                .Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);
         }
 
         public void Terminate()
-        {
-            
-        }
+        { }
     }
 }

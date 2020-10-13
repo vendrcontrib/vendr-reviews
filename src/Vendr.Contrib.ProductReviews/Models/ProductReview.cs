@@ -20,7 +20,7 @@ namespace Vendr.Contrib.ProductReviews.Models
         }
 
         [DataMember(Name = "path")]
-        public string[] Path => new string[] { "-1", StoreId.ToString(), Constants.Trees.Reviews.Id, Id.ToString() };
+        public string[] Path => new string[] { "-1", StoreId.ToString(), Constants.Trees.ProductReviews.Id, Id.ToString() };
 
         [DataMember(Name = "id")]
         public Guid Id { get; internal set; }

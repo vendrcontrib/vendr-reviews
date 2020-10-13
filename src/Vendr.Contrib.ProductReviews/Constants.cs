@@ -15,13 +15,13 @@
             {
                 public const string ProductReview = TableNamePrefix + "ProductReview";
 
-                public const string Comment = TableNamePrefix + "ProductReviewComment";
+                public const string ProductReviewComment = TableNamePrefix + "ProductReviewComment";
             }
         }
 
         public static class Trees
         {
-            public static class Reviews
+            public static class ProductReviews
             {
                 /// <summary>
                 /// Id for reviews node
@@ -36,7 +36,7 @@
                 /// <summary>
                 /// System reviews node type
                 /// </summary>
-                public const string NodeType = "Review";
+                public const string NodeType = "ProductReview";
             }
         }
 
@@ -45,9 +45,9 @@
             public static class EntityTypes
             {
                 /// <summary>
-                /// Review entity type
+                /// Product Review entity type
                 /// </summary>
-                public const string Review = "Review";
+                public const string ProductReview = "ProductReview";
             }
         }
 

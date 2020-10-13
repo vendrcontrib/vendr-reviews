@@ -6,7 +6,7 @@ using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.Querying;
 using Umbraco.Core.Persistence.SqlSyntax;
 using Vendr.Contrib.ProductReviews.Enums;
-using Vendr.Contrib.ProductReviews.Factories;
+using Vendr.Contrib.ProductReviews.Persistence.Factories;
 using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
@@ -60,7 +60,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             //return DoFetchInternal(_uow, "WHERE id IN(@0)", ids);
         }
 
-        public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ReviewStatus? status = null)
+        public IEnumerable<ProductReview> GetMany(Guid storeId, string productReference, long pageIndex, long pageSize, out long totalRecords, ProductReviewStatus? status = null)
         {
             var sql = Sql()
                 .Select("*")
@@ -83,7 +83,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return result;
         }
 
-        public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ReviewStatus? status = null)
+        public IEnumerable<ProductReview> GetForCustomer(Guid storeId, string customerReference, long pageIndex, long pageSize, out long totalRecords, string productReference = null, ProductReviewStatus? status = null)
         {
             var sql = Sql()
                 .Select("*")
@@ -118,22 +118,12 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
             return ProductReviewFactory.BuildProductReview(dto);
         }
 
-        public ProductReview Insert(ProductReview review)
-        {
-            var dto = ProductReviewFactory.BuildProductReview(review);
-            dto.Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id;
-
-            _uow.Database.Insert(dto);
-
-            return ProductReviewFactory.BuildProductReview(dto);
-        }
-
         public void Delete(Guid id)
         {
             _uow.Database.Delete<ProductReviewDto>("WHERE id = @0", id);
         }
 
-        public ProductReview ChangeStatus(Guid id, ReviewStatus status)
+        public ProductReview ChangeStatus(Guid id, ProductReviewStatus status)
         {
             //var sql = Sql().Update<ProductReviewDto>(r => r.Set(x => x.Status, status))
             //     .Where<ProductReviewDto>(x => x.Id == id);

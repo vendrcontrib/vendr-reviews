@@ -4,7 +4,7 @@ using Vendr.Contrib.ProductReviews.Persistence.Repositories;
 using Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement;
 using Vendr.Core;
 
-namespace Vendr.Contrib.ProductReviews.Factories
+namespace Vendr.Contrib.ProductReviews.Persistence
 {
     public class ProductReviewRepositoryFactory : IProductReviewRepositoryFactory
     {

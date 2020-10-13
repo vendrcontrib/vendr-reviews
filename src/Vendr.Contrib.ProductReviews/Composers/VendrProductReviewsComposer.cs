@@ -2,7 +2,8 @@
 using Umbraco.Core.Composing;
 using Vendr.Contrib.ProductReviews.Components;
 using Vendr.Contrib.ProductReviews.Events;
-using Vendr.Contrib.ProductReviews.Factories;
+using Vendr.Contrib.ProductReviews.Events.Handlers;
+using Vendr.Contrib.ProductReviews.Persistence;
 using Vendr.Contrib.ProductReviews.Services;
 using Vendr.Contrib.ProductReviews.Services.Implement;
 using Vendr.Core.Composing;
@@ -24,13 +25,13 @@ namespace Vendr.Contrib.ProductReviews.Composers
 
             // Register events
             composition.WithNotificationEvent<ProductReviewAddedNotification>()
-                .RegisterHandler<ProductReviewAddedHandler>();
+                .RegisterHandler<LogProductReviewAddedActivity>();
 
             composition.WithNotificationEvent<StoreActionsRenderingNotification>()
-                .RegisterHandler<StoreActionsRenderingEventHandler>();
+                .RegisterHandler<UpdateProductReviewStoreActions>();
 
             composition.WithNotificationEvent<ActivityLogEntriesRenderingNotification>()
-                .RegisterHandler<ActivityLogEntriesRenderingNotificationEventHandler>();
+                .RegisterHandler<UpdateProductReviewActivityLogBadge>();
 
             // Register component
             composition.Components()

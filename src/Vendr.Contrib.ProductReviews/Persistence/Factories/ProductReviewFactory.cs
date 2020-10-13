@@ -6,7 +6,7 @@ using Vendr.Contrib.ProductReviews.Models;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 using Vendr.Core;
 
-namespace Vendr.Contrib.ProductReviews.Factories
+namespace Vendr.Contrib.ProductReviews.Persistence.Factories
 {
     internal static class ProductReviewFactory
     {
@@ -50,7 +50,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
         {
             review.MustNotBeNull(nameof(review));
 
-            var status = Enum.TryParse(review.Status?.Id.ToString(), out ReviewStatus s) ? s : default(ReviewStatus);
+            var status = Enum.TryParse(review.Status?.Id.ToString(), out ProductReviewStatus s) ? s : default(ProductReviewStatus);
 
             var dto = new ProductReviewDto
             {
@@ -107,7 +107,7 @@ namespace Vendr.Contrib.ProductReviews.Factories
         private static Status BuildStatus(ProductReviewDto dto)
         {
             var name = dto.Status.ToString();
-            var color = ReviewHelper.GetStatusColor(dto.Status);
+            var color = ProductReviewHelper.GetStatusColor(dto.Status);
 
             return new Status
             {

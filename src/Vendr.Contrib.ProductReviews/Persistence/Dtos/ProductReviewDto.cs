@@ -31,7 +31,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Dtos
         public DateTime UpdateDate { get; set; }
 
         [Column("status")]
-        public ReviewStatus Status { get; set; }
+        public ProductReviewStatus Status { get; set; }
 
         [Column("rating")]
         public decimal Rating { get; set; }

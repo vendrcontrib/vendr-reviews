@@ -2,21 +2,21 @@
 
 namespace Vendr.Contrib.ProductReviews.Helpers
 {
-    internal static class ReviewHelper
+    internal static class ProductReviewHelper
     {
-        public static string GetStatusColor(ReviewStatus status)
+        public static string GetStatusColor(ProductReviewStatus status)
         {
             var color = "black";
 
             switch (status)
             {
-                case ReviewStatus.Pending:
+                case ProductReviewStatus.Pending:
                     color = "light-blue";
                     break;
-                case ReviewStatus.Approved:
+                case ProductReviewStatus.Approved:
                     color = "green";
                     break;
-                case ReviewStatus.Declined:
+                case ProductReviewStatus.Declined:
                     color = "grey";
                     break;
             }

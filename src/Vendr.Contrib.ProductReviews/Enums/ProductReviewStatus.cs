@@ -6,7 +6,7 @@ namespace Vendr.Contrib.ProductReviews.Enums
 {
     [DataContract]
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ReviewStatus
+    public enum ProductReviewStatus
     {
         [EnumMember(Value = "pending")]
         Pending = 0,

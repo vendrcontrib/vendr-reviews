@@ -55,7 +55,7 @@ namespace Vendr.Contrib.ProductReviews.Services
         /// <summary>
         /// Change status of product review.
         /// </summary>
-        ProductReview ChangeStatus(Guid id, ReviewStatus status);
+        ProductReview ChangeStatus(Guid id, ProductReviewStatus status);
 
         /// <summary>
         /// Save comment to product review.

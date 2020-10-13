@@ -37,15 +37,15 @@ namespace Vendr.Contrib.ProductReviews.Web.Controllers
         [HttpGet]
         public IEnumerable<Status> GetStatuses(Guid storeId)
         {
-            var values = Enum.GetValues(typeof(ReviewStatus));
+            var values = Enum.GetValues(typeof(ProductReviewStatus));
 
             var statuses = new List<Status>();
             int sortOrder = 1;
 
-            foreach (ReviewStatus val in values)
+            foreach (ProductReviewStatus val in values)
             {
                 var name = val.ToString();
-                var color = ReviewHelper.GetStatusColor(val);
+                var color = ProductReviewHelper.GetStatusColor(val);
 
                 statuses.Add(new Status
                 {

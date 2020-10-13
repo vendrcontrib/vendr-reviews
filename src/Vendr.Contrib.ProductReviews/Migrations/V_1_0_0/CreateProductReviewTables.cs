@@ -1,7 +1,7 @@
 ﻿using Umbraco.Core.Migrations;
 using Vendr.Contrib.ProductReviews.Persistence.Dtos;
 
-namespace Vendr.Contrib.ProductReviews.Migrations.TargetOneZeroZero
+namespace Vendr.Contrib.ProductReviews.Migrations.V_1_0_0
 {
     public class CreateProductReviewTables : MigrationBase
     {
