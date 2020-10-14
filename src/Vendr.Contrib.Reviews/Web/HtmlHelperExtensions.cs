@@ -7,9 +7,9 @@ namespace Vendr.Contrib.Reviews.Web
     public static class HtmlHelperExtensions
     {
         public static MvcHtmlString VendrReviews(this HtmlHelper html, Guid storeId, string productReference)
-            => VendrReviews(html, storeId, productReference, "~/App_Plugins/VendrReviews/Views/Partials/VendrReviews.cshtml");
+            => VendrReviews(html, "~/App_Plugins/VendrReviews/Views/Partials/VendrReviews.cshtml", storeId, productReference);
 
-        public static MvcHtmlString VendrReviews(this HtmlHelper html, Guid storeId, string productReference, string partialViewPath)
+        public static MvcHtmlString VendrReviews(this HtmlHelper html, string partialViewPath, Guid storeId, string productReference)
         {
             return html.Partial(partialViewPath, new ViewDataDictionary
             {
