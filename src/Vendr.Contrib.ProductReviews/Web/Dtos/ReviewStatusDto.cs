@@ -18,7 +18,7 @@ namespace Vendr.Contrib.ProductReviews.Web.Dtos
         public string Color { get; set; }
 
         [DataMember(Name = "icon")]
-        public string Icon => "icon-light-up";
+        public string Icon => "icon-record";
 
         [DataMember(Name = "sortOrder")]
         public int SortOrder { get; set; }
