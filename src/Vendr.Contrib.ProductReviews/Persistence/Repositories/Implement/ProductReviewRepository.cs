@@ -106,7 +106,7 @@ namespace Vendr.Contrib.ProductReviews.Persistence.Repositories.Implement
 
         public decimal GetAverageStarRatingForProduct(Guid storeId, string productReference)
         {
-            return _uow.Database.ExecuteScalar<decimal>($"SELECT AVG(rating) FROM {ReviewDto.TableName} WHERE storeId = @0 AND productReference = @1", storeId, productReference);
+            return _uow.Database.ExecuteScalar<decimal>($"SELECT AVG(rating) FROM {ReviewDto.TableName} WHERE storeId = @0 AND productReference = @1 AND status = @2", storeId, productReference, (int)ReviewStatus.Approved);
         }
 
         public Review SaveReview(Review review)
