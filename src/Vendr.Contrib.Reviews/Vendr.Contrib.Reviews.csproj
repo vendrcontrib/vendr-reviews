@@ -317,6 +317,7 @@
     <Compile Include="Web\Dtos\ReviewEditDto.cs" />
     <Compile Include="Web\Dtos\ReviewSaveDto.cs" />
     <Compile Include="Web\Dtos\ReviewStatusDto.cs" />
+    <Compile Include="Web\HtmlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
