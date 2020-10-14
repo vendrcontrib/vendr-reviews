@@ -10,8 +10,8 @@
         <icon>images\icon.png</icon>
         <license type="expression">MIT</license>
         <projectUrl>https://getvendr.net/</projectUrl>
-        <description>Product reviews for Vendr, the eCommerce package for Umbrao v8+</description>
-        <summary>Product reviews for Vendr, the eCommerce package for Umbrao v8+</summary>
+        <description>Simple product reviews for Vendr, the eCommerce package for Umbrao v8+</description>
+        <summary>Simple product reviews for Vendr, the eCommerce package for Umbrao v8+</summary>
         <language>en-US</language>
         <tags>umbraco ecommerce vendr</tags>
         <dependencies>
