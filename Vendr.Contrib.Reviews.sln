@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{28F0AFA0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{13726C8F-6AEA-43A3-8F8A-AF7AFFEFC057}"
 	ProjectSection(SolutionItems) = preProject
-		build\Umbraco\Reviews.package.xml = build\Umbraco\Reviews.package.xml
+		build\Umbraco\Vendr.Contrib.Reviews.package.xml = build\Umbraco\Vendr.Contrib.Reviews.package.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuSpecs", "NuSpecs", "{57D08155-4F59-4C25-925E-88514D95C217}"

@@ -17,7 +17,7 @@ Add the following using statement to your product page view:
 Then in the location you wish to render the reviews add:
 
 ```
-@Html.VendrReviews(store.Id, Model.Key.ToString())
+@Html.RenderVendrReviews(store.Id, Model.Key.ToString())
 ```
 
 ## TODO
