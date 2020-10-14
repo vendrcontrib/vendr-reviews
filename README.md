@@ -8,13 +8,13 @@ Simple product reviews for Vendr, the eCommerce package for Umbrao v8+
 
 Add the following using statement to your product page view:
 
-````
+````csharp
 @using Vendr.Contrib.Reviews.Web;
 ````
 
 Then in the location you wish to render the reviews add:
 
-```
+```csharp
 @Html.RenderVendrReviews(store.Id, Model.Key.ToString())
 ```
 
