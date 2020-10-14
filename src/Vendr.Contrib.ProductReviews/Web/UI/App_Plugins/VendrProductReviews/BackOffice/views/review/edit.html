@@ -40,22 +40,26 @@
                                 <button type="button" class="btn btn-default" ng-click="vm.editReview()">Edit</button>
                             </umb-box-header>
                             <umb-box-content>
-                                <span class="dib rating mb2" aria-hidden="true">
-                                    <i class="icon-rate"
-                                       ng-repeat="n in [].constructor(5) track by $index"
-                                       ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
-                                    </i>
-                                </span>
-                                <div>
-                                    <strong>{{vm.content.title}}</strong>
-                                    <p class="mt2">{{vm.content.body}}</p>
-                                    <p class="mt2">Recommend product: {{vm.content.recommendProduct !== null ? (vm.content.recommendProduct === true ? 'Yes' : 'No') : 'Not specified'}}</p>
-                                    <div class="card-review-footer">
-                                        <span><em>{{vm.content.name}}</em>&nbsp;<span ng-if="vm.content.email">({{vm.content.email}})</span></span>
-                                        <span ng-if="vm.content.verifiedBuyer" class="verified-buyer">
-                                            <i class="icon icon-shield" aria-hidden="true"></i> Verified Buyer
+                                <div class="flex flex-row-reverse w-full">
+                                    <div class="flex">
+                                        <span class="rating mb2" aria-hidden="true">
+                                            <i class="icon-rate"
+                                               ng-repeat="n in [].constructor(5) track by $index"
+                                               ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
+                                            </i>
                                         </span>
                                     </div>
+                                    <div class="flex-1 mr-10">
+                                        <strong>{{vm.content.title}}</strong>
+                                        <p>{{vm.content.body}}</p>
+                                        <p class="mt-10 mb-15">Recommend product: {{vm.content.recommendProduct !== null ? (vm.content.recommendProduct === true ? 'Yes' : 'No') : 'Not specified'}}</p>
+                                    </div>
+                                </div>
+                                <div class="card-review-footer">
+                                    <span><em>{{vm.content.name}}</em>&nbsp;<span ng-if="vm.content.email">({{vm.content.email}})</span></span>
+                                    <span ng-if="vm.content.verifiedBuyer" class="verified-buyer">
+                                        <i class="icon icon-shield" aria-hidden="true"></i> Verified Buyer
+                                    </span>
                                 </div>
                             </umb-box-content>
                         </umb-box>
