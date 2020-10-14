@@ -6,6 +6,8 @@ Product reviews for Vendr, the eCommerce package for Umbrao v8+
 
 Basic functionality to view and manage product reviews in Vendr.
 
+## Instalation
+
 Add the following using statement to your product page view:
 
 ````
@@ -34,6 +36,5 @@ Then in the location you wish to render the reviews add:
 - [x] Show product details like sku and product name on edit page.
 - [x] Recommend this product (yes/no).
 - [x] Verified buyer (yes/no).
-- [ ] Votes positive
-- [ ] Votes negative
+- [ ] Votes positive / negative
 - [ ] Add basic configuration (e.g. as config file).
