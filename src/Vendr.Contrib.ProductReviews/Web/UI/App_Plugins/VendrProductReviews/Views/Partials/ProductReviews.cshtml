@@ -1,4 +1,5 @@
 ﻿@using Vendr.Contrib.ProductReviews.Api;
+@using System.Configuration;
 @inherits Umbraco.Web.Mvc.UmbracoViewPage
 @{
     var storeId = Guid.TryParse(ViewData["storeId"]?.ToString(), out Guid result) ? result : Guid.Empty;
@@ -7,6 +8,8 @@
     var reviews = ProductReviewsApi.Instance.ReviewService.GetReviewsForProduct(storeId, productReference, 1, 10);
     var avgRating = ProductReviewsApi.Instance.ReviewService.GetAverageStarRatingForProduct(storeId, productReference);
     var maxRating = 5;
+
+    var isPostback = Request.HttpMethod == "POST";
 }
 
 <script type="application/ld+json">
@@ -217,9 +220,10 @@
             </div>
         </div>
 
-        @using (Html.BeginUmbracoForm("AddReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg hidden" }))
+        @using (Html.BeginUmbracoForm("AddReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg " + (isPostback ? "" : "hidden") }))
         {
             @Html.AntiForgeryToken();
+            @Html.ValidationSummary();
 
             <input type="hidden" name="storeId" value="@storeId" />
             <input type="hidden" name="productReference" value="@productReference" />
@@ -238,34 +242,40 @@
                     </div>
                     <div id="rated"></div>
                 </div>
-
-                <input type="hidden" name="rating" id="hdnRating" />
+                <input type="hidden" name="rating" id="hdnRating" value="@(Request.Form["rating"])" />
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4 required">
                 <label class="font-bold mb-1">Name</label>
-                <input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" required />
+                <input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" value="@(Request.Form["name"])" required />
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4 required">
                 <label class="font-bold mb-1">Email</label>
                 <small>Your email will not be published.</small>
-                <input type="text" name="email" placeholder="Enter your email" class="flex-1 bg-gray-200 px-4 py-2" required />
+                <input type="text" name="email" placeholder="Enter your email" class="flex-1 bg-gray-200 px-4 py-2" value="@(Request.Form["email"])" required />
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4 required">
                 <label class="font-bold mb-1">Title</label>
-                <input type="text" name="title" placeholder="Enter a title for your review" class="flex-1 bg-gray-200 px-4 py-2" required />
+                <input type="text" name="title" placeholder="Enter a title for your review" class="flex-1 bg-gray-200 px-4 py-2" value="@(Request.Form["title"])" required />
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4 required">
                 <label class="font-bold mb-1">Your review</label>
-                <textarea rows="5" maxlength="255" name="body" placeholder="Enter you review" class="flex-1 bg-gray-200 px-4 py-2" required></textarea>
+                <textarea rows="5" maxlength="255" name="body" placeholder="Enter you review" class="flex-1 bg-gray-200 px-4 py-2" required>@(Request.Form["body"])</textarea>
             </div>
             <div class="form-group flex flex-col flex-wrap mb-4">
                 <label class="font-bold mb-1">Do you recommend this product?</label>
                 <small>Optional</small>
                 <div>
-                    <label><input type="radio" name="recommendproduct" value="true" /> Yes</label>
-                    <label><input type="radio" name="recommendproduct" value="false" /> No</label>
+                    <label><input type="radio" name="recommendproduct" value="true" @(Request.Form["recommendproduct"] == "true" ? "checked=\"checked\"" : "") /> Yes</label>
+                    <label><input type="radio" name="recommendproduct" value="false" @(Request.Form["recommendproduct"] == "false" ? "checked=\"checked\"" : "") /> No</label>
                 </div>
             </div>
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["VendrProductReviews:hCaptcha:SiteKey"]))
+            {
+                <div class="form-group flex flex-col flex-wrap mb-4">
+                    <div class="h-captcha" data-sitekey="@(ConfigurationManager.AppSettings["VendrProductReviews:hCaptcha:SiteKey"])"></div>
+                    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+                </div>
+            }
             <div class="flex flex-wrap mb-4">
                 <button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Submit your review</button>
             </div>
@@ -328,17 +338,26 @@
     var hdnRating = document.getElementById('hdnRating');
     var rated = document.getElementById('rated');
 
-    starContainer.addEventListener('click', function (e) {
-        var index = stars.indexOf(e.target);
-        var count = count = totalStars - index;
-        hdnRating.value = count;
-        stars.forEach((el,i) => {
-            el.classList.remove('is-selected');
-        });
-        e.target.classList.add('is-selected');
-        rated.textContent = 'You have rated ' + count + ' stars';
-    });
+    function setRating(r) {
+        hdnRating.value = r;
 
+        // Reverse the value as the stars are displayed
+        // in reverse order so that we can use the ~
+        // css selector
+        var r2 = totalStars - (r - 1);
+        stars.forEach(function (s, i) {
+            s.classList.remove('is-selected');
+            if (i + 1 == r2) {
+                s.classList.add('is-selected');
+            }
+        });
+
+        rated.textContent = 'You have rated ' + r + ' stars';
+    }
+
+    starContainer.addEventListener('click', function (e) {
+        setRating(stars.indexOf(e.target) + 1);
+    });
 
     window.onload = function () {
 
@@ -371,5 +390,9 @@
 
            return false;
         });
+
+        if (hdnRating.value) {
+            setRating(parseInt(hdnRating.value));
+        }
     };
 </script>
