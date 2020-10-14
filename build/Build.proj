@@ -15,7 +15,7 @@
         <ArtifactFilesDir>$(ArtifactsDir)\files</ArtifactFilesDir>
         <ArtifactPackagesDir>$(ArtifactsDir)\packages</ArtifactPackagesDir>
         
-        <ProjectName>ProductReviews</ProjectName>
+        <ProjectName>Reviews</ProjectName>
         <ProjectId>Vendr.Contrib.$(ProjectName)</ProjectId>
         <MinUmbracoVersion>8.2.0</MinUmbracoVersion>
 

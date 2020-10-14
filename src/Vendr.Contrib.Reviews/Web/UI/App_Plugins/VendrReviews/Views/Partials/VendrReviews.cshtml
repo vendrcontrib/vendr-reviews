@@ -1,0 +1,410 @@
+﻿@using Vendr.Contrib.Reviews.Api;
+@using System.Configuration;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    var storeId = Guid.TryParse(ViewData["storeId"]?.ToString(), out Guid result) ? result : Guid.Empty;
+    var productReference = ViewData["productReference"]?.ToString();
+
+    var reviews = VendrReviewsApi.Instance.ReviewService.GetReviewsForProduct(storeId, productReference, 1, 10);
+    var avgRating = VendrReviewsApi.Instance.ReviewService.GetAverageRatingForProduct(storeId, productReference);
+    var maxRating = 5;
+
+    var isPostback = Request.HttpMethod == "POST";
+}
+
+<script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "Product",
+        "aggregateRating": {
+            "@@type": "AggregateRating",
+            "bestRating": "@maxRating",
+            "ratingValue": "@avgRating"
+            "reviewCount": "@reviews.TotalItems"
+        }
+    }
+</script>
+
+<style>
+    .stars svg,
+    .stars-empty svg,
+    .stars-fill svg,
+    .stars-small svg {
+        width: 2em;
+        height: 2em;
+        fill: white;
+        pointer-events: none;
+    }
+
+    .stars {
+      display: flex;
+      flex-flow: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .stars-small {
+      display: flex;
+    }
+
+    .star.is-selected svg, 
+    .star.is-selected ~ .star svg {
+      fill: #df9e26;
+    }
+
+    .star:hover svg, 
+    .star:hover ~ .star svg {
+      fill: #ffa500;
+    }
+
+    .reviews {
+        margin-top: 50px;
+        padding: 20px 0;
+        border-top: 1px solid #ccc;
+    }
+
+    .review-summary {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        padding: 10px 3px;
+    }
+
+    .review-summary .aggregated-rating-absolute {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .aggregated-rating-view {
+        margin: 0 25px 0 10px;
+    }
+
+    .aggregated-rating-view > .rating {
+      display: flex;
+      flex-flow: row-reverse;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .aggregated-rating-view > .rating .stars-empty,
+    .aggregated-rating-view > .rating .stars-fill {
+        display: flex;
+        flex-flow: wrap;
+        white-space: nowrap;
+    }
+
+    .aggregated-rating-view > .rating .stars-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        flex-flow: nowrap;
+        overflow: hidden;
+    }
+
+    .aggregated-rating-view > .rating .stars-fill svg {
+        fill: orange;
+    }
+
+    .aggregated-rating-view > .rating svg {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+    }
+
+    .aggregated-rating-view > .reviews-count {
+      font-size: 14px;
+      color: #a4a4a4;
+    }
+
+    #rated {
+      margin-left: 1em;
+    }
+
+    .rtl {
+      direction: rtl;
+    }
+
+    .review-list .review-item {
+        margin: 10px 0;
+        padding: 8px 0;
+        border-top: 1px solid #efefef;
+    }
+
+    .review-list .review-item h4 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .review-list .review-item svg {
+        height: 20px;
+        width: 20px;
+    }
+
+    .review-list .review-item .stars-small,
+    .review-list .review-item .verified-buyer {
+        display: inline-flex;
+    }
+
+    .review-list .review-item .verified-buyer {
+        display: inline-flex;
+        color: #a4a4a4;
+        font-size: 14px;
+        margin-left: 15px;
+    }
+
+    .review-list .review-item .verified-buyer svg {
+        fill: #24ac24;
+        margin-right: 0.25rem;
+    }
+
+    .review-form {
+        border-top: 1px solid #efefef;
+        padding: 15px 0;
+    }
+    .review-form input,
+    .review-form textarea {
+        border: 1px solid transparent;
+    }
+    .review-form .has-danger input,
+    .review-form .has-danger textarea {
+        border-color: #f56565;
+    }
+    .review-form .has-danger .text-help {
+        color: #f56565;
+    }
+    .review-form .form-group.required > label:after {
+        content: "*";
+        color: #f56565;
+        margin-left: 3px;
+    }
+    .review-form .form-group > small {
+        margin-bottom: 3px;
+    }
+</style>
+
+<section class="reviews">
+
+    <h2 class="text-2xl font-bold">Customer Reviews</h2>
+
+    <div>
+        <svg style="display: none;">
+            <symbol id="star" viewBox="0 0 98 92">
+                <title>star</title>
+                <path stroke='#ffa500' stroke-width='5' d='M49 73.5L22.55 87.406l5.05-29.453-21.398-20.86 29.573-4.296L49 6l13.225 26.797 29.573 4.297-21.4 20.86 5.052 29.452z' fill-rule='evenodd' />
+            </symbol>
+        </svg>
+
+        <div class="review-summary">
+            <div class="aggregated-rating-absolute">
+                <span>@String.Format("{0:0.0}", avgRating)</span>
+            </div>
+            <div class="aggregated-rating-view">
+                <div class="rating">
+                    <div class="stars-empty">
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                    </div>
+                    <div class="stars-fill" style="width: @Math.Round(avgRating / maxRating * 100)%">
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                        <svg><use xlink:href="#star"></use></svg>
+                    </div>
+                </div>
+                <div class="reviews-count">@reviews.TotalItems Reviews</div>
+            </div>
+
+            <div>
+                <button type="button" id="btnToggleReview" class="font-bold border-2 border-gray-900 px-4 py-1">Write a Review</button>
+            </div>
+        </div>
+
+        @using (Html.BeginUmbracoForm("AddReview", "VendrReviews", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg " + (isPostback ? "" : "hidden") }))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "message message--error" });
+            @Html.AntiForgeryToken();
+
+            <input type="hidden" name="storeId" value="@storeId" />
+            <input type="hidden" name="productReference" value="@productReference" />
+
+            <div class="form-group flex flex-col flex-wrap mb-4 required">
+
+                <label class="font-bold mb-1">How would you rate this product?</label>
+
+                <div style="display: inline-flex; align-items: center;">
+                    <div id="stars" class="stars">
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                        <button type="button" class="star"><svg><use xlink:href="#star"></use></svg></button>
+                    </div>
+                    <div id="rated"></div>
+                </div>
+                <input type="hidden" name="rating" id="hdnRating" value="@(Request.Form["rating"])" />
+            </div>
+            <div class="form-group flex flex-col flex-wrap mb-4 required">
+                <label class="font-bold mb-1">Name</label>
+                <input type="text" name="name" placeholder="Enter your name" class="flex-1 bg-gray-200 px-4 py-2" value="@(Request.Form["name"])" required />
+            </div>
+            <div class="form-group flex flex-col flex-wrap mb-4 required">
+                <label class="font-bold mb-1">Email</label>
+                <small>Your email will not be published.</small>
+                <input type="text" name="email" placeholder="Enter your email" class="flex-1 bg-gray-200 px-4 py-2" value="@(Request.Form["email"])" required />
+            </div>
+            <div class="form-group flex flex-col flex-wrap mb-4 required">
+                <label class="font-bold mb-1">Title</label>
+                <input type="text" name="title" placeholder="Enter a title for your review" class="flex-1 bg-gray-200 px-4 py-2" value="@(Request.Form["title"])" required />
+            </div>
+            <div class="form-group flex flex-col flex-wrap mb-4 required">
+                <label class="font-bold mb-1">Your review</label>
+                <textarea rows="5" maxlength="255" name="body" placeholder="Enter you review" class="flex-1 bg-gray-200 px-4 py-2" required>@(Request.Form["body"])</textarea>
+            </div>
+            <div class="form-group flex flex-col flex-wrap mb-4">
+                <label class="font-bold mb-1">Do you recommend this product?</label>
+                <small>Optional</small>
+                <div>
+                    <label><input type="radio" name="recommendproduct" value="true" @(Request.Form["recommendproduct"] == "true" ? "checked=\"checked\"" : "") /> Yes</label>
+                    <label><input type="radio" name="recommendproduct" value="false" @(Request.Form["recommendproduct"] == "false" ? "checked=\"checked\"" : "") /> No</label>
+                </div>
+            </div>
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["VendrReviews:hCaptcha:SiteKey"]))
+            {
+                <div class="form-group flex flex-col flex-wrap mb-4">
+                    <div class="h-captcha" data-sitekey="@(ConfigurationManager.AppSettings["VendrReviews:hCaptcha:SiteKey"])"></div>
+                    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+                </div>
+            }
+            <div class="flex flex-wrap mb-4">
+                <button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Submit your review</button>
+            </div>
+        }
+
+        @{
+            var sucessMessage = TempData["SucessMessage"];
+            if (sucessMessage != null)
+            {
+                <div class="message message--success">@sucessMessage</div>
+            }
+        }
+
+        <div class="review-list">
+            @foreach (var review in reviews.Items)
+            {
+                <div class="review-item">
+                    <div class="stars-small">
+                        @for (var i = 0; i < 5; i++)
+                        {
+                            <svg style="@(i < review.Rating ? "fill: #ffa500;" : null)"><use xlink:href="#star"></use></svg>
+                        }
+                    </div>
+                    @if (review.VerifiedBuyer)
+                    {
+                        <span class="verified-buyer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                <path d="M0 0h48v48H0z" fill="none" />
+                                <path d="M24 2L6 10v12c0 11.11 7.67 21.47 18 24 10.33-2.53 18-12.89 18-24V10L24 2zm-4 32l-8-8 2.83-2.83L20 28.34l13.17-13.17L36 18 20 34z" />
+                            </svg>
+                            Verified Buyer
+                        </span>
+                    }
+                    <h4>@review.Title</h4>
+                    <p style="color: #999;">by <em>@review.Name</em> (@review.CreateDate.ToString("MM/dd/yyyy"))</p>
+                    <p>@review.Body</p>
+
+                    @if (review.Comments != null && review.Comments.Count > 0)
+                    {
+                        var comment = review.Comments.FirstOrDefault();
+                        if (comment != null)
+                        {
+                            <div class="comment" style="margin: 5px 0px 5px 25px; padding: 0 10px; border-left: 3px solid #ccc;">
+                                <strong>Shop owner</strong><br />
+                                <small>@comment.CreateDate.ToString("MM/dd/yyyy")</small>
+                                <p>@comment.Body</p>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/pristinejs@0.1.9/dist/pristine.min.js" type="text/javascript"></script>
+<script>
+    var btnToggleReview = document.getElementById('btnToggleReview');
+    var reviewFormContainer = document.getElementById('reviewForm');
+
+    btnToggleReview.addEventListener('click', function (e) {
+        reviewFormContainer.classList.toggle('hidden');
+    });
+
+    var starContainer = document.getElementById('stars');
+    var stars = Array.prototype.slice.call(starContainer.children);
+    var totalStars = stars.length;
+    var hdnRating = document.getElementById('hdnRating');
+    var rated = document.getElementById('rated');
+
+    function setRating(r) {
+        hdnRating.value = r;
+
+        // Reverse the value as the stars are displayed
+        // in reverse order so that we can use the ~
+        // css selector
+        var r2 = totalStars - (r - 1);
+        stars.forEach(function (s, i) {
+            s.classList.remove('is-selected');
+            if (i + 1 == r2) {
+                s.classList.add('is-selected');
+            }
+        });
+
+        rated.textContent = 'You have rated ' + r + ' stars';
+    }
+
+    starContainer.addEventListener('click', function (e) {
+        var r = totalStars - stars.indexOf(e.target);
+        setRating(r);
+    });
+
+    window.onload = function () {
+
+        let defaultConfig = {
+            // class of the parent element where the error/success class is added
+            classTo: 'form-group',
+            errorClass: 'has-danger',
+            successClass: 'has-success',
+            // class of the parent element where error text element is appended
+            errorTextParent: 'form-group',
+            // type of element to create for the error text
+            errorTextTag: 'div',
+            // class of the error text element
+            errorTextClass: 'text-help' 
+        };
+
+        var form = document.getElementById("reviewForm");
+
+        // create the pristine instance
+        var pristine = new Pristine(form, defaultConfig);
+
+        form.addEventListener('submit', function (e) {
+           e.preventDefault();
+       
+           // check if the form is valid
+           var valid = pristine.validate(); // returns true or false
+           if (valid) {
+               this.submit();
+           }
+
+           return false;
+        });
+
+        if (hdnRating.value) {
+            setRating(parseInt(hdnRating.value));
+        }
+    };
+</script>

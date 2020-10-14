@@ -1,0 +1,97 @@
+﻿.vendr-reviews .vendr-table .vendr-table-cell.umb-table__name {
+    flex: 1 1 5%;
+    min-width: 180px;
+}
+
+.vendr-reviews .vendr-table .vendr-table-cell .rating {
+    color: #dfdfdf;
+    font-size: 20px;
+}
+
+.vendr-reviews .vendr-table .vendr-table-cell .rating > .active {
+    color: #ffbb3f;
+}
+
+.vendr-reviews .dropdown-menu umb-checkbox[name='filter-ratings'] ~ label > .umb-badge:before {
+    content: "\e0fa";
+    color: #ffbb3f;
+    font-family: icomoon;
+    margin-right: 3px;
+}
+
+.vendr-reviews .dropdown-menu .vendr-bg--light-grey {
+    background-color: #efefef;
+}
+
+.vendr-reviews .rating {
+    display: flex;
+    color: #dfdfdf;
+    font-size: 24px;
+    user-select: none;
+}
+
+.vendr-reviews .rating > .active {
+    color: #ffbb3f;
+}
+
+.vendr-reviews .card-review .verified-buyer {
+    color: #24ac24;
+    margin-left: 5px;
+}
+
+.vendr-reviews .card-review .card-review-footer {
+    border-top: 1px solid #e9e9eb;
+    padding-top: 15px;
+}
+
+.vendr-header--review .umb-panel-header-name {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin: 0;
+    line-height: 20px;
+}
+
+.vendr-header--review .umb-panel-header-locked-description {
+    color: #817f85;
+    font-size: 12px;
+    line-height: 12px;
+    height: auto;
+    margin: 6px 0 0;
+}
+
+.vendr-header--review-status .umb-panel-header-name:after {
+    font-size: 13px;
+    font-weight: normal;
+    padding: 1px 10px;
+    display: inline-block;
+    border-radius: 100px;
+    margin-left: 10px;
+    vertical-align: bottom;
+}
+
+.vendr-header--review-status-light-blue .umb-panel-header-name:after {
+    color: white;
+    background-color: #03a9f4;
+}
+.vendr-header--review-status-grey .umb-panel-header-name:after {
+    color: #68676b;
+    background-color: #d8d7d9;
+}
+.vendr-header--review-status-green .umb-panel-header-name:after {
+    color: white;
+    background-color: #4caf50;
+}
+
+.flex-row-reverse {
+    flex-direction: row-reverse;
+}
+.mb-15 {
+    margin-bottom: 15px;
+}
+.mt-15 {
+    margin-top: 15px;
+}
+.mb-20 {
+    margin-bottom: 20px;
+}

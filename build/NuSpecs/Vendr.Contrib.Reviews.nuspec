@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata minClientVersion="4.1.0">
+        <id>Vendr.Contrib.Reviews</id>
+        <version>0.0.0</version>
+        <title>Vendr.Contrib.Reviews</title>
+        <authors>Vendr Contrib</authors>
+        <owners>Vendr Contrib</owners>
+        <copyright>Vendr Contrib</copyright>
+        <icon>images\icon.png</icon>
+        <license type="expression">MIT</license>
+        <projectUrl>https://getvendr.net/</projectUrl>
+        <description>Product reviews for Vendr, the eCommerce package for Umbrao v8+</description>
+        <summary>Product reviews for Vendr, the eCommerce package for Umbrao v8+</summary>
+        <language>en-US</language>
+        <tags>umbraco ecommerce vendr</tags>
+        <dependencies>
+            <group targetFramework="net472">
+                <dependency id="Vendr.Core.Web" version="[1.3.2,1.999999)" />
+                <!--<dependency id="UmbracoCms.Core" version="[$MinUmbracoVersion$]" />-->
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <!-- nuget files -->
+        <file src="$SrcDir$\assets\logo-128.png" target="images\icon.png" />
+        
+        <!-- libs -->
+        <file src="$SrcDir$\bin\Vendr.Contrib.Reviews.dll" target="lib\net472\Vendr.Contrib.Reviews.dll" />
+
+        <!-- symbols -->
+        <file src="$SrcDir$\bin\Vendr.Contrib.Reviews.pdb" target="lib\net472\Vendr.Contrib.Reviews.pdb" />
+    </files>
+</package>

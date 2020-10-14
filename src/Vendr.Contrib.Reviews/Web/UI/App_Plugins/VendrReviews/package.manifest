@@ -1,0 +1,15 @@
+﻿{
+  "javascript": [
+    "~/App_Plugins/VendrReviews/backoffice/resources/vendrreviews.resource.js",
+    "~/App_Plugins/VendrReviews/backoffice/interceptors/routeRewrite.interceptor.js",
+    "~/App_Plugins/VendrReviews/backoffice/interceptors/config.interceptors.js",
+    "~/App_Plugins/VendrReviews/backoffice/controllers/dialogs/delete.controller.js",
+    "~/App_Plugins/VendrReviews/backoffice/controllers/dialogs/statuspicker.controller.js",
+    "~/App_Plugins/VendrReviews/backoffice/controllers/dialogs/details.controller.js",
+    "~/App_Plugins/VendrReviews/backoffice/controllers/review-list.controller.js",
+    "~/App_Plugins/VendrReviews/backoffice/controllers/review-edit.controller.js"
+  ],
+  "css": [
+    "~/App_Plugins/VendrReviews/backoffice/css/vendrreviews.css"
+  ]
+}

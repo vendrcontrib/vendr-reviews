@@ -17,7 +17,7 @@
             </ManifestFiles>
         </ItemGroup>
         <!-- Umbraco -->
-        <Pack ManifestFile="$(BuildDir)\Umbraco\$(ProjectName).package.xml"
+        <Pack ManifestFile="$(BuildDir)\Umbraco\$(ProjectId).package.xml"
 			WorkingDirectory="$(ArtifactFilesDir)"
 			OutputDirectory="$(ArtifactPackagesDir)"
             PackageVersion="$(GitVersion_NuGetVersion)"
