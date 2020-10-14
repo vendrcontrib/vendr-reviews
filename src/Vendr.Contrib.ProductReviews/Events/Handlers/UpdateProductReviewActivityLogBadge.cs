@@ -14,6 +14,7 @@ namespace Vendr.Contrib.ProductReviews.Events.Handlers
             {
                 entry.BadgeLabel = "Review";
                 entry.BadgeColorClass = "vendr-bg--orange";
+                entry.RoutePath = $"#/commerce/vendrproductreviews/review-edit/{evt.StoreId}_{entry.EntityId}";
             }
         }
     }
