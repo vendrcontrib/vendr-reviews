@@ -97,6 +97,8 @@
         position: absolute;
         left: 0;
         top: 0;
+        flex-flow: nowrap;
+        overflow: hidden;
     }
 
     .aggregated-rating-view > .rating .stars-fill svg {
@@ -106,6 +108,7 @@
     .aggregated-rating-view > .rating svg {
       width: 24px;
       height: 24px;
+      flex: 0 0 24px;
     }
 
     .aggregated-rating-view > .reviews-count {
@@ -222,8 +225,8 @@
 
         @using (Html.BeginUmbracoForm("AddReview", "ProductReview", null, new { id = "reviewForm", @class = "review-form w-full max-w-lg " + (isPostback ? "" : "hidden") }))
         {
+            @Html.ValidationSummary(false, "", new { @class = "message message--error" });
             @Html.AntiForgeryToken();
-            @Html.ValidationSummary();
 
             <input type="hidden" name="storeId" value="@storeId" />
             <input type="hidden" name="productReference" value="@productReference" />
@@ -279,6 +282,14 @@
             <div class="flex flex-wrap mb-4">
                 <button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-teal-400">Submit your review</button>
             </div>
+        }
+
+        @{
+            var sucessMessage = TempData["SucessMessage"];
+            if (sucessMessage != null)
+            {
+                <div class="message message--success">@sucessMessage</div>
+            }
         }
 
         <div class="review-list">
