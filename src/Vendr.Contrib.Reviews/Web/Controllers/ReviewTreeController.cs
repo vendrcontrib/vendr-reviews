@@ -1,30 +1,17 @@
 ﻿using System.Net.Http.Formatting;
-using Umbraco.Core;
+using System.Web.Http.ModelBinding;
 using Umbraco.Web.Actions;
 using Umbraco.Web.Models.Trees;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.Trees;
+using Umbraco.Web.WebApi.Filters;
 
 namespace Vendr.Contrib.Reviews.Web.Controllers
 {
-    using Constants = Umbraco.Core.Constants;
-
-    [Tree("commerce", "reviews", TreeTitle = "Reviews", SortOrder = 10, TreeUse = TreeUse.None)]
     [PluginController("VendrReviews")]
+    [Tree("commerce", "reviews", TreeTitle = "Reviews", SortOrder = 10, TreeUse = TreeUse.None)]
     public class ReviewTreeController : TreeController
     {
-        protected override TreeNodeCollection GetTreeNodes(string id, FormDataCollection queryStrings)
-        {
-            var nodes = new TreeNodeCollection();
-
-            if (id == Constants.System.Root.ToInvariantString())
-            {
-
-            }
-
-            return nodes;
-        }
-
         protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
         {
             var menu = new MenuItemCollection();
@@ -34,5 +21,9 @@ namespace Vendr.Contrib.Reviews.Web.Controllers
             return menu;
         }
 
+        protected override TreeNodeCollection GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
