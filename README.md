@@ -1,6 +1,6 @@
-# Vendr Reviews :star:
+# Vendr Reviews :star::star::star::star::star:
 
-Product reviews for Vendr, the eCommerce package for Umbrao v8+
+Simple product reviews for Vendr, the eCommerce package for Umbrao v8+
 
 <img src="assets/screenshots/product-reviews-list.png" alt="" />
 
