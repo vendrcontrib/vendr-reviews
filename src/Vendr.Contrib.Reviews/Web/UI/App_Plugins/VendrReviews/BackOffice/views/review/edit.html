@@ -77,7 +77,9 @@
                         <umb-box>
                             <umb-box-header title="Actions"></umb-box-header>
                             <umb-box-content class="block-form">
-                                <button type="button" class="btn btn-block btn-action" ng-click="vm.changeStatus()">Change Status</button>
+                                <button ng-if="vm.content.status.alias != 'approved'" type="button" class="btn btn-block btn-success" ng-click="vm.approveReview()">Approve</button>
+                                <button ng-if="vm.content.status.alias != 'declined'" type="button" class="btn btn-block btn-danger" ng-click="vm.declineReview()">Decline</button>
+                                <button ng-if="vm.content.status.alias != 'pending'" type="button" class="btn btn-block" ng-click="vm.unapproveReview()">Unapprove</button>
                             </umb-box-content>
                         </umb-box>
 

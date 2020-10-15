@@ -123,13 +123,8 @@
                     storeId: storeId
                 },
                 submit: function (model) {
-                    vendrReviewsResource.changeReviewStatus(id, model.id).then(function (review) {
-                        vm.content.status = review.status;
-                        notificationsService.success("Status Changed", "Status successfully changed to " + model.name + ".");
-                        editorService.close();
-                    }).catch(function (e) {
-                        notificationsService.error("Error Changing Status", "Unabled to change status to " + model.name + ". Please check the error log for details.");
-                    });
+                    vm.doChangeStatus(model.id);
+                    editorService.close();
                 },
                 close: function () {
                     editorService.close();
@@ -138,6 +133,27 @@
 
             editorService.open(dialog);
         };
+
+        vm.approveReview = function () {
+            vm.doChangeStatus({ id: 1, name: 'Approved' });
+        }
+
+        vm.declineReview = function () {
+            vm.doChangeStatus({ id: 2, name: 'Declined' });
+        }
+
+        vm.unapproveReview = function () {
+            vm.doChangeStatus({ id: 0, name: 'Pending' });
+        }
+
+        vm.doChangeStatus = function (status) {
+            vendrReviewsResource.changeReviewStatus(id, status.id).then(function (review) {
+                vm.content.status = review.status;
+                notificationsService.success("Status Changed", "Status successfully changed to " + status.name + ".");
+            }).catch(function (e) {
+                notificationsService.error("Error Changing Status", "Unabled to change status to " + status.name + ". Please check the error log for details.");
+            });
+        }
 
         vm.ready = function (model) {
             vm.page.loading = false;
