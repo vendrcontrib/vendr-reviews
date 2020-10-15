@@ -1,0 +1,61 @@
+﻿<div ng-controller="Vendr.Reviews.Controllers.ReviewDetailsEditController as vm" class="vendr">
+
+    <form name="contentForm">
+
+        <umb-editor-view>
+
+            <umb-editor-header name="model.title"
+                               name-locked="true"
+                               hide-alias="true"
+                               hide-icon="true"
+                               hide-description="true">
+            </umb-editor-header>
+
+            <umb-editor-container class="block-form">
+                <umb-box>
+                    <umb-box-content>
+
+                        <umb-control-group label="Title" description="The title of the review">
+                            <input type="text" class="umb-property-editor" ng-model="vm.content.title" required />
+                        </umb-control-group>
+
+                        <umb-control-group label="Body" description="The body of the review about this product">
+                            <textarea class="umb-property-editor" rows="10" maxlength="255" ng-model="vm.content.body" required></textarea>
+                        </umb-control-group>
+
+                        <umb-control-group label="Verified Buyer" description="Reviewer is a verified buyer of this product">
+                            <umb-toggle checked="vm.content.verifiedBuyer"
+                                        on-click="vm.content.verifiedBuyer = !vm.content.verifiedBuyer">
+                            </umb-toggle>
+                        </umb-control-group>
+
+                        <umb-control-group label="Customer" description="Customer reference" ng-if="vm.content.customerReference">
+                            <span>{{vm.content.customerReference}}</span>
+                        </umb-control-group>
+
+                    </umb-box-content>
+                </umb-box>
+            </umb-editor-container>
+
+            <umb-editor-footer>
+                <umb-editor-footer-content-right>
+                    <umb-button type="button"
+                                button-style="link"
+                                label-key="general_close"
+                                shortcut="esc"
+                                action="vm.close()">
+                    </umb-button>
+                    <umb-button type="button"
+                                button-style="success"
+                                label-key="general_submit"
+                                state="vm.saveButtonState"
+                                action="vm.submit(model)">
+                    </umb-button>
+                </umb-editor-footer-content-right>
+            </umb-editor-footer>
+
+        </umb-editor-view>
+
+    </form>
+
+</div>

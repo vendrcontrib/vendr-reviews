@@ -1,0 +1,148 @@
+﻿<div id="vendr-order-edit" ng-controller="Vendr.Reviews.Controllers.ReviewEditController as vm" class="vendr vendr-reviews">
+
+    <umb-load-indicator ng-if="vm.page.loading"></umb-load-indicator>
+
+    <style>
+      .vendr-header--review-status .umb-panel-header-name:after { content: '{{ vm.content.status.name.replace("'","\\'") }}'; }
+    </style>
+
+    <form name="contentForm"
+          ng-submit="vm.save()"
+          novalidate
+          val-form-manager>
+
+        <umb-editor-view ng-if="!vm.page.loading">
+
+            <umb-editor-header
+                name="vm.content.name"
+                description="vm.content.createDate | date: 'MMMM d, yyyy h:mm a'"
+                name-locked="true"
+                description-locked="true"
+                hide-icon="true"
+                hide-description="false"
+                hide-alias="true"
+                show-back-button="!vm.page.isInfiniteMode"
+                on-back="vm.back()"
+                menu="vm.page.menu"
+                hide-menu="vm.page.isInfiniteMode"
+                class="vendr-header vendr-header--review vendr-header--review-status vendr-header--review-status-{{vm.content.status.color}}">
+            </umb-editor-header>
+
+            <umb-editor-container class="form-horizontal">
+
+                <vendr-license-check></vendr-license-check>
+
+                <div class="vendr-layout vendr-layout--layout1">
+                    <div class="vendr-layout__left">
+
+                        <umb-box class="card-review">
+                            <umb-box-header title="Review">
+                                <button type="button" class="btn btn-default" ng-click="vm.editReview()">Edit</button>
+                            </umb-box-header>
+                            <umb-box-content>
+                                <div class="flex flex-row-reverse w-full">
+                                    <div class="flex">
+                                        <span class="rating mb2" aria-hidden="true">
+                                            <i class="icon-rate"
+                                               ng-repeat="n in [].constructor(5) track by $index"
+                                               ng-class="{ 'active': ($index + 1) <= vm.content.rating }">
+                                            </i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-1 mr-10">
+                                        <strong>{{vm.content.title}}</strong>
+                                        <p>{{vm.content.body}}</p>
+                                        <p class="mt-10 mb-15">Recommend product: {{vm.content.recommendProduct !== null ? (vm.content.recommendProduct === true ? 'Yes' : 'No') : 'Not specified'}}</p>
+                                    </div>
+                                </div>
+                                <div class="card-review-footer">
+                                    <span><em>{{vm.content.name}}</em>&nbsp;<span ng-if="vm.content.email">({{vm.content.email}})</span></span>
+                                    <span ng-if="vm.content.verifiedBuyer" class="verified-buyer">
+                                        <i class="icon icon-shield" aria-hidden="true"></i> Verified Buyer
+                                    </span>
+                                </div>
+                            </umb-box-content>
+                        </umb-box>
+
+                        <umb-box>
+                            <umb-box-header title="Reply to review"></umb-box-header>
+                            <umb-box-content>
+                                <textarea class="umb-property-editor" rows="10" maxlength="255" placeholder="Enter a reply to this review..." ng-model="vm.comment"></textarea>
+                            </umb-box-content>
+                        </umb-box>
+
+                    </div>
+                    <div class="vendr-layout__right">
+
+                        <umb-box>
+                            <umb-box-header title="Actions"></umb-box-header>
+                            <umb-box-content class="block-form">
+                                <button ng-if="vm.content.status.alias != 'approved'" type="button" class="btn btn-block btn-success" ng-click="vm.approveReview()">Approve</button>
+                                <button ng-if="vm.content.status.alias != 'declined'" type="button" class="btn btn-block btn-danger" ng-click="vm.declineReview()">Decline</button>
+                                <button ng-if="vm.content.status.alias != 'pending'" type="button" class="btn btn-block" ng-click="vm.unapproveReview()">Unapprove</button>
+                            </umb-box-content>
+                        </umb-box>
+
+                        <umb-box>
+                            <umb-box-header title-key="general_general"></umb-box-header>
+                            <umb-box-content class="block-form">
+
+                                <umb-control-group label="Product" ng-if="vm.product">
+                                    <span class="db">{{vm.product.name}}</span>
+                                    <small style="color: #999;">SKU: {{vm.product.sku}}</small>
+                                </umb-control-group>
+
+                                <umb-control-group label="Customer" ng-if="vm.customer">
+                                    <span>{{vm.customer.name}}</span>
+                                </umb-control-group>
+
+                                <umb-control-group label="Created">
+                                    <span>{{vm.content.createDate | date: 'MMMM d, yyyy h:mm a'}}</span>
+                                </umb-control-group>
+
+                                <umb-control-group label="Updated">
+                                    <span>{{vm.content.updateDate | date: 'MMMM d, yyyy h:mm a'}}</span>
+                                </umb-control-group>
+
+                            </umb-box-content>
+                        </umb-box>
+
+                    </div>
+                </div>
+
+            </umb-editor-container>
+
+            <umb-editor-footer>
+
+                <umb-editor-footer-content-left>
+                    <umb-breadcrumbs ng-if="!vm.page.isInfiniteMode && vm.page.breadcrumb && vm.page.breadcrumb.items && vm.page.breadcrumb.items.length > 0"
+                                     ancestors="vm.page.breadcrumb.items"
+                                     on-open="vm.page.breadcrumb.itemClick(ancestor)">
+                    </umb-breadcrumbs>
+                </umb-editor-footer-content-left>
+
+                <umb-editor-footer-content-right>
+
+                    <umb-button type="button"
+                                ng-if="vm.page.isInfiniteMode"
+                                button-style="link"
+                                label-key="general_close"
+                                shortcut="esc"
+                                action="vm.close()">
+                    </umb-button>
+
+                    <umb-button type="submit"
+                                button-style="success"
+                                state="vm.page.saveButtonState"
+                                shortcut="ctrl+s"
+                                label="Save"
+                                label-key="buttons_save">
+                    </umb-button>
+
+                </umb-editor-footer-content-right>
+
+            </umb-editor-footer>
+        </umb-editor-view>
+    </form>
+
+</div>

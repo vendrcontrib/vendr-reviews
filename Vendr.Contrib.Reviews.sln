@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vendr.Contrib.Reviews", "src\Vendr.Contrib.Reviews\Vendr.Contrib.Reviews.csproj", "{41CB18E9-1791-4F4C-A3E7-EF32CF69766E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{28F0AFA0-A189-4C25-8F10-D827C54A3DE1}"
+	ProjectSection(SolutionItems) = preProject
+		build\Build.Compile.targets = build\Build.Compile.targets
+		build\Build.Package.Nuget.targets = build\Build.Package.Nuget.targets
+		build\Build.Package.Umbraco.targets = build\Build.Package.Umbraco.targets
+		build\Build.Prepare.targets = build\Build.Prepare.targets
+		build\Build.proj = build\Build.proj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{13726C8F-6AEA-43A3-8F8A-AF7AFFEFC057}"
+	ProjectSection(SolutionItems) = preProject
+		build\Umbraco\Vendr.Contrib.Reviews.package.xml = build\Umbraco\Vendr.Contrib.Reviews.package.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuSpecs", "NuSpecs", "{57D08155-4F59-4C25-925E-88514D95C217}"
+	ProjectSection(SolutionItems) = preProject
+		build\NuSpecs\Vendr.Contrib.Reviews.nuspec = build\NuSpecs\Vendr.Contrib.Reviews.nuspec
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41CB18E9-1791-4F4C-A3E7-EF32CF69766E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41CB18E9-1791-4F4C-A3E7-EF32CF69766E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41CB18E9-1791-4F4C-A3E7-EF32CF69766E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41CB18E9-1791-4F4C-A3E7-EF32CF69766E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13726C8F-6AEA-43A3-8F8A-AF7AFFEFC057} = {28F0AFA0-A189-4C25-8F10-D827C54A3DE1}
+		{57D08155-4F59-4C25-925E-88514D95C217} = {28F0AFA0-A189-4C25-8F10-D827C54A3DE1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BC6FD3F-0379-4907-BBAF-80E9C4F9497B}
+	EndGlobalSection
+EndGlobal

@@ -6,19 +6,20 @@
         
         <!-- Copy static files --> 
 		<ItemGroup>
-			<BinFiles Include="$(SourceDir)\Vendr.*\bin\$(BuildConfiguration)\$(ProjectName).dll" />
-            <BinFiles Include="$(SourceDir)\Vendr.*\bin\$(BuildConfiguration)\$(ProjectName).pdb" />
-            <BinFiles Include="$(SourceDir)\Vendr.*\bin\$(BuildConfiguration)\$(ProjectName).xml" />
+			<BinFiles Include="$(SourceDir)\Vendr.*\bin\$(ProjectId).dll" />
+            <BinFiles Include="$(SourceDir)\Vendr.*\bin\$(ProjectId).pdb" />
+            <BinFiles Include="$(SourceDir)\Vendr.*\bin\$(ProjectId).xml" />
             <!-- BEGIN DLL DEPENDENCIES-->
-            <BinFiles Include="$(SourceDir)\Vendr.*\bin\$(BuildConfiguration)\Flurl.Http.dll" />
-            <BinFiles Include="$(SourceDir)\Vendr.*\bin\$(BuildConfiguration)\Flurl.dll" />
+            <!--<BinFiles Include="$(SourceDir)\Vendr.*\bin\Your.Dependency.dll" />-->
             <!-- END DLL DEPENDENCIES-->
+            <ContentFiles Include="$(SourceDir)\$(ProjectId)\Web\UI\**\*" />
             <AssetFiles Include="$(RootDir)\assets\*" />
-            <VendrLicenseFile Include="$(RootDir)\LICENSE.md" />
+            <LicenseFile Include="$(RootDir)\LICENSE.md" />
 		</ItemGroup>
 		<Copy SourceFiles="@(BinFiles)" DestinationFolder="$(ArtifactFilesDir)\bin" />
+        <Copy SourceFiles="@(ContentFiles)" DestinationFiles="@(ContentFiles-> '$(ArtifactFilesDir)\content\%(RecursiveDir)%(Filename)%(Extension)')" />
         <Copy SourceFiles="@(AssetFiles)" DestinationFiles="@(AssetFiles-> '$(ArtifactFilesDir)\assets\%(Filename)%(Extension)')" />
-        <Copy SourceFiles="@(VendrLicenseFile)" DestinationFolder="$(ArtifactFilesDir)" />
+        <Copy SourceFiles="@(LicenseFile)" DestinationFolder="$(ArtifactFilesDir)" />
         
     </Target>
     

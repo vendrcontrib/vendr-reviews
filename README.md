@@ -1,19 +1,21 @@
-# Vendr Product Reviews :star:
+# Vendr Reviews :star::star::star::star::star:
 
-Product Reviews for Vendr, the eCommerce package for Umbrao v8+
+Simple product reviews for Vendr, the eCommerce package for Umbrao v8+
 
 <img src="assets/screenshots/product-reviews-list.png" alt="" />
 
-Basic functionality to view and manage reviews in Vendr.
+## Instalation
 
-Insert the following partial on the product page:
+Add the following using statement to your product page view:
 
-```
-@Html.Partial("ProductReviews", new ViewDataDictionary
-{
-    { "storeId", store.Id },
-    { "productReference", Model.GetProductReference() }
-})
+````csharp
+@using Vendr.Contrib.Reviews.Web;
+````
+
+Then in the location you wish to render the reviews add:
+
+```csharp
+@Html.RenderVendrReviews(store.Id, Model.Key.ToString())
 ```
 
 ## TODO
@@ -32,6 +34,5 @@ Insert the following partial on the product page:
 - [x] Show product details like sku and product name on edit page.
 - [x] Recommend this product (yes/no).
 - [x] Verified buyer (yes/no).
-- [ ] Votes positive
-- [ ] Votes negative
+- [ ] Votes positive / negative
 - [ ] Add basic configuration (e.g. as config file).
