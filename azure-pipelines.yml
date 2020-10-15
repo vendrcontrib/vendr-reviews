@@ -16,7 +16,7 @@ variables:
   - name: 'vmImageName'
     value: 'vs2017-win2016'
   - name: 'nuGetOrgServiceCreds'
-    value: 'NuGet.org (Vendr)'
+    value: 'NuGet.org (Vendr.Contrib)'
   - name: 'packageName'
     value: 'Vendr.Contrib.Reviews'
 
