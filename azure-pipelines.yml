@@ -66,7 +66,7 @@ stages:
               command: 'push'
               packagesToPush: '$(Pipeline.Workspace)/BuildArtifacts/**/*.nupkg;!$(Pipeline.Workspace)/BuildArtifacts/**/*.snupkg'
               nuGetFeedType: 'internal'
-              publishVstsFeed: '576196d3-9f20-4a86-8fd6-b0d7428fe5ee/cfadaa44-aa4e-45d7-8303-91a38d020c50'
+              publishVstsFeed: 'b7810adb-d090-464a-84f1-8e6cd318c30c/fbc2bb03-9eff-453e-bb77-bdc141666fc5'
 
           # Release Deploy
           - task: UseDotNet@2
