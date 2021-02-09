@@ -25,7 +25,7 @@ namespace Vendr.Contrib.Reviews.Migrations.V_1_0_0
 
                 // Create table
                 Create.Table(commentTableName)
-                    .WithColumn("id").AsGuid().NotNullable().WithDefault(SystemMethods.NewGuid).PrimaryKey($"PK_{reviewTableName}")
+                    .WithColumn("id").AsGuid().NotNullable().WithDefault(SystemMethods.NewGuid).PrimaryKey($"PK_{commentTableName}")
                     .WithColumn("storeId").AsGuid().NotNullable()
                     .WithColumn("reviewId").AsGuid().NotNullable()
                     .WithColumn("body").AsCustom(nvarcharMaxType).NotNullable()
