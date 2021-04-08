@@ -13,7 +13,7 @@
         <description>Simple product reviews for Vendr, the eCommerce package for Umbrao v8+</description>
         <summary>Simple product reviews for Vendr, the eCommerce package for Umbrao v8+</summary>
         <language>en-US</language>
-        <tags>umbraco ecommerce vendr</tags>
+        <tags>umbraco ecommerce vendr reviews</tags>
         <dependencies>
             <group targetFramework="net472">
                 <dependency id="Vendr.Core.Web" version="[1.3.2,1.999999)" />
