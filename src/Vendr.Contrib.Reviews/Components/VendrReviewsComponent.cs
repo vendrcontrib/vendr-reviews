@@ -30,7 +30,6 @@ namespace Vendr.Contrib.Reviews.Components
         {
             if (sender.TreeAlias == "vendr" && e.QueryStrings["nodeType"] == Vendr.Core.Constants.Entities.EntityTypes.Store)
             {
-                var index = e.Nodes.Count;
                 var mainRoute = "commerce/vendrreviews";
 
                 var storeId = e.QueryStrings["id"];
@@ -46,14 +45,9 @@ namespace Vendr.Contrib.Reviews.Components
                 reviewsNode.AdditionalData.Add("application", Vendr.Web.Constants.Sections.Commerce);
 
                 var optNodeIndex = e.Nodes.FindIndex(x => x.NodeType == "Options");
-                if (optNodeIndex >= 0)
-                {
-                    e.Nodes.Insert(optNodeIndex, reviewsNode);
-                }
-                else
-                {
-                    e.Nodes.Insert(index, reviewsNode);
-                }
+                var index = optNodeIndex >= 0 ? optNodeIndex : e.Nodes.Count; 
+
+                e.Nodes.Insert(index, reviewsNode);
             }
         }
     }
