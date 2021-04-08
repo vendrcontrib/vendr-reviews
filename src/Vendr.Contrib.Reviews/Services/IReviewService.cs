@@ -33,7 +33,7 @@ namespace Vendr.Contrib.Reviews.Services
         PagedResult<Review> SearchReviews(Guid storeId, string searchTerm = "", ReviewStatus[] statuses = null, decimal[] ratings = null, DateTime? startDate = null, DateTime? endDate = null, long pageNumber = 1, long pageSize = 50);
 
         /// <summary>
-        /// Get the average star rating for a product
+        /// Get the average star rating for a product.
         /// </summary>
         /// <returns></returns>
         decimal GetAverageRatingForProduct(Guid storeId, string productReference);
