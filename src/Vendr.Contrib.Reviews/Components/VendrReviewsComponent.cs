@@ -45,7 +45,15 @@ namespace Vendr.Contrib.Reviews.Components
                 reviewsNode.AdditionalData.Add("tree", Vendr.Web.Constants.Trees.Stores.Alias);
                 reviewsNode.AdditionalData.Add("application", Vendr.Web.Constants.Sections.Commerce);
 
-                e.Nodes.Insert(index, reviewsNode);
+                var optNodeIndex = e.Nodes.FindIndex(x => x.NodeType == "Options");
+                if (optNodeIndex >= 0)
+                {
+                    e.Nodes.Insert(optNodeIndex, reviewsNode);
+                }
+                else
+                {
+                    e.Nodes.Insert(index, reviewsNode);
+                }
             }
         }
     }
